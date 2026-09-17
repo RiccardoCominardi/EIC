@@ -1,0 +1,30 @@
+namespace EOS.Solutions.Intercompany;
+table 67000 "EOS IC Setup"
+{
+    DataClassification = CustomerContent;
+    Caption = 'IC Setup (ECI)';
+
+    fields
+    {
+        field(1; "Code"; Code[1])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Code', Locked = true;
+        }
+        field(2; Enabled; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Enabled';
+        }
+        field(3; "Company Code"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Company Code';
+        }
+    }
+
+    keys
+    {
+        key(Key1; "Code") { Clustered = true; }
+    }
+}

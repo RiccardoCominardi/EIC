@@ -1,0 +1,16 @@
+.al*
+.vs*
+.snapshots*
+*.app
+*.bak
+*.orig
+*.Gimli*
+*.zip
+TestResults.xml
+rad.json
+.output
+/config/share/*
+!/config/share/README.md
+!/config/feed/*.app
+!/config/3rdparty/*.app
+*.g.xlf
