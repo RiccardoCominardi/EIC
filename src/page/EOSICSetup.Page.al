@@ -29,6 +29,24 @@ page 67000 "EOS IC Setup"
         }
     }
 
+    actions
+    {
+        area(Navigation)
+        {
+            action(IntegrationEntries)
+            {
+                ApplicationArea = All;
+                Caption = 'Integration Entries';
+                Image = Log;
+                RunObject = page "EOS IC Integration Entries";
+            }
+        }
+        area(Promoted)
+        {
+            actionref(IntegrationEntries_Promoted; IntegrationEntries) { }
+        }
+    }
+
     trigger OnOpenPage()
     begin
         Rec.Reset();
