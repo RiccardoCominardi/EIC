@@ -33,17 +33,17 @@ page 67000 "EOS IC Setup"
     {
         area(Navigation)
         {
-            action(IntegrationEntries)
+            action(ICEntries)
             {
                 ApplicationArea = All;
-                Caption = 'Integration Entries';
+                Caption = 'IC Entries';
                 Image = Log;
-                RunObject = page "EOS IC Integration Entries";
+                RunObject = page "EOS IC Entries";
             }
         }
         area(Promoted)
         {
-            actionref(IntegrationEntries_Promoted; IntegrationEntries) { }
+            actionref(ICEntries_Promoted; ICEntries) { }
         }
     }
 

@@ -1,15 +1,15 @@
 namespace EOS.Solutions.Intercompany;
 
 using Microsoft.Utilities;
-page 67012 "EOS IC Integration Entries"
+page 67012 "EOS IC Entries"
 {
-    Caption = 'IC Integration Entries (EIC)';
+    Caption = 'IC Entries (EIC)';
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
     PageType = List;
-    SourceTable = "EOS IC Integration Entries";
+    SourceTable = "EOS IC Entries";
     UsageCategory = Lists;
     ApplicationArea = All;
 
@@ -85,7 +85,7 @@ page 67012 "EOS IC Integration Entries"
 
     actions
     {
-        area(Processing)
+        area(Navigation)
         {
             action(ShowDocument)
             {
@@ -114,6 +114,31 @@ page 67012 "EOS IC Integration Entries"
                     PageManagement.PageRun(DocVariant);
                 end;
             }
+        }
+        area(Processing)
+        {
+            action(ShowRequestPayload)
+            {
+                ApplicationArea = All;
+                Caption = 'Show Request Payload';
+                Image = ExportFile;
+
+                trigger OnAction()
+                begin
+                    Message(Rec.GetBlobFields(Rec.FieldNo("Request Payload")));
+                end;
+            }
+            action(ShowReceivedPayload)
+            {
+                ApplicationArea = All;
+                Caption = 'Show Received Payload';
+                Image = ExportFile;
+
+                trigger OnAction()
+                begin
+                    Message(Rec.GetBlobFields(Rec.FieldNo("Received Payload")));
+                end;
+            }
             action(ShowFullError)
             {
                 ApplicationArea = All;
@@ -139,9 +164,15 @@ page 67012 "EOS IC Integration Entries"
         }
         area(Promoted)
         {
-            actionref(ShowDocument_Promoted; ShowDocument) { }
             actionref(ShowFullError_Promoted; ShowFullError) { }
             actionref(ShowCallStack_Promoted; ShowCallStack) { }
+            group(ShowPayload)
+            {
+                Caption = 'Show Payload';
+                Image = ExportFile;
+                actionref(ShowRequestPayload_Promoted; ShowRequestPayload) { }
+                actionref(ShowReceivedPayload_Promoted; ShowReceivedPayload) { }
+            }
         }
     }
 }

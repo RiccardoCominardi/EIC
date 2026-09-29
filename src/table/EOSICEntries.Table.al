@@ -3,10 +3,10 @@ namespace EOS.Solutions.Intercompany;
 using Microsoft.Foundation.NoSeries;
 using System.Reflection;
 
-table 67006 "EOS IC Integration Entries"
+table 67006 "EOS IC Entries"
 {
     DataClassification = CustomerContent;
-    Caption = 'IC Integration Entries (EIC)';
+    Caption = 'IC Entries (EIC)';
 
     fields
     {
@@ -116,6 +116,16 @@ table 67006 "EOS IC Integration Entries"
             DataClassification = CustomerContent;
             Caption = 'Call Stack Blob';
         }
+        field(22; "Request Payload"; Blob)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Request Payload';
+        }
+        field(23; "Received Payload"; Blob)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Received Payload';
+        }
     }
 
     keys
@@ -123,12 +133,12 @@ table 67006 "EOS IC Integration Entries"
         key(Key1; "Entry No.") { Clustered = true; }
     }
 
-    [InherentPermissions(PermissionObjectType::TableData, Database::"EOS IC Integration Entries", 'r')]
+    [InherentPermissions(PermissionObjectType::TableData, Database::"EOS IC Entries", 'r')]
     procedure GetNextEntryNo(): Integer
     var
         SequenceNoMgt: Codeunit "Sequence No. Mgt.";
     begin
-        exit(SequenceNoMgt.GetNextSeqNo(Database::"EOS IC Integration Entries"));
+        exit(SequenceNoMgt.GetNextSeqNo(Database::"EOS IC Entries"));
     end;
 
     procedure GetBlobFields(BlobFieldNo: Integer): Text
@@ -148,6 +158,18 @@ table 67006 "EOS IC Integration Entries"
                     Rec.CalcFields("Call Stack Blob");
                     Rec."Call Stack Blob".CreateInStream(InStr, TextEncoding::UTF8);
                     exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStr, TypeHelper.LFSeparator(), Rec.FieldName("Call Stack Blob")));
+                end;
+            Rec.FieldNo("Request Payload"):
+                begin
+                    Rec.CalcFields("Request Payload");
+                    Rec."Request Payload".CreateInStream(InStr, TextEncoding::UTF8);
+                    exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStr, TypeHelper.LFSeparator(), Rec.FieldName("Request Payload")));
+                end;
+            Rec.FieldNo("Received Payload"):
+                begin
+                    Rec.CalcFields("Received Payload");
+                    Rec."Received Payload".CreateInStream(InStr, TextEncoding::UTF8);
+                    exit(TypeHelper.TryReadAsTextWithSepAndFieldErrMsg(InStr, TypeHelper.LFSeparator(), Rec.FieldName("Received Payload")));
                 end;
         end;
     end;
@@ -169,6 +191,22 @@ table 67006 "EOS IC Integration Entries"
                 begin
                     Clear(Rec."Call Stack Blob");
                     Rec."Call Stack Blob".CreateOutStream(OutStr, TextEncoding::UTF8);
+                    OutStr.WriteText(NewText);
+                    if WithModify then
+                        Rec.Modify();
+                end;
+            Rec.FieldNo("Request Payload"):
+                begin
+                    Clear(Rec."Request Payload");
+                    Rec."Request Payload".CreateOutStream(OutStr, TextEncoding::UTF8);
+                    OutStr.WriteText(NewText);
+                    if WithModify then
+                        Rec.Modify();
+                end;
+            Rec.FieldNo("Received Payload"):
+                begin
+                    Clear(Rec."Received Payload");
+                    Rec."Received Payload".CreateOutStream(OutStr, TextEncoding::UTF8);
                     OutStr.WriteText(NewText);
                     if WithModify then
                         Rec.Modify();
