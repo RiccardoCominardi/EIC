@@ -73,4 +73,14 @@ table 67003 "EOS IC Flows"
     {
         key(Key1; "Company Code", "Code") { Clustered = true; }
     }
+
+    trigger OnDelete()
+    var
+        ICMappingHeaders: Record "EOS IC Mapping Headers";
+    begin
+        ICMappingHeaders.Reset();
+        ICMappingHeaders.SetRange("Company Code", "Company Code");
+        ICMappingHeaders.SetRange("Flow Code", "Code");
+        ICMappingHeaders.DeleteAll(true);
+    end;
 }
