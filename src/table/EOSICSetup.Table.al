@@ -21,6 +21,11 @@ table 67000 "EOS IC Setup"
             DataClassification = CustomerContent;
             Caption = 'Company Code';
         }
+        field(4; "Interface Company"; Enum "EOS IC Companies")
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Interface Company';
+        }
     }
 
     keys

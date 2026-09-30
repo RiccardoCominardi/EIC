@@ -17,23 +17,28 @@ table 67002 "EOS IC Companies"
             DataClassification = CustomerContent;
             Caption = 'Description';
         }
-        field(3; "Connection Code"; Code[20])
+        field(3; "Interface Company"; Enum "EOS IC Companies")
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Interface Company';
+        }
+        field(4; "Connection Code"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Connection Code';
             TableRelation = "EOS IC Connections"."Code";
         }
-        field(4; "Remote Company Id"; Text[100])
+        field(5; "Remote Company Id"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Remote Company Id';
         }
-        field(5; "Remote Company Name"; Text[100])
+        field(6; "Remote Company Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Remote Company Name';
         }
-        field(6; Enabled; Boolean)
+        field(7; Enabled; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Enabled';

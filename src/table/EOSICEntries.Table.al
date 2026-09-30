@@ -2,6 +2,7 @@ namespace EOS.Solutions.Intercompany;
 
 using Microsoft.Foundation.NoSeries;
 using System.Reflection;
+using System.Utilities;
 
 table 67006 "EOS IC Entries"
 {
@@ -126,6 +127,12 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Received Payload';
         }
+        field(24; "Staging Status"; Enum "EOS IC Staging Status")
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Staging Status';
+            Editable = false;
+        }
     }
 
     keys
@@ -212,5 +219,32 @@ table 67006 "EOS IC Entries"
                         Rec.Modify();
                 end;
         end;
+    end;
+
+    procedure ExportBlobToJson(BlobFieldNo: Integer)
+    var
+        TempBlob: Codeunit "Temp Blob";
+        InStr: InStream;
+        OutStr: OutStream;
+        BlobText, FileName, FieldName : Text;
+        EmptyBlobErr: Label 'There is no content to export.';
+        FileNameLbl: Label '%1_%2.json', Locked = true, Comment = '%1 = entry no., %2 = field name';
+    begin
+        BlobText := Rec.GetBlobFields(BlobFieldNo);
+        if BlobText = '' then
+            Error(EmptyBlobErr);
+
+        TempBlob.CreateOutStream(OutStr, TextEncoding::UTF8);
+        OutStr.WriteText(BlobText);
+        TempBlob.CreateInStream(InStr, TextEncoding::UTF8);
+
+        case BlobFieldNo of
+            Rec.FieldNo("Request Payload"):
+                FieldName := Rec.FieldCaption("Request Payload");
+            Rec.FieldNo("Received Payload"):
+                FieldName := Rec.FieldCaption("Received Payload");
+        end;
+        FileName := StrSubstNo(FileNameLbl, Rec."Entry No.", DelChr(FieldName, '=', ' '));
+        DownloadFromStream(InStr, '', '', '', FileName);
     end;
 }

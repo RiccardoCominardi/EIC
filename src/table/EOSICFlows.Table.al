@@ -67,6 +67,15 @@ table 67003 "EOS IC Flows"
             DataClassification = CustomerContent;
             Caption = 'Enabled';
         }
+        field(11; "Auto Create Documents"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Auto Create Documents';
+            trigger OnValidate()
+            begin
+                Rec.TestField(Direction, Rec.Direction::Inbound);
+            end;
+        }
     }
 
     keys

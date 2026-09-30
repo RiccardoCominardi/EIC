@@ -56,6 +56,10 @@ page 67006 "EOS IC Flow Card"
                 {
                     ApplicationArea = All;
                 }
+                field("Auto Create Documents"; Rec."Auto Create Documents")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

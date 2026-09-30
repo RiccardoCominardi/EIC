@@ -98,11 +98,11 @@ codeunit 67001 "EOS IC Functions"
         MissingCompanyIdErr: Label 'The company entry does not contain a valid "id" value.';
         MissingCompanyNameErr: Label 'The company entry does not contain a valid "name" value.', Comment = '%1 = Company id text';
     begin
-        CompanyIdText := GetJsonText(CompanyObject, 'id');
+        CompanyIdText := GetText(CompanyObject, 'id');
         if CompanyIdText = '' then
             Error(MissingCompanyIdErr);
 
-        CompanyName := GetJsonText(CompanyObject, 'name');
+        CompanyName := GetText(CompanyObject, 'name');
         if CompanyName = '' then
             Error(MissingCompanyNameErr);
 
@@ -115,9 +115,9 @@ codeunit 67001 "EOS IC Functions"
         DisplayName: Text;
         UnknownCompanyLbl: Label 'Unknown company';
     begin
-        DisplayName := GetJsonText(CompanyObject, 'displayName');
+        DisplayName := GetText(CompanyObject, 'displayName');
         if DisplayName = '' then
-            DisplayName := GetJsonText(CompanyObject, 'name');
+            DisplayName := GetText(CompanyObject, 'name');
         if DisplayName = '' then
             DisplayName := UnknownCompanyLbl;
 
@@ -219,10 +219,15 @@ codeunit 67001 "EOS IC Functions"
     end;
 
     local procedure GetFlowsEndpoint(ICConnections: Record "EOS IC Connections"; RemoteCompanyId: Text[100]): Text
+    begin
+        exit(GetRemoteApiEndpoint(ICConnections, RemoteCompanyId, 'flows'));
+    end;
+
+    procedure GetRemoteApiEndpoint(ICConnections: Record "EOS IC Connections"; RemoteCompanyId: Text[100]; EntitySetName: Text): Text
     var
         RemoteCompanyGuid: Guid;
-        SaaSEndpointLbl: Label '%1/v2.0/%2/%3/api/eos/eci/v1.0/companies(%4)/flows', Locked = true;
-        OnPremEndpointLbl: Label '%1/api/eos/eci/v1.0/companies(%2)/flows', Locked = true;
+        SaaSEndpointLbl: Label '%1/v2.0/%2/%3/api/eos/eci/v1.0/companies(%4)/%5', Locked = true;
+        OnPremEndpointLbl: Label '%1/api/eos/eci/v1.0/companies(%2)/%3', Locked = true;
         InvalidRemoteCompanyIdErr: Label 'The remote company id "%1" is not a valid GUID.', Comment = '%1 = remote company id';
     begin
         ICConnections.TestField("API Base Url");
@@ -239,12 +244,14 @@ codeunit 67001 "EOS IC Functions"
                           NormalizeApiBaseUrl(ICConnections."API Base Url"),
                           ICConnections."Tenant ID",
                           ICConnections."Environment Name",
-                          GetGuidText(RemoteCompanyGuid)));
+                          GetGuidText(RemoteCompanyGuid),
+                          EntitySetName));
                 end;
             ICConnections."Environment Type"::OnPrem:
                 exit(StrSubstNo(OnPremEndpointLbl,
                       NormalizeApiBaseUrl(ICConnections."API Base Url"),
-                      GetGuidText(RemoteCompanyGuid)));
+                      GetGuidText(RemoteCompanyGuid),
+                      EntitySetName));
         end;
     end;
 
@@ -305,7 +312,7 @@ codeunit 67001 "EOS IC Functions"
         if not Evaluate(FlowGuid, FlowIdText) then
             exit;
 
-        FlowCompanyCode := CopyStr(GetJsonText(FlowObject, 'companyCode'), 1, MaxStrLen(FlowCompanyCode));
+        FlowCompanyCode := CopyStr(GetText(FlowObject, 'companyCode'), 1, MaxStrLen(FlowCompanyCode));
         if FlowCompanyCode = '' then
             FlowCompanyCode := DefaultCompanyCode;
 
@@ -323,13 +330,14 @@ codeunit 67001 "EOS IC Functions"
         TempRemoteFlows.SystemId := FlowGuid;
         TempRemoteFlows."Company Code" := FlowCompanyCode;
         TempRemoteFlows.Code := FlowCode;
-        TempRemoteFlows.Description := CopyStr(GetJsonText(FlowObject, 'description'), 1, MaxStrLen(TempRemoteFlows.Description));
+        TempRemoteFlows.Description := CopyStr(GetText(FlowObject, 'description'), 1, MaxStrLen(TempRemoteFlows.Description));
         TempRemoteFlows."Flow Pair Id" := FlowPairId;
         TempRemoteFlows.Direction := GetDirectionFromJson(FlowObject, TempRemoteFlows.Direction);
         TempRemoteFlows."Local Document Type" := GetFlowDocumentTypeFromJson(FlowObject, 'localDocumentTypeOrdinal', 'localDocumentType', TempRemoteFlows."Local Document Type");
         TempRemoteFlows."External Document Type" := GetFlowDocumentTypeFromJson(FlowObject, 'externalDocumentTypeOrdinal', 'externalDocumentType', TempRemoteFlows."External Document Type");
         TempRemoteFlows."Auto Send" := GetJsonBooleanOrDefault(FlowObject, 'autoSend', false);
         TempRemoteFlows."Auto Process" := GetJsonBooleanOrDefault(FlowObject, 'autoProcess', false);
+        TempRemoteFlows."Auto Create Documents" := GetJsonBooleanOrDefault(FlowObject, 'autoCreateDocuments', false);
         TempRemoteFlows.Enabled := FlowEnabled;
         TempRemoteFlows.Insert(false, true);
     end;
@@ -404,20 +412,20 @@ codeunit 67001 "EOS IC Functions"
         InvalidFlowIdErr: Label 'The flow entry contains an invalid id value: %1.', Comment = '%1 = invalid flow id';
         MissingFlowCodeErr: Label 'The flow entry does not contain a valid "code" value.';
     begin
-        FlowIdText := GetJsonText(FlowObject, 'id');
+        FlowIdText := GetText(FlowObject, 'id');
         if FlowIdText = '' then
             Error(MissingFlowIdErr);
 
         if not Evaluate(RemoteFlowGuid, FlowIdText) then
             Error(InvalidFlowIdErr, FlowIdText);
 
-        FlowCodeText := GetJsonText(FlowObject, 'code');
+        FlowCodeText := GetText(FlowObject, 'code');
         if FlowCodeText = '' then
             Error(MissingFlowCodeErr);
 
         SelectedFlowId := CopyStr(GetGuidText(RemoteFlowGuid), 1, MaxStrLen(SelectedFlowId));
         SelectedFlowCode := CopyStr(FlowCodeText, 1, MaxStrLen(SelectedFlowCode));
-        SelectedFlowPairId := CopyStr(GetJsonText(FlowObject, 'flowPairId'), 1, MaxStrLen(SelectedFlowPairId));
+        SelectedFlowPairId := CopyStr(GetText(FlowObject, 'flowPairId'), 1, MaxStrLen(SelectedFlowPairId));
     end;
 
     local procedure GetDirectionFromJson(FlowObject: JsonObject; DefaultDirection: Enum "EOS IC Direction"): Enum "EOS IC Direction"
@@ -470,7 +478,7 @@ codeunit 67001 "EOS IC Functions"
     var
         JsonNumberText: Text;
     begin
-        JsonNumberText := DelChr(DelChr(GetJsonText(SourceObject, PropertyName), '<', ' '), '>', ' ');
+        JsonNumberText := DelChr(DelChr(GetText(SourceObject, PropertyName), '<', ' '), '>', ' ');
         if JsonNumberText = '' then
             exit(false);
 
@@ -482,7 +490,7 @@ codeunit 67001 "EOS IC Functions"
         JsonBooleanText: Text;
         JsonBooleanValue: Boolean;
     begin
-        JsonBooleanText := LowerCase(GetJsonText(SourceObject, PropertyName));
+        JsonBooleanText := LowerCase(GetText(SourceObject, PropertyName));
         if JsonBooleanText = '' then
             exit(DefaultValue);
 
@@ -553,7 +561,7 @@ codeunit 67001 "EOS IC Functions"
         for I := 0 to FlowsArray.Count() - 1 do begin
             FlowsArray.Get(I, FlowToken);
             FlowObject := FlowToken.AsObject();
-            FlowId := CopyStr(GetJsonText(FlowObject, 'id'), 1, MaxStrLen(FlowId));
+            FlowId := CopyStr(GetText(FlowObject, 'id'), 1, MaxStrLen(FlowId));
 
             if FlowId <> '' then
                 SetRemoteFlowPairId(FlowsEndpoint, AccessToken, FlowId, '');
@@ -622,6 +630,40 @@ codeunit 67001 "EOS IC Functions"
             Error(HttpStatusErr, ResponseMessage.HttpStatusCode(), ResponseMessage.ReasonPhrase());
     end;
 
+    procedure ExecutePostRequest(EndpointUrl: Text; AccessToken: SecretText; PayloadText: Text) ResponseText: Text
+    var
+        HttpClient: HttpClient;
+        RequestMessage: HttpRequestMessage;
+        RequestContent: HttpContent;
+        ResponseMessage: HttpResponseMessage;
+        RequestHeaders: HttpHeaders;
+        ContentHeaders: HttpHeaders;
+        BearerTokenLbl: Label 'Bearer %1', Locked = true;
+        HttpStatusErr: Label 'Error %1: %2. %3', Locked = true;
+    begin
+        RequestMessage.Method := 'POST';
+        RequestMessage.SetRequestUri(EndpointUrl);
+        RequestMessage.GetHeaders(RequestHeaders);
+        RequestHeaders.Add('Accept', 'application/json');
+
+        if not AccessToken.IsEmpty() then
+            RequestHeaders.Add('Authorization', SecretStrSubstNo(BearerTokenLbl, AccessToken));
+
+        RequestContent.WriteFrom(PayloadText);
+        RequestContent.GetHeaders(ContentHeaders);
+        if ContentHeaders.Contains('Content-Type') then
+            ContentHeaders.Remove('Content-Type');
+        ContentHeaders.Add('Content-Type', 'application/json');
+        RequestMessage.Content := RequestContent;
+
+        if not HttpClient.Send(RequestMessage, ResponseMessage) then
+            Error(HttpStatusErr, ResponseMessage.HttpStatusCode(), ResponseMessage.ReasonPhrase(), '');
+
+        ResponseMessage.Content.ReadAs(ResponseText);
+        if not ResponseMessage.IsSuccessStatusCode() then
+            Error(HttpStatusErr, ResponseMessage.HttpStatusCode(), ResponseMessage.ReasonPhrase(), ResponseText);
+    end;
+
     local procedure ExecutePatchRequest(EndpointUrl: Text; AccessToken: SecretText; PayloadText: Text)
     var
         HttpClient: HttpClient;
@@ -659,21 +701,64 @@ codeunit 67001 "EOS IC Functions"
         end;
     end;
 
-    local procedure GetJsonText(SourceObject: JsonObject; PropertyName: Text): Text
+    #region JsonHelpers
+    procedure GetValue(SourceObject: JsonObject; PropertyName: Text; var JsonValue: JsonValue): Boolean
     var
         ValueToken: JsonToken;
-        JsonValue: JsonValue;
     begin
         if not SourceObject.Get(PropertyName, ValueToken) then
-            exit('');
+            exit(false);
 
         if not ValueToken.IsValue() then
-            exit('');
+            exit(false);
 
         JsonValue := ValueToken.AsValue();
-        if JsonValue.IsNull() then
-            exit('');
-
-        exit(JsonValue.AsText());
+        exit(not JsonValue.IsNull());
     end;
+
+    procedure GetText(SourceObject: JsonObject; PropertyName: Text): Text
+    var
+        JsonValue: JsonValue;
+    begin
+        if GetValue(SourceObject, PropertyName, JsonValue) then
+            exit(JsonValue.AsText());
+    end;
+
+    procedure GetDecimal(SourceObject: JsonObject; PropertyName: Text): Decimal
+    var
+        JsonValue: JsonValue;
+    begin
+        if GetValue(SourceObject, PropertyName, JsonValue) then
+            exit(JsonValue.AsDecimal());
+    end;
+
+    procedure GetInteger(SourceObject: JsonObject; PropertyName: Text): Integer
+    var
+        JsonValue: JsonValue;
+    begin
+        if GetValue(SourceObject, PropertyName, JsonValue) then
+            exit(JsonValue.AsInteger());
+    end;
+
+    procedure GetBoolean(SourceObject: JsonObject; PropertyName: Text): Boolean
+    var
+        JsonValue: JsonValue;
+    begin
+        if GetValue(SourceObject, PropertyName, JsonValue) then
+            exit(JsonValue.AsBoolean());
+    end;
+
+    procedure GetDate(SourceObject: JsonObject; PropertyName: Text): Date
+    var
+        DateText: Text;
+        DateValue: Date;
+    begin
+        DateText := GetText(SourceObject, PropertyName);
+        if DateText = '' then
+            exit(0D);
+
+        Evaluate(DateValue, DateText, 9);
+        exit(DateValue);
+    end;
+    #endregion JsonHelpers
 }

@@ -62,20 +62,25 @@ page 67012 "EOS IC Entries"
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+                    StyleExpr = FieldColor;
+                }
+                field("Staging Status"; Rec."Staging Status")
+                {
+                    ApplicationArea = All;
+                    StyleExpr = StagingColor;
+
+                    trigger OnDrillDown()
+                    var
+                        ICEntriesManagement: Codeunit "EOS IC Entries Management";
+                    begin
+                        ICEntriesManagement.ShowStagingRecord(Rec);
+                    end;
                 }
                 field("Processed At"; Rec."Processed At")
                 {
                     ApplicationArea = All;
                 }
                 field("Retry Count"; Rec."Retry Count")
-                {
-                    ApplicationArea = All;
-                }
-                field("Error Message"; Rec."Error Message")
-                {
-                    ApplicationArea = All;
-                }
-                field("Call Stack"; Rec."Call Stack")
                 {
                     ApplicationArea = All;
                 }
@@ -117,32 +122,79 @@ page 67012 "EOS IC Entries"
         }
         area(Processing)
         {
+            action(ProcessEntries)
+            {
+                ApplicationArea = All;
+                Caption = 'Process';
+                Image = Start;
+                ToolTip = 'Sends the selected outbound entries and populates the staging tables for the selected inbound entries.';
+
+                trigger OnAction()
+                var
+                    ICEntries: Record "EOS IC Entries";
+                    ICEntriesManagement: Codeunit "EOS IC Entries Management";
+                begin
+                    CurrPage.SetSelectionFilter(ICEntries);
+                    ICEntries.SetFilter(Status, '<>%1', ICEntries.Status::Completed);
+                    if ICEntries.FindSet() then
+                        repeat
+                            case ICEntries.Direction of
+                                ICEntries.Direction::Outbound:
+                                    ICEntriesManagement.SendEntry(ICEntries);
+                                ICEntries.Direction::Inbound:
+                                    ICEntriesManagement.ProcessEntry(ICEntries);
+                            end;
+                        until ICEntries.Next() = 0;
+                end;
+            }
             action(ShowRequestPayload)
             {
                 ApplicationArea = All;
-                Caption = 'Show Request Payload';
-                Image = ExportFile;
+                Caption = 'Show Request';
+                Image = ShowList;
 
                 trigger OnAction()
                 begin
                     Message(Rec.GetBlobFields(Rec.FieldNo("Request Payload")));
                 end;
             }
+            action(ExportRequestPayload)
+            {
+                ApplicationArea = All;
+                Caption = 'Export Request';
+                Image = ExportFile;
+
+                trigger OnAction()
+                begin
+                    Rec.ExportBlobToJson(Rec.FieldNo("Request Payload"));
+                end;
+            }
             action(ShowReceivedPayload)
             {
                 ApplicationArea = All;
-                Caption = 'Show Received Payload';
-                Image = ExportFile;
+                Caption = 'Show Received';
+                Image = ShowList;
 
                 trigger OnAction()
                 begin
                     Message(Rec.GetBlobFields(Rec.FieldNo("Received Payload")));
                 end;
             }
-            action(ShowFullError)
+            action(ExportReceivedPayload)
             {
                 ApplicationArea = All;
-                Caption = 'Show Full Error';
+                Caption = 'Export Received';
+                Image = ExportFile;
+
+                trigger OnAction()
+                begin
+                    Rec.ExportBlobToJson(Rec.FieldNo("Received Payload"));
+                end;
+            }
+            action(FullError)
+            {
+                ApplicationArea = All;
+                Caption = 'Full Error';
                 Image = PrevErrorMessage;
 
                 trigger OnAction()
@@ -150,10 +202,10 @@ page 67012 "EOS IC Entries"
                     Message(Rec.GetBlobFields(Rec.FieldNo("Error Message Blob")));
                 end;
             }
-            action(ShowCallStack)
+            action(CallStack)
             {
                 ApplicationArea = All;
-                Caption = 'Show Call Stack';
+                Caption = 'Call Stack';
                 Image = PrevErrorMessage;
 
                 trigger OnAction()
@@ -164,15 +216,61 @@ page 67012 "EOS IC Entries"
         }
         area(Promoted)
         {
-            actionref(ShowFullError_Promoted; ShowFullError) { }
-            actionref(ShowCallStack_Promoted; ShowCallStack) { }
-            group(ShowPayload)
+            actionref(ProcessEntries_Promoted; ProcessEntries) { }
+            actionref(ShowDocument_Promoted; ShowDocument) { }
+            group(RequestPayload)
             {
-                Caption = 'Show Payload';
-                Image = ExportFile;
+                Caption = 'Request Payload';
+                Image = Database;
                 actionref(ShowRequestPayload_Promoted; ShowRequestPayload) { }
+                actionref(ExportRequestPayload_Promoted; ExportRequestPayload) { }
+            }
+            group(ReceivedPayload)
+            {
+                Caption = 'Received Payload';
+                Image = Database;
                 actionref(ShowReceivedPayload_Promoted; ShowReceivedPayload) { }
+                actionref(ExportReceivedPayload_Promoted; ExportReceivedPayload) { }
+            }
+            group(Error)
+            {
+                Caption = 'Error';
+                Image = ErrorLog;
+                actionref(FullError_Promoted; FullError) { }
+                actionref(CallStack_Promoted; CallStack) { }
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    begin
+        SetLineColors();
+    end;
+
+    local procedure SetLineColors()
+    begin
+        FieldColor := Format(PageStyle::Standard);
+        StagingColor := Format(PageStyle::Standard);
+
+        case Rec."Status" of
+            Rec."Status"::Pending:
+                FieldColor := Format(PageStyle::Ambiguous);
+            Rec."Status"::Processing:
+                FieldColor := Format(PageStyle::StrongAccent);
+            Rec."Status"::Error:
+                FieldColor := Format(PageStyle::Unfavorable);
+            Rec."Status"::Completed:
+                FieldColor := Format(PageStyle::Favorable);
+        end;
+
+        case Rec."Staging Status" of
+            Rec."Staging Status"::Pending:
+                StagingColor := Format(PageStyle::Ambiguous);
+            Rec."Staging Status"::Processed:
+                StagingColor := Format(PageStyle::Favorable);
+        end;
+    end;
+
+    var
+        FieldColor, StagingColor : Text;
 }

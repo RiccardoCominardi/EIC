@@ -48,6 +48,10 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
+                field("Auto Create Documents"; Rec."Auto Create Documents")
+                {
+                    ApplicationArea = All;
+                }
                 field(Enabled; Rec.Enabled)
                 {
                     ApplicationArea = All;

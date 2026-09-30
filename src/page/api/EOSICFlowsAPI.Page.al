@@ -75,6 +75,11 @@ page 67007 "EOS IC Flows API"
                 {
                     Caption = 'Flow Pair Id';
                 }
+                field(autoCreateDocuments; Rec."Auto Create Documents")
+                {
+                    Caption = 'Auto Create Documents';
+                    Editable = false;
+                }
                 field(enabled; Rec.Enabled)
                 {
                     Caption = 'Enabled';
