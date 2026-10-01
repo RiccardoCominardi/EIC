@@ -255,6 +255,44 @@ codeunit 67001 "EOS IC Functions"
         end;
     end;
 
+    procedure UpdateSourceEntry(ICEntries: Record "EOS IC Entries")
+    var
+        ICCompanies: Record "EOS IC Companies";
+        ICConnections: Record "EOS IC Connections";
+        ICAuthentication: Interface "EOS IC Authentication";
+        AccessToken: SecretText;
+        EntriesEndpoint: Text;
+    begin
+        ICEntries.TestField(Direction, ICEntries.Direction::Inbound);
+        ICEntries.TestField("IC Transaction ID");
+        ICEntries.TestField("Target Document No.");
+
+        ICCompanies.Get(ICEntries."Source Company");
+        ICCompanies.TestField("Connection Code");
+        ICCompanies.TestField("Remote Company Id");
+        ICConnections.Get(ICCompanies."Connection Code");
+
+        ICAuthentication := ICConnections."Authentication Type";
+        AccessToken := ICAuthentication.GetToken(ICConnections);
+
+        EntriesEndpoint := GetRemoteApiEndpoint(ICConnections, ICCompanies."Remote Company Id", 'entryUpdates');
+        ExecutePatchRequest(GetEntryByTransactionIdEndpoint(EntriesEndpoint, ICEntries."IC Transaction ID"), AccessToken, BuildEntryUpdatePayload(ICEntries));
+    end;
+
+    local procedure GetEntryByTransactionIdEndpoint(EntriesEndpoint: Text; ICTransactionId: Guid): Text
+    begin
+        exit(EntriesEndpoint + '?$filter=icTransactionId%20eq%20' + GetGuidText(ICTransactionId));
+    end;
+
+    local procedure BuildEntryUpdatePayload(ICEntries: Record "EOS IC Entries") PayloadText: Text
+    var
+        PayloadObject: JsonObject;
+    begin
+        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntries."Target Document Type".AsInteger());
+        PayloadObject.Add('targetDocumentNo', ICEntries."Target Document No.");
+        PayloadObject.WriteTo(PayloadText);
+    end;
+
     local procedure GetFlowsListEndpoint(FlowsEndpoint: Text; CompanyCode: Code[20]): Text
     begin
         exit(FlowsEndpoint + '?$filter=companyCode%20eq%20''' + CompanyCode + '''%20and%20enabled%20eq%20true%20and%20flowPairId%20eq%20''''&$orderby=code');

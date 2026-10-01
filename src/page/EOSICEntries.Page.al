@@ -126,7 +126,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Process';
-                Image = Start;
+                Image = NextRecord;
                 ToolTip = 'Sends the selected outbound entries and populates the staging tables for the selected inbound entries.';
 
                 trigger OnAction()
@@ -144,6 +144,27 @@ page 67012 "EOS IC Entries"
                                 ICEntries.Direction::Inbound:
                                     ICEntriesManagement.ProcessEntry(ICEntries);
                             end;
+                        until ICEntries.Next() = 0;
+                end;
+            }
+            action(ProcessStaging)
+            {
+                ApplicationArea = All;
+                Caption = 'Process Staging';
+                Image = NextSet;
+                ToolTip = 'Creates the documents from the staging records of the selected inbound entries. Entries in error are retried.';
+                trigger OnAction()
+                var
+                    ICEntries: Record "EOS IC Entries";
+                    ICEntriesManagement: Codeunit "EOS IC Entries Management";
+                begin
+                    CurrPage.SetSelectionFilter(ICEntries);
+                    ICEntries.SetRange(Direction, ICEntries.Direction::Inbound);
+                    ICEntries.SetRange(Status, ICEntries.Status::Completed);
+                    ICEntries.SetFilter("Staging Status", '<>%1', ICEntries."Staging Status"::Completed);
+                    if ICEntries.FindSet() then
+                        repeat
+                            ICEntriesManagement.ProcessStaging(ICEntries);
                         until ICEntries.Next() = 0;
                 end;
             }
@@ -217,6 +238,7 @@ page 67012 "EOS IC Entries"
         area(Promoted)
         {
             actionref(ProcessEntries_Promoted; ProcessEntries) { }
+            actionref(ProcessStaging_Promoted; ProcessStaging) { }
             actionref(ShowDocument_Promoted; ShowDocument) { }
             group(RequestPayload)
             {
@@ -266,7 +288,11 @@ page 67012 "EOS IC Entries"
         case Rec."Staging Status" of
             Rec."Staging Status"::Pending:
                 StagingColor := Format(PageStyle::Ambiguous);
-            Rec."Staging Status"::Processed:
+            Rec."Staging Status"::Processing:
+                StagingColor := Format(PageStyle::StrongAccent);
+            Rec."Staging Status"::Error:
+                StagingColor := Format(PageStyle::Unfavorable);
+            Rec."Staging Status"::Completed:
                 StagingColor := Format(PageStyle::Favorable);
         end;
     end;

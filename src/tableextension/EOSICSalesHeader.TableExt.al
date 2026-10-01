@@ -12,5 +12,11 @@ tableextension 67002 "EOS IC Sales Header" extends "Sales Header"
             Caption = 'IC Company';
             TableRelation = "EOS IC Companies".Code;
         }
+        field(67001; "EOS IC Entry No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'IC Entry No.';
+            TableRelation = "EOS IC Entries"."Entry No.";
+        }
     }
 }

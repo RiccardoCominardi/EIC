@@ -8,6 +8,8 @@ table 67006 "EOS IC Entries"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Entries (EIC)';
+    DrillDownPageId = "EOS IC Entries";
+    LookupPageId = "EOS IC Entries";
 
     fields
     {

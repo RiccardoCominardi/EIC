@@ -13,6 +13,11 @@ pageextension 67003 "EOS IC Purchase Order" extends "Purchase Order"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the intercompany company associated with this document.';
             }
+            field("EOS IC Entry No."; Rec."EOS IC Entry No.")
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
         }
     }
 }

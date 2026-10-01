@@ -12,8 +12,16 @@ enum 67007 "EOS IC Staging Status"
     {
         Caption = 'Pending';
     }
-    value(2; Processed)
+    value(2; Processing)
     {
-        Caption = 'Processed';
+        Caption = 'Processing';
+    }
+    value(3; Completed)
+    {
+        Caption = 'Completed';
+    }
+    value(4; Error)
+    {
+        Caption = 'Error';
     }
 }

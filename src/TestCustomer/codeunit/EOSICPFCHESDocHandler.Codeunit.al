@@ -4,6 +4,8 @@ using EOS.Solutions.Intercompany;
 using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
 using Microsoft.Purchases.History;
+using Microsoft.Purchases.Vendor;
+using Microsoft.Sales.Customer;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.History;
 
@@ -77,9 +79,21 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         end;
     end;
 
-    procedure ProcessStaging()
+    procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
+    var
+        ICEntriesManagement: Codeunit "EOS IC Entries Management";
+        UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
     begin
-
+        case ICEntries."Target Document Type" of
+            ICEntries."Target Document Type"::"Sales Order":
+                ICEntriesManagement.CreateSalesOrder(ICEntries);
+            ICEntries."Target Document Type"::"Purchase Order":
+                ICEntriesManagement.CreatePurchaseOrder(ICEntries);
+            ICEntries."Target Document Type"::Item:
+                ICEntriesManagement.CreateItem(ICEntries);
+            else
+                Error(UnsupportedDocumentTypeErr, ICEntries."Target Document Type");
+        end;
     end;
 
 

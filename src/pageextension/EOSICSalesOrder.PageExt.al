@@ -13,6 +13,11 @@ pageextension 67002 "EOS IC Sales Order" extends "Sales Order"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the intercompany company associated with this document.';
             }
+            field("EOS IC Entry No."; Rec."EOS IC Entry No.")
+            {
+                ApplicationArea = All;
+                Editable = false;
+            }
         }
     }
 

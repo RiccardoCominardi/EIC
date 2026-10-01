@@ -11,6 +11,8 @@ codeunit 67002 "EOS IC Try Functions"
                 TrySendEntry();
             'PROCESS_ENTRY':
                 TryProcessEntry();
+            'PROCESS_STAGING':
+                TryProcessStaging();
         end;
 
         OnAfterRun(FunctionCode);
@@ -20,7 +22,6 @@ codeunit 67002 "EOS IC Try Functions"
     var
         ICEntries: Record "EOS IC Entries";
         RecRef: RecordRef;
-        Text000Err: label 'The provided variant is not a record.';
     begin
         RecRef.GetTable(DocVariant);
         if not DocVariant.IsRecord then
@@ -34,7 +35,6 @@ codeunit 67002 "EOS IC Try Functions"
     var
         ICEntries: Record "EOS IC Entries";
         RecRef: RecordRef;
-        Text000Err: label 'The provided variant is not a record.';
     begin
         RecRef.GetTable(DocVariant);
         if not DocVariant.IsRecord then
@@ -54,6 +54,32 @@ codeunit 67002 "EOS IC Try Functions"
 
         ICDocumentHandler := ICSetup."Interface Company";
         ICDocumentHandler.LoadStaging(ICEntries);
+    end;
+
+    local procedure TryProcessStaging()
+    var
+        ICEntries: Record "EOS IC Entries";
+        RecRef: RecordRef;
+    begin
+        RecRef.GetTable(DocVariant);
+        if not DocVariant.IsRecord then
+            Error(Text000Err);
+
+        RecRef.SetTable(ICEntries);
+        ProcessStaging(ICEntries);
+        DocVariant := ICEntries;
+    end;
+
+    local procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
+    var
+        ICSetup: Record "EOS IC Setup";
+        ICDocumentHandler: Interface "EOS IC Document Handler";
+    begin
+        ICSetup.Get();
+        ICSetup.TestField(Enabled, true);
+
+        ICDocumentHandler := ICSetup."Interface Company";
+        ICDocumentHandler.ProcessStaging(ICEntries);
     end;
 
     local procedure SendEntry(ICEntries: Record "EOS IC Entries")
@@ -107,6 +133,10 @@ codeunit 67002 "EOS IC Try Functions"
         DocVariant := NewDocVariant;
     end;
 
+    procedure GetDocVariant(): Variant
+    begin
+        exit(DocVariant);
+    end;
 
     [IntegrationEvent(false, false)]
     local procedure OnAfterRun(FunctionCode: Code[50])
@@ -116,4 +146,5 @@ codeunit 67002 "EOS IC Try Functions"
     var
         DocVariant: Variant;
         FunctionCode: Code[50];
+        Text000Err: label 'The provided variant is not a record.';
 }

@@ -5,6 +5,7 @@ permissionset 67000 "EOS Intercompany"
     Permissions =
         page "EOS IC Flows API" = X,
         page "EOS IC Entries API" = X,
+        page "EOS IC Entry Update API" = X,
         page "EOS IC Remote Flows Lookup" = X,
         table "EOS IC Setup" = X,
         table "EOS IC Connections" = X,
