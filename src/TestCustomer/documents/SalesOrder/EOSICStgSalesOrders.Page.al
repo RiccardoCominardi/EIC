@@ -8,9 +8,7 @@ page 67014 "EOS IC Stg. Sales Orders"
     CardPageId = "EOS IC Stg. Sales Order";
     UsageCategory = Lists;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67027 "EOS IC Stg. Item Card"
 {
     Caption = 'IC Staging Item (EIC)';
@@ -7,9 +9,7 @@ page 67027 "EOS IC Stg. Item Card"
     SourceTable = "EOS IC Stg. Item";
     UsageCategory = None;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

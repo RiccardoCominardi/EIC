@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67024 "EOS IC Stg. Receipt"
 {
     Caption = 'IC Staging Receipt (EIC)';
@@ -7,9 +9,7 @@ page 67024 "EOS IC Stg. Receipt"
     SourceTable = "EOS IC Stg. Rcpt. Header";
     UsageCategory = None;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

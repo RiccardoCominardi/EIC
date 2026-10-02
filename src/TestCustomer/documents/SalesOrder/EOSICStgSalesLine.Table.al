@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 table 67008 "EOS IC Stg. Sales Line"
 {
     DataClassification = CustomerContent;
@@ -83,4 +85,12 @@ table 67008 "EOS IC Stg. Sales Line"
     {
         key(Key1; "Entry No.", "Line No.") { Clustered = true; }
     }
+
+    trigger OnModify()
+    var
+        UserSetup: Record "User Setup";
+    begin
+        UserSetup.Get(UserId());
+        UserSetup.TestField("EOS IC Admin");
+    end;
 }

@@ -1,6 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
 using Microsoft.Foundation.NoSeries;
+using System.Security.User;
 
 table 67013 "EOS IC Stg. Rcpt. Header"
 {
@@ -64,5 +65,13 @@ table 67013 "EOS IC Stg. Rcpt. Header"
         SequenceNoMgt: Codeunit "Sequence No. Mgt.";
     begin
         exit(SequenceNoMgt.GetNextSeqNo(Database::"EOS IC Stg. Rcpt. Header"));
+    end;
+
+    trigger OnModify()
+    var
+        UserSetup: Record "User Setup";
+    begin
+        UserSetup.Get(UserId());
+        UserSetup.TestField("EOS IC Admin");
     end;
 }

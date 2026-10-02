@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67018 "EOS IC Stg. Purch. Order"
 {
     Caption = 'IC Staging Purchase Order (EIC)';
@@ -7,9 +9,7 @@ page 67018 "EOS IC Stg. Purch. Order"
     SourceTable = "EOS IC Stg. Purch. Header";
     UsageCategory = None;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

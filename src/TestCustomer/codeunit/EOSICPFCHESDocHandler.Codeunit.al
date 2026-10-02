@@ -3,6 +3,7 @@ namespace EOS_Solutions.EOS_Intercompany;
 using EOS.Solutions.Intercompany;
 using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
+using System.Security.User;
 using Microsoft.Purchases.History;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.History;
@@ -464,7 +465,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         StgPurchHeader.Init();
         StgPurchHeader."Entry No." := StgPurchHeader.GetNextEntryNo();
         StgPurchHeader."IC Entry No." := ICEntryNo;
-        StgPurchHeader."Vendor Order No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgPurchHeader."Vendor Order No."));
+        StgPurchHeader."No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgPurchHeader."No."));
         StgPurchHeader."Order Date" := ICFunctions.GetDate(HeaderObject, 'orderDate');
         StgPurchHeader."Posting Date" := ICFunctions.GetDate(HeaderObject, 'postingDate');
         StgPurchHeader."Document Date" := ICFunctions.GetDate(HeaderObject, 'documentDate');
@@ -473,6 +474,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         StgPurchHeader."Your Reference" := CopyStr(ICFunctions.GetText(HeaderObject, 'yourReference'), 1, MaxStrLen(StgPurchHeader."Your Reference"));
         StgPurchHeader."Payment Terms Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'paymentTermsCode'), 1, MaxStrLen(StgPurchHeader."Payment Terms Code"));
         StgPurchHeader."Shipment Method Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'shipmentMethodCode'), 1, MaxStrLen(StgPurchHeader."Shipment Method Code"));
+        StgPurchHeader."Buy-from Vendor No." := CopyStr(ICFunctions.GetText(HeaderObject, 'sellToCustomerNo'), 1, MaxStrLen(StgPurchHeader."Buy-from Vendor No."));
         StgPurchHeader.Insert(true);
 
         foreach LineToken in LinesArray do begin
@@ -832,6 +834,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
     #endregion ProcessStaging
 
     #region GeneralFunctions
+
     [EventSubscriber(ObjectType::Table, Database::"EOS IC Document Types", OnUpdateTableId, '', false, false)]
     local procedure EOSICFlows_OnUpdateTableId(var Rec: Record "EOS IC Document Types")
     begin

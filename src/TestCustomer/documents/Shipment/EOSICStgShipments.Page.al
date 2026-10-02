@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67020 "EOS IC Stg. Shipments"
 {
     Caption = 'IC Staging Shipments (EIC)';
@@ -8,9 +10,7 @@ page 67020 "EOS IC Stg. Shipments"
     CardPageId = "EOS IC Stg. Shipment";
     UsageCategory = Lists;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

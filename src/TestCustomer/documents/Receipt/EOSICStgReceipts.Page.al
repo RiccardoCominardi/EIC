@@ -8,9 +8,7 @@ page 67023 "EOS IC Stg. Receipts"
     CardPageId = "EOS IC Stg. Receipt";
     UsageCategory = Lists;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

@@ -297,6 +297,7 @@ codeunit 67007 "EOS IC Entries Management"
     procedure ShowDocumentEntries(DocumentRecord: Variant)
     var
         ICEntries: Record "EOS IC Entries";
+        ICEntriesPage: Page "EOS IC Entries";
         RecRef: RecordRef;
         SystemIdFieldRef: FieldRef;
         DocumentSystemId: Guid;
@@ -305,8 +306,29 @@ codeunit 67007 "EOS IC Entries Management"
         SystemIdFieldRef := RecRef.Field(RecRef.SystemIdNo());
         DocumentSystemId := SystemIdFieldRef.Value;
 
-        MarkDocumentEntries(ICEntries, RecRef.Number, DocumentSystemId);
-        Page.Run(Page::"EOS IC Entries", ICEntries);
+        ICEntries.Reset();
+        ICEntries.SetRange("Source Table Id", RecRef.Number);
+        ICEntries.SetRange("Source System Id", DocumentSystemId);
+        if ICEntries.FindSet() then
+            repeat
+                ICEntries.Mark(true);
+            until ICEntries.Next() = 0;
+
+        ICEntries.SetRange("Target Table Id", RecRef.Number);
+        ICEntries.SetRange("Target System Id", DocumentSystemId);
+        if ICEntries.FindSet() then
+            repeat
+                ICEntries.Mark(true);
+            until ICEntries.Next() = 0;
+
+        ICEntries.SetRange("Source Table Id");
+        ICEntries.SetRange("Target Table Id");
+        ICEntries.SetRange("Source System Id");
+        ICEntries.SetRange("Target System Id");
+        ICEntries.MarkedOnly(true);
+
+        ICEntriesPage.SetTableView(ICEntries);
+        ICEntriesPage.RunModal();
     end;
 
     local procedure UpdateDocumentEntriesCount(ICEntry: Record "EOS IC Entries")
@@ -318,21 +340,21 @@ codeunit 67007 "EOS IC Entries Management"
         SystemIdToUpdate: Guid;
     begin
         case ICEntry.Direction of
-            ICEntry.Direction::Inbound:
+            ICEntry.Direction::Outbound:
                 begin
                     if ICEntry."Status" <> ICEntry."Status"::Completed then
                         exit;
 
-                    ICDocumentTypes.Get(ICEntry."Target Document Type");
-                    SystemIdToUpdate := ICEntry."Target System Id";
+                    ICDocumentTypes.Get(ICEntry."Source Document Type");
+                    SystemIdToUpdate := ICEntry."Source System Id";
                 end;
-            ICEntry.Direction::Outbound:
+            ICEntry.Direction::Inbound:
                 begin
                     if ICEntry."Staging Status" <> ICEntry."Staging Status"::Completed then
                         exit;
 
-                    ICDocumentTypes.Get(ICEntry."Source Document Type");
-                    SystemIdToUpdate := ICEntry."Source System Id";
+                    ICDocumentTypes.Get(ICEntry."Target Document Type");
+                    SystemIdToUpdate := ICEntry."Target System Id";
                 end;
         end;
 
@@ -343,34 +365,41 @@ codeunit 67007 "EOS IC Entries Management"
         if not RecRef.GetBySystemId(SystemIdToUpdate) then
             exit;
 
-        MarkDocumentEntries(ICEntries, ICDocumentTypes."Table Id", SystemIdToUpdate);
+        MarkDocumentEntries(ICEntries, ICEntry.Direction, ICDocumentTypes."Table Id", SystemIdToUpdate);
         EntriesCountFieldRef := RecRef.Field(ICDocumentTypes."IC Entry Field No.");
         EntriesCountFieldRef.Value := ICEntries.Count();
         RecRef.Modify(false);
     end;
 
     // Entries sent from the document (source) or generating it (target), in a single marked set.
-    local procedure MarkDocumentEntries(var ICEntries: Record "EOS IC Entries"; TableId: Integer; SystemId: Guid)
+    local procedure MarkDocumentEntries(var ICEntries: Record "EOS IC Entries"; Direction: Enum "EOS IC Direction"; TableId: Integer; SystemId: Guid)
     begin
-        ICEntries.Reset();
-        ICEntries.SetRange(Direction, ICEntries.Direction::Outbound);
-        ICEntries.SetRange("Source Table Id", TableId);
-        ICEntries.SetRange("Source System Id", SystemId);
-        if ICEntries.FindSet() then
-            repeat
-                ICEntries.Mark(true);
-            until ICEntries.Next() = 0;
+        case Direction of
+            Direction::Outbound:
+                begin
+                    ICEntries.Reset();
+                    ICEntries.SetRange(Direction, ICEntries.Direction::Outbound);
+                    ICEntries.SetRange("Source Table Id", TableId);
+                    ICEntries.SetRange("Source System Id", SystemId);
+                    if ICEntries.FindSet() then
+                        repeat
+                            ICEntries.Mark(true);
+                        until ICEntries.Next() = 0;
+                end;
 
-        ICEntries.Reset();
-        ICEntries.SetRange(Direction, ICEntries.Direction::Inbound);
-        ICEntries.SetRange("Target Table Id", TableId);
-        ICEntries.SetRange("Target System Id", SystemId);
-        if ICEntries.FindSet() then
-            repeat
-                ICEntries.Mark(true);
-            until ICEntries.Next() = 0;
+            Direction::Inbound:
+                begin
+                    ICEntries.Reset();
+                    ICEntries.SetRange(Direction, ICEntries.Direction::Inbound);
+                    ICEntries.SetRange("Target Table Id", TableId);
+                    ICEntries.SetRange("Target System Id", SystemId);
+                    if ICEntries.FindSet() then
+                        repeat
+                            ICEntries.Mark(true);
+                        until ICEntries.Next() = 0;
+                end;
+        end;
 
-        ICEntries.Reset();
         ICEntries.MarkedOnly(true);
     end;
     #endregion DocumentTracking

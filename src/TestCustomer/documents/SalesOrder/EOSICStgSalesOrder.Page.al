@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67015 "EOS IC Stg. Sales Order"
 {
     Caption = 'IC Staging Sales Order (EIC)';
@@ -7,9 +9,7 @@ page 67015 "EOS IC Stg. Sales Order"
     SourceTable = "EOS IC Stg. Sales Header";
     UsageCategory = None;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

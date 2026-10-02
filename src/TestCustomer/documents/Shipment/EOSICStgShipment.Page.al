@@ -1,5 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67021 "EOS IC Stg. Shipment"
 {
     Caption = 'IC Staging Shipment (EIC)';
@@ -7,9 +9,7 @@ page 67021 "EOS IC Stg. Shipment"
     SourceTable = "EOS IC Stg. Shpt. Header";
     UsageCategory = None;
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout

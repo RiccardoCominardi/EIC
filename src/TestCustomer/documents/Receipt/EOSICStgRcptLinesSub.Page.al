@@ -1,14 +1,14 @@
 namespace EOS.Solutions.Intercompany;
 
+using System.Security.User;
+
 page 67025 "EOS IC Stg. Rcpt. Lines Sub"
 {
     Caption = 'Lines';
     PageType = ListPart;
     SourceTable = "EOS IC Stg. Rcpt. Line";
     ApplicationArea = All;
-    Editable = false;
     InsertAllowed = false;
-    ModifyAllowed = false;
     DeleteAllowed = false;
 
     layout
