@@ -21,7 +21,6 @@ page 67023 "EOS IC Stg. Receipts"
             {
                 field("Entry No."; Rec."Entry No.") { }
                 field("IC Entry No."; Rec."IC Entry No.") { }
-                field(Status; Rec.Status) { }
                 field("No."; Rec."No.") { }
                 field("Buy-from Vendor No."; Rec."Buy-from Vendor No.") { }
                 field("Posting Date"; Rec."Posting Date") { }

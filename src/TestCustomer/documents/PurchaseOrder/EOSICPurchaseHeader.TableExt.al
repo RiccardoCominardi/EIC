@@ -15,8 +15,7 @@ tableextension 67003 "EOS IC Purchase Header" extends "Purchase Header"
         field(67001; "EOS IC Entry No."; Integer)
         {
             DataClassification = CustomerContent;
-            Caption = 'IC Entry No.';
-            TableRelation = "EOS IC Entries"."Entry No.";
+            Caption = 'IC Entries';
         }
     }
 }

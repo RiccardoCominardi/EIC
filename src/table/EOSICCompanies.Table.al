@@ -3,6 +3,8 @@ table 67002 "EOS IC Companies"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Companies (EIC)';
+    DrillDownPageId = "EOS IC Companies";
+    LookupPageId = "EOS IC Companies";
 
     fields
     {
@@ -17,10 +19,10 @@ table 67002 "EOS IC Companies"
             DataClassification = CustomerContent;
             Caption = 'Description';
         }
-        field(3; "Interface Company"; Enum "EOS IC Companies")
+        field(3; "Interface"; Enum "EOS IC Companies")
         {
             DataClassification = CustomerContent;
-            Caption = 'Interface Company';
+            Caption = 'Interface';
         }
         field(4; "Connection Code"; Code[20])
         {

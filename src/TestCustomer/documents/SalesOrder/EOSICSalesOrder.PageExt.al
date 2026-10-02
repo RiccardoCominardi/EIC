@@ -17,6 +17,14 @@ pageextension 67002 "EOS IC Sales Order" extends "Sales Order"
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the number of intercompany entries linked to this document. Click to see them.';
+
+                trigger OnDrillDown()
+                var
+                    ICEntriesMgt: Codeunit "EOS IC Entries Management";
+                begin
+                    ICEntriesMgt.ShowDocumentEntries(Rec);
+                end;
             }
         }
     }
@@ -36,8 +44,8 @@ pageextension 67002 "EOS IC Sales Order" extends "Sales Order"
                 var
                     ICEntriesMgt: Codeunit "EOS IC Entries Management";
                 begin
-                    Rec.TestField("EOS IC Company");
-                    ICEntriesMgt.CreateEntry(Rec, Rec."EOS IC Company");
+                    ICEntriesMgt.CreateEntry(Rec);
+                    CurrPage.Update(false);
                 end;
             }
         }

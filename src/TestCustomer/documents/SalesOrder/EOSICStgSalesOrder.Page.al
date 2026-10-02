@@ -1,12 +1,11 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67014 "EOS IC Stg. Sales Orders"
+page 67015 "EOS IC Stg. Sales Order"
 {
-    Caption = 'IC Staging Sales Orders (EIC)';
-    PageType = List;
+    Caption = 'IC Staging Sales Order (EIC)';
+    PageType = Document;
     SourceTable = "EOS IC Stg. Sales Header";
-    CardPageId = "EOS IC Stg. Sales Order";
-    UsageCategory = Lists;
+    UsageCategory = None;
     ApplicationArea = All;
     Editable = false;
     InsertAllowed = false;
@@ -17,11 +16,12 @@ page 67014 "EOS IC Stg. Sales Orders"
     {
         area(Content)
         {
-            repeater(General)
+            group(General)
             {
+                Caption = 'General';
+
                 field("Entry No."; Rec."Entry No.") { }
                 field("IC Entry No."; Rec."IC Entry No.") { }
-                field(Status; Rec.Status) { }
                 field("No."; Rec."No.") { }
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.") { }
                 field("Order Date"; Rec."Order Date") { }
@@ -34,6 +34,11 @@ page 67014 "EOS IC Stg. Sales Orders"
                 field("Payment Terms Code"; Rec."Payment Terms Code") { }
                 field("Shipment Method Code"; Rec."Shipment Method Code") { }
                 field("Location Code"; Rec."Location Code") { }
+            }
+            part(Lines; "EOS IC Stg. Sales Lines Sub")
+            {
+                Caption = 'Lines';
+                SubPageLink = "Entry No." = field("Entry No.");
             }
         }
     }

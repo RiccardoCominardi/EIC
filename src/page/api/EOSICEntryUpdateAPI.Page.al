@@ -50,7 +50,7 @@ page 67028 "EOS IC Entry Update API"
 
     trigger OnModifyRecord(): Boolean
     begin
-        Rec."Target Document Type" := Enum::"EOS IC Flow Document Types".FromInteger(TargetDocumentTypeOrdinal);
+        Rec."Target Document Type" := Enum::"EOS IC Document Types".FromInteger(TargetDocumentTypeOrdinal);
         exit(true);
     end;
 

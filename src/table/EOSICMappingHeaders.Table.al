@@ -6,6 +6,8 @@ table 67004 "EOS IC Mapping Headers"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Mapping Headers (EIC)';
+    LookupPageId = "EOS IC Mapping List";
+    DrillDownPageId = "EOS IC Mapping List";
 
     fields
     {

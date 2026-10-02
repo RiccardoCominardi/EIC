@@ -44,7 +44,7 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Target Company';
         }
-        field(7; "Source Document Type"; Enum "EOS IC Flow Document Types")
+        field(7; "Source Document Type"; Enum "EOS IC Document Types")
         {
             DataClassification = CustomerContent;
             Caption = 'Source Document Type';
@@ -64,7 +64,7 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Source System Id';
         }
-        field(11; "Target Document Type"; Enum "EOS IC Flow Document Types")
+        field(11; "Target Document Type"; Enum "EOS IC Document Types")
         {
             DataClassification = CustomerContent;
             Caption = 'Target Document Type';
@@ -77,7 +77,7 @@ table 67006 "EOS IC Entries"
         field(13; "Target Table Id"; Integer)
         {
             DataClassification = CustomerContent;
-            Caption = 'Source Table Id';
+            Caption = 'Target Table Id';
         }
         field(14; "Target System Id"; Guid)
         {

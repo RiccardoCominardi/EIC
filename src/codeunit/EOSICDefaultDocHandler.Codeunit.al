@@ -13,4 +13,8 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
     begin
     end;
+
+    procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries")
+    begin
+    end;
 }

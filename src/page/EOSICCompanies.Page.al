@@ -20,7 +20,7 @@ page 67003 "EOS IC Companies"
                 {
                     ApplicationArea = All;
                 }
-                field("Interface Company"; Rec."Interface Company")
+                field("Interface"; Rec."Interface")
                 {
                     ApplicationArea = All;
                 }

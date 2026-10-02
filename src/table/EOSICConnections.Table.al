@@ -3,6 +3,8 @@ table 67001 "EOS IC Connections"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Connections (EIC)';
+    DrillDownPageId = "EOS IC Connections List";
+    LookupPageId = "EOS IC Connections List";
 
     fields
     {

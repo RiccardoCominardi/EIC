@@ -25,6 +25,10 @@ page 67000 "EOS IC Setup"
                 {
                     ApplicationArea = All;
                 }
+                field("Interface Company"; Rec."Interface Company")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

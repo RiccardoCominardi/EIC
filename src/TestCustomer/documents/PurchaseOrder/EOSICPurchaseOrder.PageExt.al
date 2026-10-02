@@ -17,6 +17,14 @@ pageextension 67003 "EOS IC Purchase Order" extends "Purchase Order"
             {
                 ApplicationArea = All;
                 Editable = false;
+                ToolTip = 'Specifies the number of intercompany entries linked to this document. Click to see them.';
+
+                trigger OnDrillDown()
+                var
+                    ICEntriesMgt: Codeunit "EOS IC Entries Management";
+                begin
+                    ICEntriesMgt.ShowDocumentEntries(Rec);
+                end;
             }
         }
     }

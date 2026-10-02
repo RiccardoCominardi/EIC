@@ -1,19 +1,8 @@
 namespace EOS.Solutions.Intercompany;
-permissionset 67000 "EOS Intercompany"
+permissionset 67001 "EOS IC Test Customer"
 {
     Assignable = true;
     Permissions =
-        page "EOS IC Flows API" = X,
-        page "EOS IC Entries API" = X,
-        page "EOS IC Entry Update API" = X,
-        page "EOS IC Remote Flows Lookup" = X,
-        table "EOS IC Setup" = X,
-        table "EOS IC Connections" = X,
-        table "EOS IC Companies" = X,
-        table "EOS IC Flows" = X,
-        table "EOS IC Mapping Headers" = X,
-        table "EOS IC Mapping Lines" = X,
-        table "EOS IC Entries" = X,
         table "EOS IC Stg. Sales Header" = X,
         table "EOS IC Stg. Sales Line" = X,
         table "EOS IC Stg. Purch. Header" = X,
@@ -23,13 +12,6 @@ permissionset 67000 "EOS Intercompany"
         table "EOS IC Stg. Rcpt. Header" = X,
         table "EOS IC Stg. Rcpt. Line" = X,
         table "EOS IC Stg. Item" = X,
-        tabledata "EOS IC Setup" = RIMD,
-        tabledata "EOS IC Connections" = RIMD,
-        tabledata "EOS IC Companies" = RIMD,
-        tabledata "EOS IC Flows" = RIMD,
-        tabledata "EOS IC Mapping Headers" = RIMD,
-        tabledata "EOS IC Mapping Lines" = RIMD,
-        tabledata "EOS IC Entries" = RIMD,
         tabledata "EOS IC Stg. Sales Header" = RIMD,
         tabledata "EOS IC Stg. Sales Line" = RIMD,
         tabledata "EOS IC Stg. Purch. Header" = RIMD,

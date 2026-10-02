@@ -18,7 +18,7 @@ page 67004 "EOS IC Company Card"
                 {
                     ApplicationArea = All;
                 }
-                field("Interface Company"; Rec."Interface Company")
+                field("Interface"; Rec."Interface")
                 {
                     ApplicationArea = All;
                 }

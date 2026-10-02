@@ -6,4 +6,6 @@ interface "EOS IC Document Handler"
     procedure LoadStaging(ICEntries: Record "EOS IC Entries");
 
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries");
+
+    procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries");
 }

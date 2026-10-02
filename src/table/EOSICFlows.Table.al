@@ -3,6 +3,8 @@ table 67003 "EOS IC Flows"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Flows (EIC)';
+    DrillDownPageId = "EOS IC Flows";
+    LookupPageId = "EOS IC Flows";
 
     fields
     {
@@ -34,12 +36,12 @@ table 67003 "EOS IC Flows"
             DataClassification = CustomerContent;
             Caption = 'Direction';
         }
-        field(6; "Local Document Type"; Enum "EOS IC Flow Document Types")
+        field(6; "Local Document Type"; Enum "EOS IC Document Types")
         {
             DataClassification = CustomerContent;
             Caption = 'Local Document Type';
         }
-        field(7; "External Document Type"; Enum "EOS IC Flow Document Types")
+        field(7; "External Document Type"; Enum "EOS IC Document Types")
         {
             DataClassification = CustomerContent;
             Caption = 'External Document Type';

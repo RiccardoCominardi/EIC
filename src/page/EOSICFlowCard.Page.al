@@ -27,9 +27,9 @@ page 67006 "EOS IC Flow Card"
                     ApplicationArea = All;
                 }
             }
-            group(Setting)
+            group(Settings)
             {
-                Caption = 'Setting';
+                Caption = 'Settings';
 
                 field("Flow Pair Id"; Rec."Flow Pair Id")
                 {
@@ -40,13 +40,35 @@ page 67006 "EOS IC Flow Card"
                 {
                     ApplicationArea = All;
                 }
-                field("Local Document Type"; Rec."Local Document Type")
+                group(Inbound)
                 {
-                    ApplicationArea = All;
+                    ShowCaption = false;
+                    Visible = Rec.Direction = Rec.Direction::Inbound;
+                    field("Inbound External Document Type"; Rec."External Document Type")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Document to receive';
+                    }
+                    field("Inbound Local Document Type"; Rec."Local Document Type")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Document to create';
+                    }
                 }
-                field("External Document Type"; Rec."External Document Type")
+                group(Outbound)
                 {
-                    ApplicationArea = All;
+                    ShowCaption = false;
+                    Visible = Rec.Direction = Rec.Direction::Outbound;
+                    field("Outbound Local Document Type"; Rec."Local Document Type")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Document to send';
+                    }
+                    field("Outbound External Document Type"; Rec."External Document Type")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Document to create';
+                    }
                 }
                 field("Auto Send"; Rec."Auto Send")
                 {

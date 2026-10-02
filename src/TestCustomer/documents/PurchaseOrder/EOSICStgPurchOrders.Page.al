@@ -1,11 +1,12 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67018 "EOS IC Stg. Purch. Order"
+page 67017 "EOS IC Stg. Purch. Orders"
 {
-    Caption = 'IC Staging Purchase Order (EIC)';
-    PageType = Document;
+    Caption = 'IC Staging Purchase Orders (EIC)';
+    PageType = List;
     SourceTable = "EOS IC Stg. Purch. Header";
-    UsageCategory = None;
+    CardPageId = "EOS IC Stg. Purch. Order";
+    UsageCategory = Lists;
     ApplicationArea = All;
     Editable = false;
     InsertAllowed = false;
@@ -16,13 +17,10 @@ page 67018 "EOS IC Stg. Purch. Order"
     {
         area(Content)
         {
-            group(General)
+            repeater(General)
             {
-                Caption = 'General';
-
                 field("Entry No."; Rec."Entry No.") { }
                 field("IC Entry No."; Rec."IC Entry No.") { }
-                field(Status; Rec.Status) { }
                 field("No."; Rec."No.") { }
                 field("Buy-from Vendor No."; Rec."Buy-from Vendor No.") { }
                 field("Order Date"; Rec."Order Date") { }
@@ -35,11 +33,6 @@ page 67018 "EOS IC Stg. Purch. Order"
                 field("Payment Terms Code"; Rec."Payment Terms Code") { }
                 field("Shipment Method Code"; Rec."Shipment Method Code") { }
                 field("Location Code"; Rec."Location Code") { }
-            }
-            part(Lines; "EOS IC Stg. Purch. Lines Sub")
-            {
-                Caption = 'Lines';
-                SubPageLink = "Entry No." = field("Entry No.");
             }
         }
     }

@@ -3,7 +3,8 @@ table 67000 "EOS IC Setup"
 {
     DataClassification = CustomerContent;
     Caption = 'IC Setup (ECI)';
-
+    DrillDownPageId = "EOS IC Setup";
+    LookupPageId = "EOS IC Setup";
     fields
     {
         field(1; "Code"; Code[1])

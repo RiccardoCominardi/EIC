@@ -22,7 +22,6 @@ page 67021 "EOS IC Stg. Shipment"
 
                 field("Entry No."; Rec."Entry No.") { }
                 field("IC Entry No."; Rec."IC Entry No.") { }
-                field(Status; Rec.Status) { }
                 field("No."; Rec."No.") { }
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.") { }
                 field("Posting Date"; Rec."Posting Date") { }

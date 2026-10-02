@@ -28,14 +28,6 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
-                field("Local Document Type"; Rec."Local Document Type")
-                {
-                    ApplicationArea = All;
-                }
-                field("External Document Type"; Rec."External Document Type")
-                {
-                    ApplicationArea = All;
-                }
                 field("Flow Pair Id"; Rec."Flow Pair Id")
                 {
                     ApplicationArea = All;

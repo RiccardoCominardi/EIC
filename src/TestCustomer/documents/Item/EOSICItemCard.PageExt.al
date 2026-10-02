@@ -17,18 +17,10 @@ pageextension 67004 "EOS IC Item Card" extends "Item Card"
 
                 trigger OnAction()
                 var
-                    ICCompanies: Record "EOS IC Companies";
                     ICEntriesMgt: Codeunit "EOS IC Entries Management";
-                    ICCompaniesPage: Page "EOS IC Companies";
                 begin
-                    ICCompanies.SetRange(Enabled, true);
-                    ICCompaniesPage.SetTableView(ICCompanies);
-                    ICCompaniesPage.LookupMode(true);
-                    if ICCompaniesPage.RunModal() <> Action::LookupOK then
-                        exit;
-
-                    ICCompaniesPage.GetRecord(ICCompanies);
-                    ICEntriesMgt.CreateEntry(Rec, ICCompanies.Code);
+                    ICEntriesMgt.CreateEntry(Rec);
+                    CurrPage.Update(false);
                 end;
             }
         }

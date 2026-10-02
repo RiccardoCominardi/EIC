@@ -90,8 +90,8 @@ page 67013 "EOS IC Entries API"
         Rec.Direction := Rec.Direction::Inbound;
         Rec."Source Company" := ICFlows."Company Code";
         Rec."Target Company" := ICSetup."Company Code";
-        Rec."Source Document Type" := Enum::"EOS IC Flow Document Types".FromInteger(SourceDocumentTypeOrdinal);
-        Rec."Target Document Type" := Enum::"EOS IC Flow Document Types".FromInteger(TargetDocumentTypeOrdinal);
+        Rec."Source Document Type" := Enum::"EOS IC Document Types".FromInteger(SourceDocumentTypeOrdinal);
+        Rec."Target Document Type" := Enum::"EOS IC Document Types".FromInteger(TargetDocumentTypeOrdinal);
         Rec.Status := Rec.Status::Pending;
         Rec.SetBlobFields(Rec.FieldNo("Received Payload"), Base64Convert.FromBase64(RequestPayload), false);
         Rec.Insert(true);
