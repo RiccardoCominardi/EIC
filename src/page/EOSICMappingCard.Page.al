@@ -22,11 +22,11 @@ page 67010 "EOS IC Mapping Card"
                 {
                     ApplicationArea = All;
                 }
-                field("Source Table ID"; Rec."Source Table ID")
+                field("Header Table ID"; Rec."Header Table ID")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Table ID"; Rec."Target Table ID")
+                field("Lines Table ID"; Rec."Lines Table ID")
                 {
                     ApplicationArea = All;
                 }

@@ -14,11 +14,15 @@ page 67011 "EOS IC Mapping Lines Subpage"
         {
             repeater(Control1)
             {
-                field("Source Field No."; Rec."Source Field No.")
+                field(Section; Rec.Section)
                 {
                     ApplicationArea = All;
                 }
-                field("Source Field Name"; Rec."Source Field Name")
+                field("JSON Tag"; Rec."JSON Tag")
+                {
+                    ApplicationArea = All;
+                }
+                field("Target Table ID"; Rec."Target Table ID")
                 {
                     ApplicationArea = All;
                 }
@@ -30,11 +34,11 @@ page 67011 "EOS IC Mapping Lines Subpage"
                 {
                     ApplicationArea = All;
                 }
-                field("Source Value"; Rec."Source Value")
+                field("Mapping Type"; Rec."Mapping Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Mapping Type"; Rec."Mapping Type")
+                field("Source Value"; Rec."Source Value")
                 {
                     ApplicationArea = All;
                 }

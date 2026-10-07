@@ -36,34 +36,34 @@ table 67004 "EOS IC Mapping Headers"
             DataClassification = CustomerContent;
             Caption = 'Description';
         }
-        field(5; "Source Table ID"; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Source Table ID';
-            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
-            BlankZero = true;
-            trigger OnValidate()
-            begin
-                if Rec."Source Table ID" <> xRec."Source Table ID" then
-                    CheckNoLines();
-            end;
-        }
-        field(6; "Target Table ID"; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Table ID';
-            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
-            BlankZero = true;
-            trigger OnValidate()
-            begin
-                if Rec."Target Table ID" <> xRec."Target Table ID" then
-                    CheckNoLines();
-            end;
-        }
         field(7; Enabled; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Enabled';
+        }
+        field(8; "Header Table ID"; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Header Table ID';
+            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
+            BlankZero = true;
+            trigger OnValidate()
+            begin
+                if Rec."Header Table ID" <> xRec."Header Table ID" then
+                    CheckNoLines();
+            end;
+        }
+        field(9; "Lines Table ID"; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Lines Table ID';
+            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
+            BlankZero = true;
+            trigger OnValidate()
+            begin
+                if Rec."Lines Table ID" <> xRec."Lines Table ID" then
+                    CheckNoLines();
+            end;
         }
     }
 
@@ -86,7 +86,7 @@ table 67004 "EOS IC Mapping Headers"
     local procedure CheckNoLines()
     var
         ICMappingLines: Record "EOS IC Mapping Lines";
-        LinesExistErr: Label 'You cannot change the table IDs while mapping lines exist.';
+        LinesExistErr: Label 'You cannot change the target tables while mapping lines exist.';
     begin
         ICMappingLines.SetRange("Company Code", "Company Code");
         ICMappingLines.SetRange("Flow Code", "Flow Code");

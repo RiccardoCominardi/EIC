@@ -30,6 +30,18 @@ page 67000 "EOS IC Setup"
                     ApplicationArea = All;
                 }
             }
+            group(DocumentFields)
+            {
+                Caption = 'Document Fields';
+                field("Company Code Field No."; Rec."Company Code Field No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("IC Entry Field No."; Rec."IC Entry Field No.")
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
     }
 

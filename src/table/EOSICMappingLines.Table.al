@@ -32,44 +32,30 @@ table 67005 "EOS IC Mapping Lines"
             DataClassification = CustomerContent;
             Caption = 'Line No.';
         }
-        field(5; "Source Table ID"; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Source Table ID';
-            Editable = false;
-        }
         field(6; "Target Table ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Target Table ID';
             Editable = false;
         }
-        field(7; "Source Field No."; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Source Field No.';
-            TableRelation = Field."No." where(TableNo = field("Source Table ID"));
-            BlankZero = true;
-        }
-        field(8; "Source Field Name"; Text[30])
-        {
-            Caption = 'Source Field Name';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Field.FieldName where(TableNo = field("Source Table ID"), "No." = field("Source Field No.")));
-            Editable = false;
-        }
         field(9; "Target Field No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Target Field No.';
-            TableRelation = Field."No." where(TableNo = field("Target Table ID"));
             BlankZero = true;
+            trigger OnLookup()
+            var
+                NewFieldID: Integer;
+            begin
+                if LookupFieldsID(NewFieldID, Rec."Target Table ID", Rec."Target Field No.") then
+                    Rec.Validate("Target Field No.", NewFieldID);
+            end;
         }
-        field(10; "Target Field Name"; Text[30])
+        field(10; "Target Field Name"; Text[80])
         {
             Caption = 'Target Field Name';
             FieldClass = FlowField;
-            CalcFormula = lookup(Field.FieldName where(TableNo = field("Target Table ID"), "No." = field("Target Field No.")));
+            CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Target Table ID"), "No." = field("Target Field No.")));
             Editable = false;
         }
         field(11; "Source Value"; Text[2048])
@@ -86,6 +72,23 @@ table 67005 "EOS IC Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Target Value';
+        }
+        field(14; Section; Enum "EOS IC Mapping Section")
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Section';
+            trigger OnValidate()
+            begin
+                if Rec.Section <> xRec.Section then begin
+                    InitFromHeader();
+                    Rec."Target Field No." := 0;
+                end;
+            end;
+        }
+        field(15; "JSON Tag"; Text[100])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'JSON Tag';
         }
     }
 
@@ -104,7 +107,35 @@ table 67005 "EOS IC Mapping Lines"
         ICMappingHeaders: Record "EOS IC Mapping Headers";
     begin
         ICMappingHeaders.Get("Company Code", "Flow Code", "Mapping Code");
-        "Source Table ID" := ICMappingHeaders."Source Table ID";
-        "Target Table ID" := ICMappingHeaders."Target Table ID";
+        case Section of
+            Section::Header:
+                "Target Table ID" := ICMappingHeaders."Header Table ID";
+            Section::Lines:
+                begin
+                    ICMappingHeaders.TestField("Lines Table ID");
+                    "Target Table ID" := ICMappingHeaders."Lines Table ID";
+                end;
+        end;
+    end;
+
+    procedure LookupFieldsID(var NewFieldNo: Integer; TableNo: Integer; FieldNo: Integer): Boolean
+    var
+        Field: Record Field;
+        FieldsLookup: Page "Fields Lookup";
+    begin
+        if Field.Get(TableNo, FieldNo) then;
+
+        Field.FilterGroup(2);
+        Field.SetRange(TableNo, TableNo);
+        Field.FilterGroup(0);
+        FieldsLookup.SetRecord(Field);
+        FieldsLookup.SetTableView(Field);
+        FieldsLookup.LookupMode := true;
+        if FieldsLookup.RunModal() = Action::LookupOK then begin
+            FieldsLookup.GetRecord(Field);
+            NewFieldNo := Field."No.";
+            exit(true);
+        end;
+        exit(false);
     end;
 }

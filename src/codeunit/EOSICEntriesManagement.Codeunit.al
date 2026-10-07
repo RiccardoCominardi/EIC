@@ -199,14 +199,16 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure GetCompanyCode(RecRef: RecordRef) CompanyCode: Code[20]
     var
-        ICDocumentTypes: Record "EOS IC Document Types";
+        ICSetup: Record "EOS IC Setup";
         CompanyCodeFieldRef: FieldRef;
     begin
-        if GetDocumentTypeByTableId(RecRef.Number, ICDocumentTypes) then
-            if ICDocumentTypes."Company Code Field No." <> 0 then begin
-                CompanyCodeFieldRef := RecRef.Field(ICDocumentTypes."Company Code Field No.");
+        ICSetup.Get();
+        if RecRef.FieldExist(ICSetup."Company Code Field No.") then begin
+            CompanyCodeFieldRef := RecRef.Field(ICSetup."Company Code Field No.");
+            // The same field number can hold another type on tables that do not carry the company code.
+            if CompanyCodeFieldRef.Type in [FieldType::Code, FieldType::Text] then
                 CompanyCode := CopyStr(Format(CompanyCodeFieldRef.Value), 1, MaxStrLen(CompanyCode));
-            end;
+        end;
 
         if CompanyCode = '' then
             CompanyCode := LookupCompanyCode();
@@ -229,12 +231,6 @@ codeunit 67007 "EOS IC Entries Management"
 
         ICCompaniesPage.GetRecord(ICCompanies);
         exit(ICCompanies.Code);
-    end;
-
-    local procedure GetDocumentTypeByTableId(TableId: Integer; var ICDocumentTypes: Record "EOS IC Document Types"): Boolean
-    begin
-        ICDocumentTypes.SetRange("Table Id", TableId);
-        exit(ICDocumentTypes.FindFirst());
     end;
 
     local procedure GetSourceRecordRef(SourceRecord: Variant) RecRef: RecordRef
@@ -333,10 +329,11 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure UpdateDocumentEntriesCount(ICEntry: Record "EOS IC Entries")
     var
-        ICDocumentTypes: Record "EOS IC Document Types";
+        ICSetup: Record "EOS IC Setup";
         ICEntries: Record "EOS IC Entries";
         RecRef: RecordRef;
         EntriesCountFieldRef: FieldRef;
+        TableIdToUpdate: Integer;
         SystemIdToUpdate: Guid;
     begin
         case ICEntry.Direction of
@@ -345,7 +342,7 @@ codeunit 67007 "EOS IC Entries Management"
                     if ICEntry."Status" <> ICEntry."Status"::Completed then
                         exit;
 
-                    ICDocumentTypes.Get(ICEntry."Source Document Type");
+                    TableIdToUpdate := ICEntry."Source Table Id";
                     SystemIdToUpdate := ICEntry."Source System Id";
                 end;
             ICEntry.Direction::Inbound:
@@ -353,20 +350,23 @@ codeunit 67007 "EOS IC Entries Management"
                     if ICEntry."Staging Status" <> ICEntry."Staging Status"::Completed then
                         exit;
 
-                    ICDocumentTypes.Get(ICEntry."Target Document Type");
+                    TableIdToUpdate := ICEntry."Target Table Id";
                     SystemIdToUpdate := ICEntry."Target System Id";
                 end;
         end;
 
-        if ICDocumentTypes."IC Entry Field No." = 0 then
+        ICSetup.Get();
+        if (ICSetup."IC Entry Field No." = 0) or (TableIdToUpdate = 0) then
             exit;
 
-        RecRef.Open(ICDocumentTypes."Table Id");
+        RecRef.Open(TableIdToUpdate);
+        if not RecRef.FieldExist(ICSetup."IC Entry Field No.") then
+            exit;
         if not RecRef.GetBySystemId(SystemIdToUpdate) then
             exit;
 
-        MarkDocumentEntries(ICEntries, ICEntry.Direction, ICDocumentTypes."Table Id", SystemIdToUpdate);
-        EntriesCountFieldRef := RecRef.Field(ICDocumentTypes."IC Entry Field No.");
+        MarkDocumentEntries(ICEntries, ICEntry.Direction, TableIdToUpdate, SystemIdToUpdate);
+        EntriesCountFieldRef := RecRef.Field(ICSetup."IC Entry Field No.");
         EntriesCountFieldRef.Value := ICEntries.Count();
         RecRef.Modify(false);
     end;

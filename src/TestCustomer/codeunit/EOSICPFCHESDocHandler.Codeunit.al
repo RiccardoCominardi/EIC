@@ -3,16 +3,12 @@ namespace EOS_Solutions.EOS_Intercompany;
 using EOS.Solutions.Intercompany;
 using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
-using System.Security.User;
 using Microsoft.Purchases.History;
 using Microsoft.Sales.Document;
 using Microsoft.Sales.History;
 
 codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler"
 {
-    var
-        ICFunctions: Codeunit "EOS IC Functions";
-
     procedure BuildPayload(SourceRecord: Variant; ICFlows: Record "EOS IC Flows"): JsonObject;
     var
         RecRef: RecordRef;
@@ -40,42 +36,13 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
 
     procedure LoadStaging(ICEntries: Record "EOS IC Entries")
     var
+        ICMappingMgt: Codeunit "EOS IC Mapping Mgt.";
         HeaderObject: JsonObject;
         LinesArray: JsonArray;
-        UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the staging process.', Comment = '%1 = document type';
     begin
         ICEntries.TestField(Direction, ICEntries.Direction::Inbound);
         ReadPayload(ICEntries, HeaderObject, LinesArray);
-
-        case ICEntries."Target Document Type" of
-            ICEntries."Target Document Type"::"ES Sales Order":
-                case ICEntries."Source Document Type" of
-                    ICEntries."Source Document Type"::"ES Purchase Order":
-                        PopulateSalesOrderFromPurchaseOrder(ICEntries."Entry No.", HeaderObject, LinesArray);
-                end;
-            ICEntries."Target Document Type"::"ES Purchase Order":
-                case ICEntries."Source Document Type" of
-                    ICEntries."Source Document Type"::"ES Sales Order":
-                        PopulatePurchaseOrderFromSalesOrder(ICEntries."Entry No.", HeaderObject, LinesArray);
-                end;
-            ICEntries."Target Document Type"::"ES Shipment":
-                case ICEntries."Source Document Type" of
-                    ICEntries."Source Document Type"::"ES Receipt":
-                        PopulateShipmentFromReceipt(ICEntries."Entry No.", HeaderObject, LinesArray);
-                end;
-            ICEntries."Target Document Type"::"ES Receipt":
-                case ICEntries."Source Document Type" of
-                    ICEntries."Source Document Type"::"ES Shipment":
-                        PopulateReceiptFromShipment(ICEntries."Entry No.", HeaderObject, LinesArray);
-                end;
-            ICEntries."Target Document Type"::"ES Item":
-                case ICEntries."Source Document Type" of
-                    ICEntries."Source Document Type"::"ES Item":
-                        PopulateItem(ICEntries."Entry No.", HeaderObject);
-                end;
-            else
-                Error(UnsupportedDocumentTypeErr, ICEntries."Target Document Type");
-        end;
+        ICMappingMgt.PopulateFromPayload(ICEntries, HeaderObject, LinesArray);
     end;
 
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
@@ -415,168 +382,6 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
             LinesArray := JsonToken.AsArray();
     end;
 
-    local procedure PopulateSalesOrderFromPurchaseOrder(ICEntryNo: Integer; HeaderObject: JsonObject; LinesArray: JsonArray)
-    var
-        StgSalesHeader: Record "EOS IC Stg. Sales Header";
-        StgSalesLine: Record "EOS IC Stg. Sales Line";
-        LineToken: JsonToken;
-        LineObject: JsonObject;
-    begin
-        StgSalesHeader.Init();
-        StgSalesHeader."Entry No." := StgSalesHeader.GetNextEntryNo();
-        StgSalesHeader."IC Entry No." := ICEntryNo;
-        StgSalesHeader."External Document No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgSalesHeader."External Document No."));
-        StgSalesHeader."Order Date" := ICFunctions.GetDate(HeaderObject, 'orderDate');
-        StgSalesHeader."Posting Date" := ICFunctions.GetDate(HeaderObject, 'postingDate');
-        StgSalesHeader."Document Date" := ICFunctions.GetDate(HeaderObject, 'documentDate');
-        StgSalesHeader."Requested Delivery Date" := ICFunctions.GetDate(HeaderObject, 'requestedReceiptDate');
-        StgSalesHeader."Currency Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'currencyCode'), 1, MaxStrLen(StgSalesHeader."Currency Code"));
-        StgSalesHeader."Your Reference" := CopyStr(ICFunctions.GetText(HeaderObject, 'yourReference'), 1, MaxStrLen(StgSalesHeader."Your Reference"));
-        StgSalesHeader."Payment Terms Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'paymentTermsCode'), 1, MaxStrLen(StgSalesHeader."Payment Terms Code"));
-        StgSalesHeader."Shipment Method Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'shipmentMethodCode'), 1, MaxStrLen(StgSalesHeader."Shipment Method Code"));
-        StgSalesHeader.Insert(true);
-
-        foreach LineToken in LinesArray do begin
-            LineObject := LineToken.AsObject();
-            StgSalesLine.Init();
-            StgSalesLine."Entry No." := StgSalesHeader."Entry No.";
-            StgSalesLine."Line No." := ICFunctions.GetInteger(LineObject, 'lineNo');
-            StgSalesLine.Type := CopyStr(ICFunctions.GetText(LineObject, 'type'), 1, MaxStrLen(StgSalesLine.Type));
-            StgSalesLine."No." := CopyStr(ICFunctions.GetText(LineObject, 'no'), 1, MaxStrLen(StgSalesLine."No."));
-            StgSalesLine.Description := CopyStr(ICFunctions.GetText(LineObject, 'description'), 1, MaxStrLen(StgSalesLine.Description));
-            StgSalesLine.Quantity := ICFunctions.GetDecimal(LineObject, 'quantity');
-            StgSalesLine."Unit of Measure Code" := CopyStr(ICFunctions.GetText(LineObject, 'unitOfMeasureCode'), 1, MaxStrLen(StgSalesLine."Unit of Measure Code"));
-            StgSalesLine."Unit Price" := ICFunctions.GetDecimal(LineObject, 'directUnitCost');
-            StgSalesLine."Line Discount %" := ICFunctions.GetDecimal(LineObject, 'lineDiscountPercent');
-            StgSalesLine."Line Amount" := ICFunctions.GetDecimal(LineObject, 'lineAmount');
-            StgSalesLine."Requested Delivery Date" := ICFunctions.GetDate(LineObject, 'requestedReceiptDate');
-            StgSalesLine."Variant Code" := CopyStr(ICFunctions.GetText(LineObject, 'variantCode'), 1, MaxStrLen(StgSalesLine."Variant Code"));
-            StgSalesLine.Insert(true);
-        end;
-    end;
-
-    local procedure PopulatePurchaseOrderFromSalesOrder(ICEntryNo: Integer; HeaderObject: JsonObject; LinesArray: JsonArray)
-    var
-        StgPurchHeader: Record "EOS IC Stg. Purch. Header";
-        StgPurchLine: Record "EOS IC Stg. Purch. Line";
-        LineToken: JsonToken;
-        LineObject: JsonObject;
-    begin
-        StgPurchHeader.Init();
-        StgPurchHeader."Entry No." := StgPurchHeader.GetNextEntryNo();
-        StgPurchHeader."IC Entry No." := ICEntryNo;
-        StgPurchHeader."No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgPurchHeader."No."));
-        StgPurchHeader."Order Date" := ICFunctions.GetDate(HeaderObject, 'orderDate');
-        StgPurchHeader."Posting Date" := ICFunctions.GetDate(HeaderObject, 'postingDate');
-        StgPurchHeader."Document Date" := ICFunctions.GetDate(HeaderObject, 'documentDate');
-        StgPurchHeader."Requested Receipt Date" := ICFunctions.GetDate(HeaderObject, 'requestedDeliveryDate');
-        StgPurchHeader."Currency Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'currencyCode'), 1, MaxStrLen(StgPurchHeader."Currency Code"));
-        StgPurchHeader."Your Reference" := CopyStr(ICFunctions.GetText(HeaderObject, 'yourReference'), 1, MaxStrLen(StgPurchHeader."Your Reference"));
-        StgPurchHeader."Payment Terms Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'paymentTermsCode'), 1, MaxStrLen(StgPurchHeader."Payment Terms Code"));
-        StgPurchHeader."Shipment Method Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'shipmentMethodCode'), 1, MaxStrLen(StgPurchHeader."Shipment Method Code"));
-        StgPurchHeader."Buy-from Vendor No." := CopyStr(ICFunctions.GetText(HeaderObject, 'sellToCustomerNo'), 1, MaxStrLen(StgPurchHeader."Buy-from Vendor No."));
-        StgPurchHeader.Insert(true);
-
-        foreach LineToken in LinesArray do begin
-            LineObject := LineToken.AsObject();
-            StgPurchLine.Init();
-            StgPurchLine."Entry No." := StgPurchHeader."Entry No.";
-            StgPurchLine."Line No." := ICFunctions.GetInteger(LineObject, 'lineNo');
-            StgPurchLine.Type := CopyStr(ICFunctions.GetText(LineObject, 'type'), 1, MaxStrLen(StgPurchLine.Type));
-            StgPurchLine."No." := CopyStr(ICFunctions.GetText(LineObject, 'no'), 1, MaxStrLen(StgPurchLine."No."));
-            StgPurchLine.Description := CopyStr(ICFunctions.GetText(LineObject, 'description'), 1, MaxStrLen(StgPurchLine.Description));
-            StgPurchLine.Quantity := ICFunctions.GetDecimal(LineObject, 'quantity');
-            StgPurchLine."Unit of Measure Code" := CopyStr(ICFunctions.GetText(LineObject, 'unitOfMeasureCode'), 1, MaxStrLen(StgPurchLine."Unit of Measure Code"));
-            StgPurchLine."Direct Unit Cost" := ICFunctions.GetDecimal(LineObject, 'unitPrice');
-            StgPurchLine."Line Discount %" := ICFunctions.GetDecimal(LineObject, 'lineDiscountPercent');
-            StgPurchLine."Line Amount" := ICFunctions.GetDecimal(LineObject, 'lineAmount');
-            StgPurchLine."Requested Receipt Date" := ICFunctions.GetDate(LineObject, 'requestedDeliveryDate');
-            StgPurchLine."Variant Code" := CopyStr(ICFunctions.GetText(LineObject, 'variantCode'), 1, MaxStrLen(StgPurchLine."Variant Code"));
-            StgPurchLine.Insert(true);
-        end;
-    end;
-
-    local procedure PopulateShipmentFromReceipt(ICEntryNo: Integer; HeaderObject: JsonObject; LinesArray: JsonArray)
-    var
-        StgShptHeader: Record "EOS IC Stg. Shpt. Header";
-        StgShptLine: Record "EOS IC Stg. Shpt. Line";
-        LineToken: JsonToken;
-        LineObject: JsonObject;
-    begin
-        StgShptHeader.Init();
-        StgShptHeader."Entry No." := StgShptHeader.GetNextEntryNo();
-        StgShptHeader."IC Entry No." := ICEntryNo;
-        StgShptHeader."External Document No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgShptHeader."External Document No."));
-        StgShptHeader."Posting Date" := ICFunctions.GetDate(HeaderObject, 'postingDate');
-        StgShptHeader.Insert(true);
-
-        foreach LineToken in LinesArray do begin
-            LineObject := LineToken.AsObject();
-            StgShptLine.Init();
-            StgShptLine."Entry No." := StgShptHeader."Entry No.";
-            StgShptLine."Line No." := ICFunctions.GetInteger(LineObject, 'lineNo');
-            StgShptLine.Type := CopyStr(ICFunctions.GetText(LineObject, 'type'), 1, MaxStrLen(StgShptLine.Type));
-            StgShptLine."No." := CopyStr(ICFunctions.GetText(LineObject, 'no'), 1, MaxStrLen(StgShptLine."No."));
-            StgShptLine.Description := CopyStr(ICFunctions.GetText(LineObject, 'description'), 1, MaxStrLen(StgShptLine.Description));
-            StgShptLine.Quantity := ICFunctions.GetDecimal(LineObject, 'quantity');
-            StgShptLine."Unit of Measure Code" := CopyStr(ICFunctions.GetText(LineObject, 'unitOfMeasureCode'), 1, MaxStrLen(StgShptLine."Unit of Measure Code"));
-            StgShptLine."Variant Code" := CopyStr(ICFunctions.GetText(LineObject, 'variantCode'), 1, MaxStrLen(StgShptLine."Variant Code"));
-            StgShptLine.Insert(true);
-        end;
-    end;
-
-    local procedure PopulateReceiptFromShipment(ICEntryNo: Integer; HeaderObject: JsonObject; LinesArray: JsonArray)
-    var
-        StgRcptHeader: Record "EOS IC Stg. Rcpt. Header";
-        StgRcptLine: Record "EOS IC Stg. Rcpt. Line";
-        LineToken: JsonToken;
-        LineObject: JsonObject;
-    begin
-        StgRcptHeader.Init();
-        StgRcptHeader."Entry No." := StgRcptHeader.GetNextEntryNo();
-        StgRcptHeader."IC Entry No." := ICEntryNo;
-        StgRcptHeader."Vendor Shipment No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgRcptHeader."Vendor Shipment No."));
-        StgRcptHeader."Posting Date" := ICFunctions.GetDate(HeaderObject, 'postingDate');
-        StgRcptHeader.Insert(true);
-
-        foreach LineToken in LinesArray do begin
-            LineObject := LineToken.AsObject();
-            StgRcptLine.Init();
-            StgRcptLine."Entry No." := StgRcptHeader."Entry No.";
-            StgRcptLine."Line No." := ICFunctions.GetInteger(LineObject, 'lineNo');
-            StgRcptLine.Type := CopyStr(ICFunctions.GetText(LineObject, 'type'), 1, MaxStrLen(StgRcptLine.Type));
-            StgRcptLine."No." := CopyStr(ICFunctions.GetText(LineObject, 'no'), 1, MaxStrLen(StgRcptLine."No."));
-            StgRcptLine.Description := CopyStr(ICFunctions.GetText(LineObject, 'description'), 1, MaxStrLen(StgRcptLine.Description));
-            StgRcptLine.Quantity := ICFunctions.GetDecimal(LineObject, 'quantity');
-            StgRcptLine."Unit of Measure Code" := CopyStr(ICFunctions.GetText(LineObject, 'unitOfMeasureCode'), 1, MaxStrLen(StgRcptLine."Unit of Measure Code"));
-            StgRcptLine."Variant Code" := CopyStr(ICFunctions.GetText(LineObject, 'variantCode'), 1, MaxStrLen(StgRcptLine."Variant Code"));
-            StgRcptLine.Insert(true);
-        end;
-    end;
-
-    local procedure PopulateItem(ICEntryNo: Integer; HeaderObject: JsonObject)
-    var
-        StgItem: Record "EOS IC Stg. Item";
-    begin
-        StgItem.Init();
-        StgItem."Entry No." := StgItem.GetNextEntryNo();
-        StgItem."IC Entry No." := ICEntryNo;
-        StgItem."No." := CopyStr(ICFunctions.GetText(HeaderObject, 'no'), 1, MaxStrLen(StgItem."No."));
-        StgItem.Description := CopyStr(ICFunctions.GetText(HeaderObject, 'description'), 1, MaxStrLen(StgItem.Description));
-        StgItem."Description 2" := CopyStr(ICFunctions.GetText(HeaderObject, 'description2'), 1, MaxStrLen(StgItem."Description 2"));
-        StgItem.Type := CopyStr(ICFunctions.GetText(HeaderObject, 'type'), 1, MaxStrLen(StgItem.Type));
-        StgItem."Base Unit of Measure" := CopyStr(ICFunctions.GetText(HeaderObject, 'baseUnitOfMeasure'), 1, MaxStrLen(StgItem."Base Unit of Measure"));
-        StgItem."Item Category Code" := CopyStr(ICFunctions.GetText(HeaderObject, 'itemCategoryCode'), 1, MaxStrLen(StgItem."Item Category Code"));
-        StgItem."Gen. Prod. Posting Group" := CopyStr(ICFunctions.GetText(HeaderObject, 'genProdPostingGroup'), 1, MaxStrLen(StgItem."Gen. Prod. Posting Group"));
-        StgItem."Inventory Posting Group" := CopyStr(ICFunctions.GetText(HeaderObject, 'inventoryPostingGroup'), 1, MaxStrLen(StgItem."Inventory Posting Group"));
-        StgItem."VAT Prod. Posting Group" := CopyStr(ICFunctions.GetText(HeaderObject, 'vatProdPostingGroup'), 1, MaxStrLen(StgItem."VAT Prod. Posting Group"));
-        StgItem."Unit Price" := ICFunctions.GetDecimal(HeaderObject, 'unitPrice');
-        StgItem."Unit Cost" := ICFunctions.GetDecimal(HeaderObject, 'unitCost');
-        StgItem.Blocked := ICFunctions.GetBoolean(HeaderObject, 'blocked');
-        StgItem.GTIN := CopyStr(ICFunctions.GetText(HeaderObject, 'gtin'), 1, MaxStrLen(StgItem.GTIN));
-        StgItem.Insert(true);
-    end;
-
     #endregion LoadStaging
 
     #region ProcessStaging
@@ -832,25 +637,4 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
     end;
 
     #endregion ProcessStaging
-
-    #region GeneralFunctions
-
-    [EventSubscriber(ObjectType::Table, Database::"EOS IC Document Types", OnUpdateTableId, '', false, false)]
-    local procedure EOSICFlows_OnUpdateTableId(var Rec: Record "EOS IC Document Types")
-    begin
-        case Rec."Document Type" of
-            Rec."Document Type"::"ES Sales Order":
-                Rec."Table Id" := Database::"Sales Header";
-            Rec."Document Type"::"ES Purchase Order":
-                Rec."Table Id" := Database::"Purchase Header";
-            Rec."Document Type"::"ES Receipt":
-                Rec."Table Id" := Database::"Purch. Rcpt. Header";
-            Rec."Document Type"::"ES Shipment":
-                Rec."Table Id" := Database::"Sales Shipment Header";
-            Rec."Document Type"::"ES Item":
-                Rec."Table Id" := Database::Item;
-        end;
-    end;
-
-    #endregion GeneralFunctions
 }

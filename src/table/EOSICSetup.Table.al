@@ -27,6 +27,18 @@ table 67000 "EOS IC Setup"
             DataClassification = CustomerContent;
             Caption = 'Interface Company';
         }
+        field(5; "Company Code Field No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Company Code Field No.';
+            BlankZero = true;
+        }
+        field(6; "IC Entry Field No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'IC Entry Field No.';
+            BlankZero = true;
+        }
     }
 
     keys
