@@ -1,4 +1,7 @@
 namespace EOS.Solutions.Intercompany;
+
+// The legacy mapping tables stay in the permission set until their data has been migrated.
+#pragma warning disable AL0432
 permissionset 67000 "EOS IC Intercompany"
 {
     Assignable = true;
@@ -13,6 +16,7 @@ permissionset 67000 "EOS IC Intercompany"
         table "EOS IC Flows" = X,
         table "EOS IC Mapping Headers" = X,
         table "EOS IC Mapping Lines" = X,
+        table "EOS IC Mapping Json Node" = X,
         table "EOS IC Entries" = X,
         tabledata "EOS IC Setup" = RIMD,
         tabledata "EOS IC Connections" = RIMD,
@@ -20,5 +24,6 @@ permissionset 67000 "EOS IC Intercompany"
         tabledata "EOS IC Flows" = RIMD,
         tabledata "EOS IC Mapping Headers" = RIMD,
         tabledata "EOS IC Mapping Lines" = RIMD,
+        tabledata "EOS IC Mapping Json Node" = RIMD,
         tabledata "EOS IC Entries" = RIMD;
 }

@@ -34,17 +34,6 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         end;
     end;
 
-    procedure LoadStaging(ICEntries: Record "EOS IC Entries")
-    var
-        ICMappingMgt: Codeunit "EOS IC Mapping Mgt.";
-        HeaderObject: JsonObject;
-        LinesArray: JsonArray;
-    begin
-        ICEntries.TestField(Direction, ICEntries.Direction::Inbound);
-        ReadPayload(ICEntries, HeaderObject, LinesArray);
-        ICMappingMgt.PopulateFromPayload(ICEntries, HeaderObject, LinesArray);
-    end;
-
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
     var
         UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
@@ -362,27 +351,6 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
     end;
 
     #endregion BuildPayloadFunctions
-
-    #region LoadStaging
-    local procedure ReadPayload(ICEntries: Record "EOS IC Entries"; var HeaderObject: JsonObject; var LinesArray: JsonArray)
-    var
-        PayloadObject: JsonObject;
-        JsonToken: JsonToken;
-        InvalidPayloadErr: Label 'The received payload of the entry %1 is not a valid JSON.', Comment = '%1 = entry no.';
-        MissingHeaderErr: Label 'The received payload of the entry %1 does not contain the header.', Comment = '%1 = entry no.';
-    begin
-        if not PayloadObject.ReadFrom(ICEntries.GetBlobFields(ICEntries.FieldNo("Received Payload"))) then
-            Error(InvalidPayloadErr, ICEntries."Entry No.");
-
-        if not PayloadObject.Get('header', JsonToken) then
-            Error(MissingHeaderErr, ICEntries."Entry No.");
-        HeaderObject := JsonToken.AsObject();
-
-        if PayloadObject.Get('lines', JsonToken) then
-            LinesArray := JsonToken.AsArray();
-    end;
-
-    #endregion LoadStaging
 
     #region ProcessStaging
 

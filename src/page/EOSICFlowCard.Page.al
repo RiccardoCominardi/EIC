@@ -54,6 +54,10 @@ page 67006 "EOS IC Flow Card"
                         ApplicationArea = All;
                         Caption = 'Document to create';
                     }
+                    field("Mapping Code"; Rec."Mapping Code")
+                    {
+                        ApplicationArea = All;
+                    }
                 }
                 group(Outbound)
                 {
@@ -118,15 +122,6 @@ page 67006 "EOS IC Flow Card"
                     CurrPage.Update(false);
                 end;
             }
-            action(Mapping)
-            {
-                ApplicationArea = All;
-                Caption = 'Mapping';
-                Enabled = Rec.Direction = Rec.Direction::Inbound;
-                Image = MapAccounts;
-                RunObject = page "EOS IC Mapping List";
-                RunPageLink = "Company Code" = field("Company Code"), "Flow Code" = field(Code);
-            }
         }
         area(Promoted)
         {
@@ -137,7 +132,6 @@ page 67006 "EOS IC Flow Card"
                 actionref(PairFlow_Promoted; PairFlow) { }
                 actionref(UnpairFlow_Promoted; UnpairFlow) { }
             }
-            actionref(Mapping_Promoted; Mapping) { }
         }
     }
 }

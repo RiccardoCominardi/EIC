@@ -78,20 +78,16 @@ table 67003 "EOS IC Flows"
                 Rec.TestField(Direction, Rec.Direction::Inbound);
             end;
         }
+        field(12; "Mapping Code"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Mapping Code';
+            TableRelation = "EOS IC Mapping Headers"."Code";
+        }
     }
 
     keys
     {
         key(Key1; "Company Code", "Code") { Clustered = true; }
     }
-
-    trigger OnDelete()
-    var
-        ICMappingHeaders: Record "EOS IC Mapping Headers";
-    begin
-        ICMappingHeaders.Reset();
-        ICMappingHeaders.SetRange("Company Code", "Company Code");
-        ICMappingHeaders.SetRange("Flow Code", "Code");
-        ICMappingHeaders.DeleteAll(true);
-    end;
 }

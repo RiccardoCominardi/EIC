@@ -23,6 +23,10 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
+                field("System Created At"; Rec.SystemCreatedAt)
+                {
+                    ApplicationArea = All;
+                }
                 field("IC Transaction ID"; Rec."IC Transaction ID")
                 {
                     ApplicationArea = All;

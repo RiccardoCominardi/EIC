@@ -49,7 +49,7 @@
         {
             "id": "PTE0005",
             "action":"None",
-            "justification" : "App.json 'target' property must not be set to 'Internal' or 'OnPrem'"
+            "justification" : "App.Json 'target' property must not be set to 'Internal' or 'OnPrem'"
         },
         {
             "id": "AA0072",

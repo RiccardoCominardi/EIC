@@ -83,15 +83,6 @@ page 67005 "EOS IC Flows"
                     CurrPage.Update(false);
                 end;
             }
-            action(Mapping)
-            {
-                ApplicationArea = All;
-                Caption = 'Mapping';
-                Enabled = Rec.Direction = Rec.Direction::Inbound;
-                Image = MapAccounts;
-                RunObject = page "EOS IC Mapping List";
-                RunPageLink = "Company Code" = field("Company Code"), "Flow Code" = field(Code);
-            }
         }
         area(Promoted)
         {
@@ -102,7 +93,6 @@ page 67005 "EOS IC Flows"
                 actionref(PairFlow_Promoted; PairFlow) { }
                 actionref(UnpairFlow_Promoted; UnpairFlow) { }
             }
-            actionref(Mapping_Promoted; Mapping) { }
         }
     }
 }

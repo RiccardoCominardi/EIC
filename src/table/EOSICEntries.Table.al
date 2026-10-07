@@ -230,7 +230,7 @@ table 67006 "EOS IC Entries"
         OutStr: OutStream;
         BlobText, FileName, FieldName : Text;
         EmptyBlobErr: Label 'There is no content to export.';
-        FileNameLbl: Label '%1_%2.json', Locked = true, Comment = '%1 = entry no., %2 = field name';
+        FileNameLbl: Label '%1_%2.Json', Locked = true, Comment = '%1 = entry no., %2 = field name';
     begin
         BlobText := Rec.GetBlobFields(BlobFieldNo);
         if BlobText = '' then

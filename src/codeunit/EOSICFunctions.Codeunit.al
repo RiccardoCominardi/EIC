@@ -612,7 +612,7 @@ codeunit 67001 "EOS IC Functions"
     var
         ResponseObject: JsonObject;
         ValueToken: JsonToken;
-        InvalidJsonErr: Label 'The endpoint response is not a valid JSON payload.';
+        InvalidJsonErr: Label 'The endpoint response is not a valid Json payload.';
         MissingValueNodeErr: Label 'The endpoint response is missing the ''value'' node.';
         MissingValueArrayErr: Label 'The ''value'' node in the endpoint response is not an array.';
     begin
@@ -655,7 +655,7 @@ codeunit 67001 "EOS IC Functions"
         RequestMessage.Method := 'GET';
         RequestMessage.SetRequestUri(EndpointUrl);
         RequestMessage.GetHeaders(RequestHeaders);
-        RequestHeaders.Add('Accept', 'application/json');
+        RequestHeaders.Add('Accept', 'application/Json');
 
         if not AccessToken.IsEmpty() then
             RequestHeaders.Add('Authorization', SecretStrSubstNo(BearerTokenLbl, AccessToken));
@@ -682,7 +682,7 @@ codeunit 67001 "EOS IC Functions"
         RequestMessage.Method := 'POST';
         RequestMessage.SetRequestUri(EndpointUrl);
         RequestMessage.GetHeaders(RequestHeaders);
-        RequestHeaders.Add('Accept', 'application/json');
+        RequestHeaders.Add('Accept', 'application/Json');
 
         if not AccessToken.IsEmpty() then
             RequestHeaders.Add('Authorization', SecretStrSubstNo(BearerTokenLbl, AccessToken));
@@ -691,7 +691,7 @@ codeunit 67001 "EOS IC Functions"
         RequestContent.GetHeaders(ContentHeaders);
         if ContentHeaders.Contains('Content-Type') then
             ContentHeaders.Remove('Content-Type');
-        ContentHeaders.Add('Content-Type', 'application/json');
+        ContentHeaders.Add('Content-Type', 'application/Json');
         RequestMessage.Content := RequestContent;
 
         if not HttpClient.Send(RequestMessage, ResponseMessage) then
@@ -717,7 +717,7 @@ codeunit 67001 "EOS IC Functions"
         RequestMessage.Method := 'PATCH';
         RequestMessage.SetRequestUri(EndpointUrl);
         RequestMessage.GetHeaders(RequestHeaders);
-        RequestHeaders.Add('Accept', 'application/json');
+        RequestHeaders.Add('Accept', 'application/Json');
         RequestHeaders.Add('If-Match', '*');
 
         if not AccessToken.IsEmpty() then
@@ -727,7 +727,7 @@ codeunit 67001 "EOS IC Functions"
         RequestContent.GetHeaders(ContentHeaders);
         if ContentHeaders.Contains('Content-Type') then
             ContentHeaders.Remove('Content-Type');
-        ContentHeaders.Add('Content-Type', 'application/json');
+        ContentHeaders.Add('Content-Type', 'application/Json');
         RequestMessage.Content := RequestContent;
 
         if not HttpClient.Send(RequestMessage, ResponseMessage) then
@@ -760,43 +760,6 @@ codeunit 67001 "EOS IC Functions"
     begin
         if GetValue(SourceObject, PropertyName, JsonValue) then
             exit(JsonValue.AsText());
-    end;
-
-    procedure GetDecimal(SourceObject: JsonObject; PropertyName: Text): Decimal
-    var
-        JsonValue: JsonValue;
-    begin
-        if GetValue(SourceObject, PropertyName, JsonValue) then
-            exit(JsonValue.AsDecimal());
-    end;
-
-    procedure GetInteger(SourceObject: JsonObject; PropertyName: Text): Integer
-    var
-        JsonValue: JsonValue;
-    begin
-        if GetValue(SourceObject, PropertyName, JsonValue) then
-            exit(JsonValue.AsInteger());
-    end;
-
-    procedure GetBoolean(SourceObject: JsonObject; PropertyName: Text): Boolean
-    var
-        JsonValue: JsonValue;
-    begin
-        if GetValue(SourceObject, PropertyName, JsonValue) then
-            exit(JsonValue.AsBoolean());
-    end;
-
-    procedure GetDate(SourceObject: JsonObject; PropertyName: Text): Date
-    var
-        DateText: Text;
-        DateValue: Date;
-    begin
-        DateText := GetText(SourceObject, PropertyName);
-        if DateText = '' then
-            exit(0D);
-
-        Evaluate(DateValue, DateText, 9);
-        exit(DateValue);
     end;
     #endregion JsonHelpers
 }

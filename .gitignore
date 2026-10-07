@@ -7,7 +7,7 @@
 *.Gimli*
 *.zip
 TestResults.xml
-rad.json
+rad.Json
 .output
 /config/share/*
 !/config/share/README.md
