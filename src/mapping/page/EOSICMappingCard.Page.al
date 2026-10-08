@@ -119,6 +119,7 @@ page 67010 "EOS IC Mapping Card"
             {
                 ApplicationArea = All;
                 Caption = 'Import Json';
+                Enabled = not Rec.Enabled;
                 Image = Import;
                 Visible = Rec.Direction = Rec.Direction::Inbound;
                 ToolTip = 'Imports an example of the Json to be received and analyzes its structure, so that the Json paths can be selected instead of typed. No data is created in Business Central.';

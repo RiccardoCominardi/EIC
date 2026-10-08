@@ -55,6 +55,7 @@ page 67009 "EOS IC Mapping List"
             {
                 ApplicationArea = All;
                 Caption = 'Import Json';
+                Enabled = not Rec.Enabled;
                 Image = Import;
                 Visible = Rec.Direction = Rec.Direction::Inbound;
                 ToolTip = 'Imports an example of the Json to be received and analyzes its structure, so that the Json paths can be selected instead of typed. No data is created in Business Central.';
@@ -113,6 +114,7 @@ page 67009 "EOS IC Mapping List"
                 ApplicationArea = All;
                 Caption = 'Import Mapping';
                 Image = Import;
+                Visible = Rec.Direction = Rec.Direction::Outbound;
                 ToolTip = 'Imports an outbound mapping, with its table relations and transformation rules, from a file.';
                 trigger OnAction()
                 var
@@ -127,6 +129,7 @@ page 67009 "EOS IC Mapping List"
                 ApplicationArea = All;
                 Caption = 'Export Mapping';
                 Image = Export;
+                Visible = Rec.Direction = Rec.Direction::Outbound;
                 ToolTip = 'Exports the selected outbound mappings, with their table relations and transformation rules. More mappings are downloaded in a zip file.';
                 trigger OnAction()
                 var
@@ -142,6 +145,7 @@ page 67009 "EOS IC Mapping List"
                 ApplicationArea = All;
                 Caption = 'Export Mapping (Base64)';
                 Image = Export;
+                Visible = Rec.Direction = Rec.Direction::Outbound;
                 ToolTip = 'Exports the selected outbound mappings as Base64 text files. More mappings are downloaded in a zip file.';
                 trigger OnAction()
                 var
@@ -170,6 +174,7 @@ page 67009 "EOS IC Mapping List"
                 ApplicationArea = All;
                 Caption = 'Table Relations';
                 Image = Relationship;
+                Visible = Rec.Direction = Rec.Direction::Outbound;
                 RunObject = page "EOS IC Table Relation List";
                 ToolTip = 'Shows the relations between the tables that can be used by the lines of the outbound mappings.';
             }
@@ -187,7 +192,7 @@ page 67009 "EOS IC Mapping List"
             }
             group(OutboundGroup)
             {
-                Caption = 'Outbound';
+                Caption = 'Json', Locked = true;
                 Image = View;
                 actionref(DownloadJsonExample_Promoted; DownloadJsonExample) { }
                 actionref(TableRelations_Promoted; TableRelations) { }

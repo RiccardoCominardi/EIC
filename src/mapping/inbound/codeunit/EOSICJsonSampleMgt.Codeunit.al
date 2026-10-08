@@ -81,6 +81,7 @@ codeunit 67016 "EOS IC Json Sample Mgt."
         ICMappingLines: Record "EOS IC Mapping Lines";
     begin
         ICMapping.TestField(Code);
+        ICMapping.TestField(Enabled, false);
         AnalyzeRoot(Root, ICMapping.Code);
 
         ICMappingLines.SetRange("Mapping Code", ICMapping.Code);

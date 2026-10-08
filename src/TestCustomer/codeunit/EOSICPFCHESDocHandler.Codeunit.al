@@ -11,8 +11,11 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
 {
     procedure BuildPayload(SourceRecord: Variant; ICFlows: Record "EOS IC Flows"): JsonObject;
     var
-        RecRef: RecordRef;
+    //RecRef: RecordRef;
     begin
+        //Implement only if the mapping is unusable.
+        //You can use the mapping with the transformation rule for complex json
+        /*
         if not ICFlows.Enabled then
             exit;
 
@@ -32,6 +35,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
             Database::Item:
                 exit(BuildItemJson(RecRef));
         end;
+        */
     end;
 
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
@@ -102,6 +106,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
     end;
 
     #region BuildPayloadFunctions
+    /*
     local procedure BuildItemJson(RecRef: RecordRef): JsonObject
     var
         Item: Record Item;
@@ -350,6 +355,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         exit(LineJson);
     end;
 
+    */
     #endregion BuildPayloadFunctions
 
     #region ProcessStaging
