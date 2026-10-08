@@ -16,6 +16,7 @@ codeunit 67007 "EOS IC Entries Management"
         ICFlows: Record "EOS IC Flows";
         ICSetup: Record "EOS IC Setup";
         ICEntries: Record "EOS IC Entries";
+        ICOutMappingMgt: Codeunit "EOS IC Out. Mapping Mgt.";
         RecRef: RecordRef;
         SystemIdFieldRef: FieldRef;
         ICDocumentHandler: Interface "EOS IC Document Handler";
@@ -47,8 +48,13 @@ codeunit 67007 "EOS IC Entries Management"
         ICSetup.Get();
         ICSetup.TestField("Company Code");
 
-        ICDocumentHandler := ICCompanies."Interface";
-        PayloadJson := ICDocumentHandler.BuildPayload(SourceRecord, ICFlows);
+        // A mapping assigned to the flow builds the payload; otherwise it is built by the document handler of the company.
+        if ICFlows."Mapping Code" <> '' then
+            PayloadJson := ICOutMappingMgt.BuildPayload(SourceRecord, ICFlows)
+        else begin
+            ICDocumentHandler := ICCompanies."Interface";
+            PayloadJson := ICDocumentHandler.BuildPayload(SourceRecord, ICFlows);
+        end;
         if PayloadJson.Keys().Count() = 0 then
             Error(EmptyPayloadErr, ICFlows.Code, SourceDocumentNo);
         PayloadJson.WriteTo(PayloadText);

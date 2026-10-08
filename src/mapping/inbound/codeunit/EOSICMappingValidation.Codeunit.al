@@ -15,6 +15,7 @@ codeunit 67015 "EOS IC Mapping Validation"
         ICMapping: Record "EOS IC Mapping Headers";
         ICMappingLine: Record "EOS IC Mapping Lines";
         TempICMappingLine: Record "EOS IC Mapping Lines" temporary;
+        ICOutMappingValidation: Codeunit "EOS IC Out. Mapping Validation";
         SamplePaths: List of [Text];
         PathLines: Dictionary of [Text, Integer];
         CheckedTables: List of [Integer];
@@ -35,6 +36,9 @@ codeunit 67015 "EOS IC Mapping Validation"
             Issues.Add(StrSubstNo(MappingNotFoundErr, MappingCode));
             exit(false);
         end;
+
+        if ICMapping.Direction = ICMapping.Direction::Outbound then
+            exit(ICOutMappingValidation.ValidateMapping(MappingCode, Issues));
 
         ICMappingLine.SetRange("Mapping Code", MappingCode);
         if not ICMappingLine.FindSet() then begin

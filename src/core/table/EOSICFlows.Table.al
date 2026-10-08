@@ -82,7 +82,18 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Mapping Code';
-            TableRelation = "EOS IC Mapping Headers"."Code";
+            TableRelation = "EOS IC Mapping Headers"."Code" where(Direction = field(Direction));
+
+            trigger OnValidate()
+            var
+                ICMappingHeaders: Record "EOS IC Mapping Headers";
+            begin
+                if Rec."Mapping Code" = '' then
+                    exit;
+
+                ICMappingHeaders.Get(Rec."Mapping Code");
+                ICMappingHeaders.TestField(Direction, Rec.Direction);
+            end;
         }
     }
 

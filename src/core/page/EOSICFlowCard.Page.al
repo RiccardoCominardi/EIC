@@ -54,10 +54,6 @@ page 67006 "EOS IC Flow Card"
                         ApplicationArea = All;
                         Caption = 'Document to create';
                     }
-                    field("Mapping Code"; Rec."Mapping Code")
-                    {
-                        ApplicationArea = All;
-                    }
                 }
                 group(Outbound)
                 {
@@ -73,6 +69,10 @@ page 67006 "EOS IC Flow Card"
                         ApplicationArea = All;
                         Caption = 'Document to create';
                     }
+                }
+                field("Mapping Code"; Rec."Mapping Code")
+                {
+                    ApplicationArea = All;
                 }
                 field("Auto Send"; Rec."Auto Send")
                 {

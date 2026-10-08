@@ -28,6 +28,10 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
+                field("Mapping Code"; Rec."Mapping Code")
+                {
+                    ApplicationArea = All;
+                }
                 field("Flow Pair Id"; Rec."Flow Pair Id")
                 {
                     ApplicationArea = All;
