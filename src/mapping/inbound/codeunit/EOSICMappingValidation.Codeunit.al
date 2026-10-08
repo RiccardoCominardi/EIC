@@ -59,7 +59,7 @@ codeunit 67015 "EOS IC Mapping Validation"
             Issues.Add(NoActiveLinesErr)
         else begin
             BuildTableContextsInternal(TempICMappingLine, TableOrder, TableContext, PathIssues, PathIssueOrder);
-            ValidateReservedFields(TempICMappingLine, TableContext, PathIssues, PathIssueOrder);
+            ValidateKeys(TempICMappingLine, TableOrder, TableContext, PathIssues, PathIssueOrder);
         end;
 
         AppendPathIssues(Issues, PathIssues, PathIssueOrder);
@@ -104,6 +104,43 @@ codeunit 67015 "EOS IC Mapping Validation"
         foreach Issue in Issues do
             Result.AppendLine(Issue);
         exit(Result.ToText());
+    end;
+
+    // The parent of a table is the first table, in mapping order, found in the nearest array context (or the root) enclosing its own context.
+    // First-level tables have no parent.
+    procedure BuildTableParents(TableOrder: List of [Integer]; TableContext: Dictionary of [Integer, Text]; var TableParent: Dictionary of [Integer, Integer])
+    var
+        TableID: Integer;
+    begin
+        Clear(TableParent);
+        foreach TableID in TableOrder do
+            AddTableParent(TableID, TableOrder, TableContext, TableParent);
+    end;
+
+    procedure GetPrimaryKeyFields(TableID: Integer; var KeyFieldNos: List of [Integer])
+    var
+        RecRef: RecordRef;
+        PrimaryKey: KeyRef;
+        Index: Integer;
+    begin
+        Clear(KeyFieldNos);
+        RecRef.Open(TableID);
+        PrimaryKey := RecRef.KeyIndex(1);
+        for Index := 1 to PrimaryKey.FieldCount() do
+            KeyFieldNos.Add(PrimaryKey.FieldIndex(Index).Number);
+        RecRef.Close();
+    end;
+
+    // First-level staging tables have an Integer field with this exact name, which links them to the IC entry.
+    procedure GetICEntryNoFieldNo(TableID: Integer): Integer
+    var
+        Field: Record Field;
+    begin
+        Field.SetRange(TableNo, TableID);
+        Field.SetRange(FieldName, ICEntryNoFieldName());
+        Field.SetRange(Type, Field.Type::Integer);
+        if Field.FindFirst() then
+            exit(Field."No.");
     end;
 
     // Determines the array context of each target table: the innermost array crossed by its paths. All the paths of a table
@@ -244,36 +281,180 @@ codeunit 67015 "EOS IC Mapping Validation"
         end;
     end;
 
-    // Staging tables share the key layout: field 1 is the entry number and field 2 the IC entry number (root) or the line number.
+    // The first key field of a staging table is the entry number.
     local procedure CheckTableStructure(ICMappingLine: Record "EOS IC Mapping Lines"; var CheckedTables: List of [Integer]; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
     var
         Field: Record Field;
-        StructureErr: Label 'The table %1 cannot be used as a target: the fields 1 and 2 must be Integer fields (entry number and IC entry number / line number).', Comment = '%1 = table';
+        KeyFieldNos: List of [Integer];
+        StructureErr: Label 'The table %1 cannot be used as a target: the first field of its primary key (entry number) must be an Integer field.', Comment = '%1 = table';
     begin
         if CheckedTables.Contains(ICMappingLine."Target Table ID") then
             exit;
         CheckedTables.Add(ICMappingLine."Target Table ID");
 
-        if not Field.Get(ICMappingLine."Target Table ID", 1) or (Field.Type <> Field.Type::Integer) or
-           not Field.Get(ICMappingLine."Target Table ID", 2) or (Field.Type <> Field.Type::Integer)
-        then
+        GetPrimaryKeyFields(ICMappingLine."Target Table ID", KeyFieldNos);
+        if not Field.Get(ICMappingLine."Target Table ID", KeyFieldNos.Get(1)) or (Field.Type <> Field.Type::Integer) then
             AddPathIssue(PathIssues, PathIssueOrder, ICMappingLine."Json Path", StrSubstNo(StructureErr, GetTableText(ICMappingLine."Target Table ID")));
     end;
 
-    local procedure ValidateReservedFields(var TempICMappingLine: Record "EOS IC Mapping Lines" temporary; TableContext: Dictionary of [Integer, Text]; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
+    // The key of a first-level table (without parent table) is the entry number alone, assigned by the app. The key of a nested table
+    // is the key of its parent table followed by the fields marked as key field, which identify its records.
+    local procedure ValidateKeys(var TempICMappingLine: Record "EOS IC Mapping Lines" temporary; TableOrder: List of [Integer]; TableContext: Dictionary of [Integer, Text]; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
     var
-        ReservedFieldErr: Label 'The field %1 of the table %2 is filled in automatically and cannot be mapped.', Comment = '%1 = field no., %2 = table';
-        TableContextText: Text;
+        TableParent: Dictionary of [Integer, Integer];
+        TableID: Integer;
+    begin
+        BuildTableParents(TableOrder, TableContext, TableParent);
+        foreach TableID in TableOrder do
+            ValidateTableKeys(TempICMappingLine, TableID, TableParent, PathIssues, PathIssueOrder);
+    end;
+
+    local procedure ValidateTableKeys(var TempICMappingLine: Record "EOS IC Mapping Lines" temporary; TableID: Integer; TableParent: Dictionary of [Integer, Integer]; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
+    var
+        KeyFieldNos: List of [Integer];
+        ParentKeyFieldNos: List of [Integer];
+        ParentID: Integer;
+        InheritedCount: Integer;
+        ICEntryNoFieldNo: Integer;
+        TablePath: Text;
+        FirstLevelKeyErr: Label 'The table %1 is at the first level of the payload: its primary key must be the entry number only.', Comment = '%1 = table';
+        MissingICEntryNoErr: Label 'The table %1 is linked to the IC entry: it must have an Integer field named %2.', Comment = '%1 = table, %2 = field name';
+        ParentKeyErr: Label 'The primary key of the table %1 must start with the same fields of the primary key of its parent table %2.', Comment = '%1 = table, %2 = parent table';
+        KeyTooShortErr: Label 'The table %1 is nested in the table %2: its primary key must have at least %3 fields (the key of the parent table followed by the fields that identify its records).', Comment = '%1 = table, %2 = parent table, %3 = number of fields';
     begin
         TempICMappingLine.Reset();
+        TempICMappingLine.SetRange("Target Table ID", TableID);
+        TempICMappingLine.SetFilter("Target Field No.", '<>0');
+        if not TempICMappingLine.FindFirst() then
+            exit;
+        TablePath := TempICMappingLine."Json Path";
+
+        GetPrimaryKeyFields(TableID, KeyFieldNos);
+        if not TableParent.Get(TableID, ParentID) then begin
+            InheritedCount := KeyFieldNos.Count();
+            if InheritedCount <> 1 then
+                AddPathIssue(PathIssues, PathIssueOrder, TablePath, StrSubstNo(FirstLevelKeyErr, GetTableText(TableID)));
+            ICEntryNoFieldNo := GetICEntryNoFieldNo(TableID);
+            if ICEntryNoFieldNo = 0 then
+                AddPathIssue(PathIssues, PathIssueOrder, TablePath, StrSubstNo(MissingICEntryNoErr, GetTableText(TableID), ICEntryNoFieldName()));
+        end else begin
+            GetPrimaryKeyFields(ParentID, ParentKeyFieldNos);
+            InheritedCount := ParentKeyFieldNos.Count();
+            if not KeyStartsWithParentKey(TableID, KeyFieldNos, ParentID, ParentKeyFieldNos) then
+                AddPathIssue(PathIssues, PathIssueOrder, TablePath, StrSubstNo(ParentKeyErr, GetTableText(TableID), GetTableText(ParentID)));
+            if KeyFieldNos.Count() <= InheritedCount then
+                AddPathIssue(PathIssues, PathIssueOrder, TablePath, StrSubstNo(KeyTooShortErr, GetTableText(TableID), GetTableText(ParentID), InheritedCount + 1));
+        end;
+
+        ValidateKeyLines(TempICMappingLine, TableID, KeyFieldNos, InheritedCount, ICEntryNoFieldNo, PathIssues, PathIssueOrder);
+        ValidateOwnKeyFields(TempICMappingLine, TableID, KeyFieldNos, InheritedCount, TablePath, PathIssues, PathIssueOrder);
+        TempICMappingLine.Reset();
+    end;
+
+    // The key fields up to the inherited ones (and the IC entry number of first-level tables) are filled in automatically, so they cannot be mapped.
+    local procedure ValidateKeyLines(var TempICMappingLine: Record "EOS IC Mapping Lines" temporary; TableID: Integer; KeyFieldNos: List of [Integer]; InheritedCount: Integer; ICEntryNoFieldNo: Integer; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
+    var
+        Position: Integer;
+        ReservedFieldErr: Label 'The field %1 of the table %2 is filled in automatically and cannot be mapped.', Comment = '%1 = field, %2 = table';
+        NotKeyFieldErr: Label 'The field %1 of the table %2 is marked as key field but it is not part of its primary key.', Comment = '%1 = field, %2 = table';
+    begin
+        TempICMappingLine.Reset();
+        TempICMappingLine.SetRange("Target Table ID", TableID);
+        TempICMappingLine.SetFilter("Target Field No.", '<>0');
         if not TempICMappingLine.FindSet() then
             exit;
 
         repeat
-            TableContext.Get(TempICMappingLine."Target Table ID", TableContextText);
-            if (TempICMappingLine."Target Field No." = 1) or ((TempICMappingLine."Target Field No." = 2) and (TableContextText = '')) then
-                AddPathIssue(PathIssues, PathIssueOrder, TempICMappingLine."Json Path", StrSubstNo(ReservedFieldErr, TempICMappingLine."Target Field No.", GetTableText(TempICMappingLine."Target Table ID")));
+            Position := KeyFieldNos.IndexOf(TempICMappingLine."Target Field No.");
+            if Position = 0 then begin
+                if TempICMappingLine."Is Key Field" then
+                    AddPathIssue(PathIssues, PathIssueOrder, TempICMappingLine."Json Path", StrSubstNo(NotKeyFieldErr, GetFieldText(TableID, TempICMappingLine."Target Field No."), GetTableText(TableID)))
+                else
+                    if TempICMappingLine."Target Field No." = ICEntryNoFieldNo then
+                        AddPathIssue(PathIssues, PathIssueOrder, TempICMappingLine."Json Path", StrSubstNo(ReservedFieldErr, GetFieldText(TableID, TempICMappingLine."Target Field No."), GetTableText(TableID)));
+            end else
+                if Position <= InheritedCount then
+                    AddPathIssue(PathIssues, PathIssueOrder, TempICMappingLine."Json Path", StrSubstNo(ReservedFieldErr, GetFieldText(TableID, TempICMappingLine."Target Field No."), GetTableText(TableID)));
         until TempICMappingLine.Next() = 0;
+    end;
+
+    local procedure ValidateOwnKeyFields(var TempICMappingLine: Record "EOS IC Mapping Lines" temporary; TableID: Integer; KeyFieldNos: List of [Integer]; InheritedCount: Integer; TablePath: Text; var PathIssues: Dictionary of [Text, Text]; var PathIssueOrder: List of [Text])
+    var
+        Position: Integer;
+        MissingKeyLineErr: Label 'The field %1 of the table %2 is part of its primary key: it must be mapped and its line must be marked as key field.', Comment = '%1 = field, %2 = table';
+    begin
+        for Position := InheritedCount + 1 to KeyFieldNos.Count() do begin
+            TempICMappingLine.Reset();
+            TempICMappingLine.SetRange("Target Table ID", TableID);
+            TempICMappingLine.SetRange("Target Field No.", KeyFieldNos.Get(Position));
+            TempICMappingLine.SetRange("Is Key Field", true);
+            if TempICMappingLine.IsEmpty() then
+                AddPathIssue(PathIssues, PathIssueOrder, TablePath, StrSubstNo(MissingKeyLineErr, GetFieldText(TableID, KeyFieldNos.Get(Position)), GetTableText(TableID)));
+        end;
+    end;
+
+    local procedure KeyStartsWithParentKey(TableID: Integer; KeyFieldNos: List of [Integer]; ParentID: Integer; ParentKeyFieldNos: List of [Integer]): Boolean
+    var
+        Field: Record Field;
+        ParentField: Record Field;
+        Position: Integer;
+    begin
+        for Position := 1 to ParentKeyFieldNos.Count() do begin
+            if Position > KeyFieldNos.Count() then
+                exit(true);
+            Field.Get(TableID, KeyFieldNos.Get(Position));
+            ParentField.Get(ParentID, ParentKeyFieldNos.Get(Position));
+            if Field.Type <> ParentField.Type then
+                exit(false);
+        end;
+        exit(true);
+    end;
+
+    local procedure AddTableParent(TableID: Integer; TableOrder: List of [Integer]; TableContext: Dictionary of [Integer, Text]; var TableParent: Dictionary of [Integer, Integer])
+    var
+        ContextChain: List of [Text];
+        ContextPath: Text;
+        CandidateContext: Text;
+        CandidateTableContext: Text;
+        CandidateID: Integer;
+        Level: Integer;
+    begin
+        TableContext.Get(TableID, ContextPath);
+        if ContextPath = '' then
+            exit;
+
+        // The enclosing contexts are the chain without the table's own one, down to the root (level 0).
+        ICJsonPathMgt.GetContextChain(ContextPath, ContextChain);
+        for Level := ContextChain.Count() - 1 downto 0 do begin
+            CandidateContext := '';
+            if Level > 0 then
+                CandidateContext := ContextChain.Get(Level);
+
+            foreach CandidateID in TableOrder do begin
+                TableContext.Get(CandidateID, CandidateTableContext);
+                if CandidateTableContext = CandidateContext then begin
+                    TableParent.Add(TableID, CandidateID);
+                    exit;
+                end;
+            end;
+        end;
+    end;
+
+    local procedure ICEntryNoFieldName(): Text
+    var
+        FieldNameLbl: Label 'IC Entry No.', Locked = true;
+    begin
+        exit(FieldNameLbl);
+    end;
+
+    local procedure GetFieldText(TableID: Integer; FieldNo: Integer): Text
+    var
+        Field: Record Field;
+        FieldTextLbl: Label '%1 %2', Locked = true, Comment = '%1 = field no., %2 = field name';
+    begin
+        if Field.Get(TableID, FieldNo) then
+            exit(StrSubstNo(FieldTextLbl, FieldNo, Field.FieldName));
+        exit(Format(FieldNo));
     end;
 
     local procedure LoadSamplePaths(MappingCode: Code[20]; var SamplePaths: List of [Text]): Boolean

@@ -8,13 +8,18 @@ codeunit 67013 "EOS IC Mapping Mgt."
     var
         TempICMappingLine: Record "EOS IC Mapping Lines" temporary;
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
+        ICMappingValidation: Codeunit "EOS IC Mapping Validation";
         ContextElements: Dictionary of [Text, JsonToken];
         TableContext: Dictionary of [Integer, Text];
         TablesOfContext: Dictionary of [Text, List of [Integer]];
         ChildContexts: Dictionary of [Text, List of [Text]];
-        LineCounters: Dictionary of [Integer, Integer];
+        TableKeyFields: Dictionary of [Integer, List of [Integer]];
+        InheritedKeyLines: Dictionary of [Integer, List of [Integer]];
+        TableParents: Dictionary of [Integer, Integer];
+        EntryContextTables: Dictionary of [Text, Integer];
+        ContextEntryNos: Dictionary of [Text, Integer];
+        CurrentMappingCode: Code[20];
         CurrentICEntryNo: Integer;
-        StagingEntryNo: Integer;
 
     procedure PopulateFromPayload(ICEntries: Record "EOS IC Entries")
     var
@@ -50,24 +55,23 @@ codeunit 67013 "EOS IC Mapping Mgt."
     // each target table gets one record for every element of the innermost array crossed by its paths.
     procedure PopulateFromMapping(ICEntryNo: Integer; MappingCode: Code[20]; Payload: JsonToken)
     var
-        ICMappingValidation: Codeunit "EOS IC Mapping Validation";
         TableOrder: List of [Integer];
         Issues: List of [Text];
     begin
         ICMappingValidation.CheckForExecution(MappingCode);
 
-        ResetRunState(ICEntryNo);
+        ResetRunState(ICEntryNo, MappingCode);
         LoadActiveLines(MappingCode);
         ICMappingValidation.BuildTableContexts(TempICMappingLine, TableOrder, TableContext, Issues);
         BuildContextTree(TableOrder);
-        StagingEntryNo := GetStagingEntryNo(ICEntryNo, TableOrder);
+        BuildTableKeys(TableOrder);
 
         ContextElements.Set('', Payload);
         ProcessContext('');
     end;
 
     #region Preparation
-    local procedure ResetRunState(ICEntryNo: Integer)
+    local procedure ResetRunState(ICEntryNo: Integer; MappingCode: Code[20])
     begin
         TempICMappingLine.Reset();
         TempICMappingLine.DeleteAll();
@@ -75,9 +79,13 @@ codeunit 67013 "EOS IC Mapping Mgt."
         Clear(TableContext);
         Clear(TablesOfContext);
         Clear(ChildContexts);
-        Clear(LineCounters);
+        Clear(TableKeyFields);
+        Clear(InheritedKeyLines);
+        Clear(TableParents);
+        Clear(EntryContextTables);
+        Clear(ContextEntryNos);
+        CurrentMappingCode := MappingCode;
         CurrentICEntryNo := ICEntryNo;
-        StagingEntryNo := 0;
     end;
 
     // Lines without a target table or field are ignored, as in the previous versions.
@@ -134,19 +142,65 @@ codeunit 67013 "EOS IC Mapping Mgt."
         ChildContexts.Set(ParentContext, Children);
     end;
 
-    // Records are linked through the number of the first record created at the root of the payload; without it the IC entry number is used.
-    local procedure GetStagingEntryNo(ICEntryNo: Integer; TableOrder: List of [Integer]): Integer
+    // A record is keyed by the entry number, the key fields of its ancestor tables (taken again from the key lines of the ancestors)
+    // and the fields marked as key field in its own lines.
+    local procedure BuildTableKeys(TableOrder: List of [Integer])
     var
-        SequenceNoMgt: Codeunit "Sequence No. Mgt.";
         TableID: Integer;
+    begin
+        ICMappingValidation.BuildTableParents(TableOrder, TableContext, TableParents);
+        foreach TableID in TableOrder do begin
+            AddTableKeyFields(TableID);
+            AddInheritedKeyLines(TableID);
+            AddEntryContext(TableID);
+        end;
+    end;
+
+    local procedure AddTableKeyFields(TableID: Integer)
+    var
+        KeyFieldNos: List of [Integer];
+    begin
+        ICMappingValidation.GetPrimaryKeyFields(TableID, KeyFieldNos);
+        TableKeyFields.Set(TableID, KeyFieldNos);
+    end;
+
+    local procedure AddInheritedKeyLines(TableID: Integer)
+    var
+        LineNos: List of [Integer];
+        CurrentID: Integer;
+        ParentID: Integer;
+    begin
+        CurrentID := TableID;
+        while TableParents.Get(CurrentID, ParentID) do begin
+            AddKeyLineNos(ParentID, LineNos);
+            CurrentID := ParentID;
+        end;
+        InheritedKeyLines.Set(TableID, LineNos);
+    end;
+
+    local procedure AddKeyLineNos(TableID: Integer; var LineNos: List of [Integer])
+    begin
+        TempICMappingLine.Reset();
+        TempICMappingLine.SetRange("Target Table ID", TableID);
+        TempICMappingLine.SetRange("Is Key Field", true);
+        if TempICMappingLine.FindSet() then
+            repeat
+                LineNos.Add(TempICMappingLine."Line No.");
+            until TempICMappingLine.Next() = 0;
+        TempICMappingLine.Reset();
+    end;
+
+    // The first-level tables (without a parent table) share the entry number of their context; its sequence is the one of the first of them.
+    local procedure AddEntryContext(TableID: Integer)
+    var
         ContextPath: Text;
     begin
-        foreach TableID in TableOrder do begin
-            TableContext.Get(TableID, ContextPath);
-            if ContextPath = '' then
-                exit(SequenceNoMgt.GetNextSeqNo(TableID));
-        end;
-        exit(ICEntryNo);
+        if TableParents.ContainsKey(TableID) then
+            exit;
+
+        TableContext.Get(TableID, ContextPath);
+        if not EntryContextTables.ContainsKey(ContextPath) then
+            EntryContextTables.Add(ContextPath, TableID);
     end;
     #endregion Preparation
 
@@ -160,9 +214,11 @@ codeunit 67013 "EOS IC Mapping Mgt."
         TableID: Integer;
         ChildPath: Text;
     begin
+        AssignEntryNo(ContextPath);
+
         if TablesOfContext.Get(ContextPath, TableIDs) then
             foreach TableID in TableIDs do
-                InsertRecord(TableID, ContextPath = '');
+                InsertRecord(TableID);
 
         if ChildContexts.Get(ContextPath, ChildPaths) then
             foreach ChildPath in ChildPaths do
@@ -242,29 +298,56 @@ codeunit 67013 "EOS IC Mapping Mgt."
     #endregion Navigation
 
     #region Records
-    local procedure InsertRecord(TableID: Integer; IsRootRecord: Boolean)
+    local procedure InsertRecord(TableID: Integer)
     var
         RecRef: RecordRef;
-        SecondFieldRef: FieldRef;
-        LineNo: Integer;
+        KeyFieldNos: List of [Integer];
     begin
         RecRef.Open(TableID);
         RecRef.Init();
         ApplyLines(TableID, RecRef);
+        ApplyInheritedKeys(TableID, RecRef);
+        CheckKeyValues(TableID, RecRef);
 
-        // Key fields are set after the mapping so that they cannot be overwritten by it.
-        RecRef.Field(EntryNoFieldNo()).Value := StagingEntryNo;
-        SecondFieldRef := RecRef.Field(SecondFieldNo());
-        if IsRootRecord then
-            SecondFieldRef.Value := CurrentICEntryNo
-        else begin
-            // The line number comes from the mapping when available, otherwise it is generated.
-            LineNo := SecondFieldRef.Value;
-            if LineNo = 0 then
-                SecondFieldRef.Value := GetNextLineNo(TableID);
-        end;
+        // The entry number and the IC entry number are set after the mapping so that they cannot be overwritten by it.
+        TableKeyFields.Get(TableID, KeyFieldNos);
+        RecRef.Field(KeyFieldNos.Get(1)).Value := GetEntryNo(TableID);
+        if not TableParents.ContainsKey(TableID) then
+            RecRef.Field(ICMappingValidation.GetICEntryNoFieldNo(TableID)).Value := CurrentICEntryNo;
         RecRef.Insert(true);
         RecRef.Close();
+    end;
+
+    // Every element of the context of the first-level tables gets a new entry number.
+    local procedure AssignEntryNo(ContextPath: Text)
+    var
+        SequenceNoMgt: Codeunit "Sequence No. Mgt.";
+        TableID: Integer;
+        EntryNo: Integer;
+    begin
+        if not EntryContextTables.Get(ContextPath, TableID) then
+            exit;
+
+        EntryNo := SequenceNoMgt.GetNextSeqNo(TableID);
+        ContextEntryNos.Set(ContextPath, EntryNo);
+    end;
+
+    // The entry number is the one of the nearest enclosing context of a first-level table, which is the context of the table itself for those.
+    local procedure GetEntryNo(TableID: Integer): Integer
+    var
+        Chain: List of [Text];
+        ContextPath: Text;
+        EntryNo: Integer;
+        Index: Integer;
+    begin
+        TableContext.Get(TableID, ContextPath);
+        ICJsonPathMgt.GetContextChain(ContextPath, Chain);
+        for Index := Chain.Count() downto 1 do
+            if ContextEntryNos.Get(Chain.Get(Index), EntryNo) then
+                exit(EntryNo);
+
+        ContextEntryNos.Get('', EntryNo);
+        exit(EntryNo);
     end;
 
     local procedure ApplyLines(TableID: Integer; var RecRef: RecordRef)
@@ -280,6 +363,63 @@ codeunit 67013 "EOS IC Mapping Mgt."
             FieldRef := RecRef.Field(TempICMappingLine."Target Field No.");
             ApplyLine(TempICMappingLine, FieldRef);
         until TempICMappingLine.Next() = 0;
+    end;
+
+    // The key fields of the ancestors are in the same position of the key of this table: the line of the ancestor is applied to that field.
+    local procedure ApplyInheritedKeys(TableID: Integer; var RecRef: RecordRef)
+    var
+        FieldRef: FieldRef;
+        KeyFieldNos: List of [Integer];
+        AncestorKeyFieldNos: List of [Integer];
+        LineNos: List of [Integer];
+        LineNo: Integer;
+    begin
+        if not InheritedKeyLines.Get(TableID, LineNos) then
+            exit;
+
+        TableKeyFields.Get(TableID, KeyFieldNos);
+        TempICMappingLine.Reset();
+        foreach LineNo in LineNos do begin
+            TempICMappingLine.Get(CurrentMappingCode, LineNo);
+            TableKeyFields.Get(TempICMappingLine."Target Table ID", AncestorKeyFieldNos);
+            FieldRef := RecRef.Field(KeyFieldNos.Get(AncestorKeyFieldNos.IndexOf(TempICMappingLine."Target Field No.")));
+            ApplyLine(TempICMappingLine, FieldRef);
+        end;
+    end;
+
+    // The entry number (first key field) is assigned later: every other key field must have a value, otherwise the records would collide.
+    local procedure CheckKeyValues(TableID: Integer; var RecRef: RecordRef)
+    var
+        FieldRef: FieldRef;
+        KeyFieldNos: List of [Integer];
+        Index: Integer;
+        ContextPath: Text;
+        BlankKeyErr: Label 'The key field %1 of the table %2 has no value in the payload (array %3). Check the mapping.', Comment = '%1 = field caption, %2 = table caption, %3 = Json path of the array';
+    begin
+        TableKeyFields.Get(TableID, KeyFieldNos);
+        TableContext.Get(TableID, ContextPath);
+        for Index := 2 to KeyFieldNos.Count() do begin
+            FieldRef := RecRef.Field(KeyFieldNos.Get(Index));
+            if IsBlankValue(FieldRef) then
+                Error(BlankKeyErr, FieldRef.Caption, RecRef.Caption, ContextPath);
+        end;
+    end;
+
+    local procedure IsBlankValue(FieldRef: FieldRef): Boolean
+    var
+        GuidValue: Guid;
+    begin
+        case FieldRef.Type of
+            FieldType::Integer, FieldType::BigInteger, FieldType::Decimal:
+                exit(Format(FieldRef.Value, 0, 9) in ['', '0']);
+            FieldType::Guid:
+                begin
+                    GuidValue := FieldRef.Value;
+                    exit(IsNullGuid(GuidValue));
+                end;
+            else
+                exit(Format(FieldRef.Value, 0, 9) = '');
+        end;
     end;
 
     local procedure ApplyLine(ICMappingLine: Record "EOS IC Mapping Lines"; var FieldRef: FieldRef)
@@ -345,27 +485,6 @@ codeunit 67013 "EOS IC Mapping Mgt."
         ErrorText := ConfigValidateMgt.EvaluateValue(FieldRef, ValueText, false);
         if ErrorText <> '' then
             Error(InvalidValueErr, FieldRef.Caption, FieldRef.Record().Caption, ErrorText);
-    end;
-
-    local procedure GetNextLineNo(TableID: Integer): Integer
-    var
-        LastLineNo: Integer;
-    begin
-        if LineCounters.Get(TableID, LastLineNo) then;
-        LastLineNo += 10000;
-        LineCounters.Set(TableID, LastLineNo);
-        exit(LastLineNo);
-    end;
-
-    // Target tables share the key layout: field 1 is the entry number; field 2 is the IC entry number (root record) or the line number.
-    local procedure EntryNoFieldNo(): Integer
-    begin
-        exit(1);
-    end;
-
-    local procedure SecondFieldNo(): Integer
-    begin
-        exit(2);
     end;
     #endregion Records
 

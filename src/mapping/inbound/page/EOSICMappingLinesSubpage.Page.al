@@ -53,6 +53,13 @@ page 67011 "EOS IC Mapping Lines Subpage"
                     Editable = false;
                     HideValue = not NodeEditable;
                 }
+                field("Is Key Field"; Rec."Is Key Field")
+                {
+                    ApplicationArea = All;
+                    Editable = NodeEditable;
+                    HideValue = not NodeEditable;
+                    ToolTip = 'Specifies that the target field is part of the primary key of the target table, after the entry number and the key fields of the parent table. Its value identifies each record created from the elements of the array.';
+                }
                 field("Mapping Type"; Rec."Mapping Type")
                 {
                     ApplicationArea = All;

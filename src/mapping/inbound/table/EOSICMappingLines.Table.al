@@ -120,6 +120,17 @@ table 67017 "EOS IC Mapping Lines"
             Caption = 'Is Structure';
             Editable = false;
         }
+        field(14; "Is Key Field"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Key Field';
+
+            trigger OnValidate()
+            begin
+                if Rec."Is Key Field" then
+                    Rec.TestField("Target Field No.");
+            end;
+        }
     }
 
     keys
