@@ -875,7 +875,7 @@
           <target>Tipo documento destinazione</target>
         </trans-unit>
         <trans-unit id="Table 910390347 - Field 2228918483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Source System Id</source>
+          <source>Target System Id</source>
           <target>System Id destinazione</target>
         </trans-unit>
         <trans-unit id="Table 910390347 - Field 598236158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -2193,6 +2193,286 @@
         <trans-unit id="Codeunit 203049984 - Method 2908153215 - NamedType 880984256" size-unit="char" translate="yes" xml:space="preserve">
           <source>The table filter is not valid for the table %1.</source>
           <target>Il filtro tabella non è valido per la tabella %1</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 929460672" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unexpected end of the path after the escape character at position %1.</source>
+          <target>Fine del percorso imprevista dopo il carattere di escape alla posizione %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 321720248" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A "." separator is expected before the character at position %1.</source>
+          <target>È previsto un separatore ""."" prima del carattere in posizione %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 3673300089" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The character "[" at position %1 must be followed by "]".</source>
+          <target>Il carattere "[" alla posizione %1 deve essere seguito da "]".</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 2897812615" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The array marker at position %1 must follow a property name.</source>
+          <target>Il marcatore di array nella posizione %1 deve seguire un nome di proprietà.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 3666032556" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unexpected "]" at position %1.</source>
+          <target>"]" imprevisto alla posizione %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 682397447" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unexpected "." at position %1.</source>
+          <target>"." imprevisto alla posizione %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 4107639858 - Method 2449675892 - NamedType 946871870" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The path cannot end with a "." separator.</source>
+          <target>Il percorso non può terminare con un separatore "".""</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 2574470166 - NamedType 3101381154" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The root of the Json must be an object or an array.</source>
+          <target>La radice del JSON deve essere un oggetto o un array.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 2574470166 - NamedType 710728215" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json does not contain any property to be mapped.</source>
+          <target>Il JSON non contiene alcuna proprietà da mappare.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 165320526 - NamedType 2584866090" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The path %1 is longer than the %2 characters supported.</source>
+          <target>Il percorso %1 è più lungo dei %2 caratteri supportati.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 1539275407 - NamedType 2428621518" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The node %1 of the payload is expected to be an array.</source>
+          <target>Il nodo %1 del payload deve essere un array.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 2178881834 - NamedType 1981320726" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The received payload of the entry %1 is not a valid Json.</source>
+          <target>Il payload ricevuto per la voce %1 non è un JSON valido.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 1100458592" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The flow %1 of the company %2 does not exist.</source>
+          <target>Il flusso %1 della società %2 non esiste</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 1476822440" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No mapping has been assigned to the flow %1 of the company %2.</source>
+          <target>Non è stata assegnata alcuna mappatura al flusso %1 della società %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 3608194195" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 assigned to the flow %2 of the company %3 is not enabled.</source>
+          <target>La mappatura %1 assegnata al flusso %2 della società %3 non è abilitata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 1190564735 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The value cannot be mapped to the field %1 of the table %2. %3</source>
+          <target>Il valore non può essere mappato sul campo %1 della tabella %2. %3</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 382403341 - NamedType 2762621889" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The path %1 belongs to a different array branch than the other paths of the table %2 (%3).</source>
+          <target>Il percorso %1 appartiene a un ramo di array diverso rispetto agli altri percorsi della tabella %2 (%3).</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 273134276 - NamedType 3557067621" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json path %1 is already used by the line %2.</source>
+          <target>Il percorso JSON %1 è già utilizzato dalla riga %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 1527500307 - NamedType 4114321298" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 cannot be enabled because it is not valid:\%2</source>
+          <target>La mappatura %1 non può essere abilitata perché non è valida:\%2</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 3799472879 - NamedType 1548293700" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The table %1 cannot be used as a target: the first field of its primary key (entry number) must be an Integer field.</source>
+          <target>La tabella %1 non può essere utilizzata come destinazione: il primo campo della sua chiave primaria (numero di voce) deve essere un campo di tipo Integer.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 1705898744 - NamedType 929574037" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 of the table %2 is filled in automatically and cannot be mapped.</source>
+          <target>Il campo %1 della tabella %2 viene compilato automaticamente e non può essere mappato.</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 2561221096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Generates the Json of the first records of the source table that match the table filter and downloads it. The mapping must be enabled.</source>
+          <target>Genera il JSON dei primi record della tabella di origine che corrispondono al filtro di tabella e lo scarica. Il mapping deve essere abilitato.</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 439340365 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imports an example of the Json to be received and analyzes its structure, so that the Json paths can be selected instead of typed. No data is created in Business Central.</source>
+          <target>Importa un esempio del JSON che verrà ricevuto e ne analizza la struttura, in modo che i percorsi JSON possano essere selezionati anziché digitati. Non vengono creati dati in Business Central.</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Control 2337464825 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies that the target field is part of the primary key of the target table, after the entry number and the key fields of the parent table. Its value identifies each record created from the elements of the array.</source>
+          <target>Specifica che il campo di destinazione fa parte della chiave primaria della tabella di destinazione, collocandosi dopo il numero di voce e i campi chiave della tabella padre. Il suo valore identifica ciascun record creato a partire dagli elementi dell'array.</target>
+        </trans-unit>
+        <trans-unit id="Page 3819397511 - Action 2561221096 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Generates the Json of the first records of the source table that match the table filter and downloads it. The mapping must be enabled.</source>
+          <target>Genera il JSON dei primi record della tabella di origine che corrispondono al filtro di tabella e lo scarica. Il mapping deve essere abilitato.</target>
+        </trans-unit>
+        <trans-unit id="Page 3819397511 - Action 1082995412 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exports the selected outbound mappings, with their table relations and transformation rules. More mappings are downloaded in a zip file.</source>
+          <target>Esporta le mappature in uscita selezionate, insieme alle relative relazioni tra tabelle e regole di trasformazione. Le mappature vengono scaricate all'interno di un file zip.</target>
+        </trans-unit>
+        <trans-unit id="Page 3819397511 - Action 13504337 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Exports the selected outbound mappings as Base64 text files. More mappings are downloaded in a zip file.</source>
+          <target>Esporta le mappature in uscita selezionate come file di testo in formato Base64. Se vengono selezionate più mappature, queste vengono scaricate all'interno di un file zip.</target>
+        </trans-unit>
+        <trans-unit id="Page 3819397511 - Action 439340365 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Imports an example of the Json to be received and analyzes its structure, so that the Json paths can be selected instead of typed. No data is created in Business Central.</source>
+          <target>Importa un esempio del JSON che verrà ricevuto e ne analizza la struttura, in modo che i percorsi JSON possano essere selezionati anziché digitati. Non vengono creati dati in Business Central.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 3370190025" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The line type is missing.</source>
+          <target>Il tipo di linea è mancante.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 2570541006" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The level must be 1 or greater.</source>
+          <target>Il livello deve essere pari o superiore a 1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 1710722862 - NamedType 1175574011" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The original Json content is not available for mapping %1. Import the Json again to enable export.</source>
+          <target>Il contenuto JSON originale non è disponibile per la mappatura %1. Importa nuovamente il JSON per abilitare l'esportazione.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 348235997 - NamedType 1583747567" size-unit="char" translate="yes" xml:space="preserve">
+          <source>All the lines of the mapping %1 will be deleted and created again from the Json, so the configuration of the existing lines will be lost. Do you want to continue?</source>
+          <target>Tutte le righe della mappatura %1 verranno eliminate e ricreate dal file JSON, pertanto la configurazione delle righe esistenti andrà persa. Vuoi continuare?</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 348235997 - NamedType 3907048935" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json structure has been imported (%1 nodes). %2 lines have been created in the mapping %3: select the target table and field of each line to complete the configuration.</source>
+          <target>La struttura JSON è stata importata (%1 nodi). %2 righe sono state create nella mappatura %3: selezionare la tabella di destinazione e il campo di ciascuna riga per completare la configurazione.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 3719697972 - NamedType 3895367688" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json file is not valid. %1</source>
+          <target>Il file JSON non è valido. %1</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 3804463361 - NamedType 1248466434" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No Json has been imported for the mapping %1. Use the action "Import Json" to import it.</source>
+          <target>Non è stato importato alcun file JSON per la mappatura %1. Utilizzare l'azione ""Importa JSON"" per importarlo.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2274236919 - Method 1271915842 - NamedType 3895367688" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json file is not valid. %1</source>
+          <target>Il file JSON non è valido. %1</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1131357321 - Method 933040171 - NamedType 2565456324" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The key field %1 of the table %2 has no value in the payload (array %3). Check the mapping.</source>
+          <target>Il campo chiave %1 della tabella %2 non ha alcun valore nel payload (array %3). Verificare la mappatura.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 1705898744 - NamedType 2795102967" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 of the table %2 is marked as key field but it is not part of its primary key.</source>
+          <target>Il campo %1 della tabella %2 è contrassegnato come campo chiave, ma non fa parte della sua chiave primaria.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3314249000" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 of the table %2 cannot be mapped because it is not a normal field.</source>
+          <target>Il campo %1 della tabella %2 non può essere mappato perché non è un campo normale.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 1857365242 - NamedType 3875065412" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 of the table %2 is part of its primary key: it must be mapped and its line must be marked as key field.</source>
+          <target>Il campo %1 della tabella %2 fa parte della sua chiave primaria: deve essere mappato e la sua riga deve essere contrassegnata come campo chiave.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 1578380186" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The table %1 is at the first level of the payload: its primary key must be the entry number only.</source>
+          <target>La tabella %1 si trova al primo livello del payload: la sua chiave primaria deve essere costituita unicamente dal numero di voce.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 3648346386" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The table %1 is linked to the IC entry: it must have an Integer field named %2.</source>
+          <target>La tabella %1 è collegata alla voce IC: deve avere un campo Integer denominato %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 355462506" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The primary key of the table %1 must start with the same fields of the primary key of its parent table %2.</source>
+          <target>La chiave primaria della tabella %1 deve iniziare con gli stessi campi della chiave primaria della sua tabella padre %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 2628352360" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The table %1 is nested in the table %2: its primary key must have at least %3 fields (the key of the parent table followed by the fields that identify its records).</source>
+          <target>La tabella %1 è annidata nella tabella %2: la sua chiave primaria deve avere almeno %3 campi (la chiave della tabella padre seguita dai campi che identificano i suoi record).</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2199460658 - Method 3218354727 - NamedType 365681226" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Client secret is missing for connection %1.</source>
+          <target>La chiave segreta del client per la connessione %1 è mancante.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2199460658 - Method 3218354727 - NamedType 1383990408" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unable to get an access token for connection %1. Details: %2</source>
+          <target>Impossibile ottenere un token di accesso per la connessione %1. Dettagli: %2</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 2021407465 - NamedType 2740271968" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json tag %1 is already used by the line %2 in the same Json object.</source>
+          <target>Il tag JSON %1 è già utilizzato dalla riga %2 nello stesso oggetto JSON.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 952110350 - NamedType 126429675" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 of the table %2 used by the record relation %3 does not exist.</source>
+          <target>Il campo %1 della tabella %2 utilizzato dalla relazione record %3 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1186586979 - NamedType 4094571047" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source table %1 does not exist.</source>
+          <target>La tabella di origine %1 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1186586979 - NamedType 880984256" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The table filter of the mapping is not valid for the table %1.</source>
+          <target>Il filtro della tabella di mappatura non è valido per la tabella %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 3306836038" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The parent line %1 does not exist.</source>
+          <target>La riga principale %1 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 3027167441" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The parent line %1 must be at level %2.</source>
+          <target>La riga principale %1 deve trovarsi al livello %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 929665707" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The parent line %1 must be of type Record.</source>
+          <target>La riga principale %1 deve essere di tipo Record.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 1004440081" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The parent table %1 is different from the table %2 of the parent line.</source>
+          <target>La tabella principale %1 è diversa dalla tabella %2 della riga principale.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 2812443995" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The transformation rule %1 does not exist.</source>
+          <target>La regola di trasformazione %1 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 1004476092 - NamedType 1562635252" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A line of type Attribute cannot have child lines.</source>
+          <target>Una riga di tipo Attributo non può avere righe figlie.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 2591697262 - NamedType 1039245016" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 is not an outbound mapping.</source>
+          <target>La mappatura %1 non è una mappatura in uscita.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 203049984 - Method 2591697262 - NamedType 1508989089" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping has no line at level 1.</source>
+          <target>La mappatura non presenta linee al livello 1.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Control 2202265920 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the intercompany company associated with this document.</source>
+          <target>Specifica la società interaziendale associata al presente documento.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Control 811614172 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of intercompany entries linked to this document. Click to see them.</source>
+          <target>Specifica il numero di transazioni interaziendali collegate a questo documento. Clicca per visualizzarle.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 4174190279 - Action 3097581009 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the intercompany entry for this order and sends it to the intercompany company.</source>
+          <target>Crea la registrazione interaziendale per questo ordine e la invia alla società interaziendale.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 4174190279 - Control 2202265920 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the intercompany company associated with this document.</source>
+          <target>Specifica la società interaziendale associata al presente documento.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 4174190279 - Control 811614172 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of intercompany entries linked to this document. Click to see them.</source>
+          <target>Specifica il numero di transazioni interaziendali collegate a questo documento. Clicca per visualizzarle.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 2027694165 - Control 2202265920 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the intercompany company associated with this vendor.</source>
+          <target>Specifica la società interaziendale associata a questo fornitore.</target>
+        </trans-unit>
+        <trans-unit id="Table 2796177829 - Method 771611651 - NamedType 2297219720" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The direction of the mapping %1 cannot be changed because it already has lines or it is used by flows.</source>
+          <target>La direzione della mappatura %1 non può essere modificata perché contiene già delle linee o è utilizzata dai flussi.</target>
+        </trans-unit>
+        <trans-unit id="Table 2796177829 - Method 1421123570 - NamedType 2597726115" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 cannot be deleted because it is used by the following flows (company / flow): %2.</source>
+          <target>La mappatura %1 non può essere eliminata perché viene utilizzata dai seguenti flussi (azienda/flusso): %2.</target>
+        </trans-unit>
+        <trans-unit id="Table 2796177829 - Method 804474859 - NamedType 3435470116" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A mapping cannot be renamed. Export it and import it again with a new code.</source>
+          <target>Non è possibile rinominare una mappatura. Esportala e importala nuovamente con un nuovo codice.</target>
+        </trans-unit>
+        <trans-unit id="XmlPort 3515908602 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Outbound Mapping Import/Export (EIC)</source>
+          <target>Mappatura in uscita IC Import/Export (EIC)</target>
+        </trans-unit>
+        <trans-unit id="XmlPort 3515908602 - NamedType 4249531032" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 already exists and is enabled. Disable it before importing it again.</source>
+          <target>La mappatura %1 esiste già ed è attiva. Disabilitala prima di importarla nuovamente.</target>
+        </trans-unit>
+        <trans-unit id="XmlPort 3515908602 - NamedType 1039245016" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 is not an outbound mapping.</source>
+          <target>La mappatura %1 non è una mappatura in uscita.</target>
         </trans-unit>
       </group>
     </body>
