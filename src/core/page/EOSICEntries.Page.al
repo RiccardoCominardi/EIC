@@ -172,48 +172,26 @@ page 67012 "EOS IC Entries"
                         until ICEntries.Next() = 0;
                 end;
             }
-            action(ShowRequestPayload)
+            action(ShowPayloadAction)
             {
                 ApplicationArea = All;
-                Caption = 'Show Request';
+                Caption = 'Show Payload';
                 Image = ShowList;
 
                 trigger OnAction()
                 begin
-                    Message(Rec.GetBlobFields(Rec.FieldNo("Request Payload")));
+                    ShowPayload();
                 end;
             }
-            action(ExportRequestPayload)
+            action(ExportPayloadAction)
             {
                 ApplicationArea = All;
-                Caption = 'Export Request';
+                Caption = 'Export Payload';
                 Image = ExportFile;
 
                 trigger OnAction()
                 begin
-                    Rec.ExportBlobToJson(Rec.FieldNo("Request Payload"));
-                end;
-            }
-            action(ShowReceivedPayload)
-            {
-                ApplicationArea = All;
-                Caption = 'Show Received';
-                Image = ShowList;
-
-                trigger OnAction()
-                begin
-                    Message(Rec.GetBlobFields(Rec.FieldNo("Received Payload")));
-                end;
-            }
-            action(ExportReceivedPayload)
-            {
-                ApplicationArea = All;
-                Caption = 'Export Received';
-                Image = ExportFile;
-
-                trigger OnAction()
-                begin
-                    Rec.ExportBlobToJson(Rec.FieldNo("Received Payload"));
+                    ExportPayload();
                 end;
             }
             action(FullError)
@@ -244,19 +222,12 @@ page 67012 "EOS IC Entries"
             actionref(ProcessEntries_Promoted; ProcessEntries) { }
             actionref(ProcessStaging_Promoted; ProcessStaging) { }
             actionref(ShowDocument_Promoted; ShowDocument) { }
-            group(RequestPayload)
+            group(Payload)
             {
-                Caption = 'Request Payload';
+                Caption = 'Payload';
                 Image = Database;
-                actionref(ShowRequestPayload_Promoted; ShowRequestPayload) { }
-                actionref(ExportRequestPayload_Promoted; ExportRequestPayload) { }
-            }
-            group(ReceivedPayload)
-            {
-                Caption = 'Received Payload';
-                Image = Database;
-                actionref(ShowReceivedPayload_Promoted; ShowReceivedPayload) { }
-                actionref(ExportReceivedPayload_Promoted; ExportReceivedPayload) { }
+                actionref(ShowPayload_Promoted; ShowPayloadAction) { }
+                actionref(ExportPayload_Promoted; ExportPayloadAction) { }
             }
             group(Error)
             {
@@ -271,6 +242,34 @@ page 67012 "EOS IC Entries"
     trigger OnAfterGetRecord()
     begin
         SetLineColors();
+    end;
+
+    local procedure ShowPayload()
+    var
+        PayloadFieldNo: Integer;
+    begin
+        case Rec.Direction of
+            Rec.Direction::Outbound:
+                PayloadFieldNo := Rec.FieldNo("Request Payload");
+            Rec.Direction::Inbound:
+                PayloadFieldNo := Rec.FieldNo("Received Payload");
+        end;
+
+        Message(Rec.GetBlobFields(PayloadFieldNo));
+    end;
+
+    local procedure ExportPayload()
+    var
+        PayloadFieldNo: Integer;
+    begin
+        case Rec.Direction of
+            Rec.Direction::Outbound:
+                PayloadFieldNo := Rec.FieldNo("Request Payload");
+            Rec.Direction::Inbound:
+                PayloadFieldNo := Rec.FieldNo("Received Payload");
+        end;
+
+        Rec.ExportBlobToJson(PayloadFieldNo);
     end;
 
     local procedure SetLineColors()

@@ -1,21 +1,18 @@
-namespace EOS_Solutions.EOS_Intercompany;
+namespace EOS.Solutions.Intercompany;
 
-using EOS.Solutions.Intercompany;
 using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
-using Microsoft.Purchases.History;
 using Microsoft.Sales.Document;
-using Microsoft.Sales.History;
 
-codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler"
+codeunit 67003 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler"
 {
     procedure BuildPayload(SourceRecord: Variant; ICFlows: Record "EOS IC Flows"): JsonObject;
     var
-    //RecRef: RecordRef;
+        RecRef: RecordRef;
     begin
         //Implement only if the mapping is unusable.
         //You can use the mapping with the transformation rule for complex json
-        /*
+
         if not ICFlows.Enabled then
             exit;
 
@@ -28,14 +25,7 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
                 exit(BuildPurchaseOrderJson(RecRef));
             Database::"Sales Header":
                 exit(BuildSalesOrderJson(RecRef));
-            Database::"Purch. Rcpt. Header":
-                exit(BuildReceiptJson(RecRef));
-            Database::"Sales Shipment Header":
-                exit(BuildShipmentJson(RecRef));
-            Database::Item:
-                exit(BuildItemJson(RecRef));
         end;
-        */
     end;
 
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
@@ -43,11 +33,11 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
     begin
         case ICEntries."Target Document Type" of
-            ICEntries."Target Document Type"::"ES Sales Order":
+            ICEntries."Target Document Type"::"Sales Order":
                 CreateSalesOrder(ICEntries);
-            ICEntries."Target Document Type"::"ES Purchase Order":
+            ICEntries."Target Document Type"::"Purchase Order":
                 CreatePurchaseOrder(ICEntries);
-            ICEntries."Target Document Type"::"ES Item":
+            ICEntries."Target Document Type"::"Item":
                 CreateItem(ICEntries);
             else
                 Error(UnsupportedDocumentTypeErr, ICEntries."Target Document Type");
@@ -56,86 +46,12 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
 
     procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries")
     var
-        StgSalesHeader: Record "EOS IC Stg. Sales Header";
-        StgPurchHeader: Record "EOS IC Stg. Purch. Header";
-        StgShptHeader: Record "EOS IC Stg. Shpt. Header";
-        StgRcptHeader: Record "EOS IC Stg. Rcpt. Header";
-        StgItem: Record "EOS IC Stg. Item";
-        StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
     begin
-        if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
-            exit;
-
-        case ICEntries."Target Document Type" of
-            ICEntries."Target Document Type"::"ES Sales Order":
-                begin
-                    StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgSalesHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Purchase Order":
-                begin
-                    StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgPurchHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Purch. Order", StgPurchHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Shipment":
-                begin
-                    StgShptHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgShptHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Shipment", StgShptHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Receipt":
-                begin
-                    StgRcptHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgRcptHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Receipt", StgRcptHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Item":
-                begin
-                    StgItem.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgItem.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Item Card", StgItem);
-                end;
-        end;
+        ICEntriesMgt.ShowStagingRecord(ICEntries);
     end;
 
     #region BuildPayloadFunctions
-    /*
-    local procedure BuildItemJson(RecRef: RecordRef): JsonObject
-    var
-        Item: Record Item;
-        ItemJson: JsonObject;
-    begin
-        RecRef.SetTable(Item);
-        ItemJson.Add('header', BuildHeaderJson(Item));
-        exit(ItemJson);
-    end;
-
-    local procedure BuildHeaderJson(Item: Record Item): JsonObject
-    var
-        HeaderJson: JsonObject;
-    begin
-        HeaderJson.Add('no', Item."No.");
-        HeaderJson.Add('description', Item.Description);
-        HeaderJson.Add('description2', Item."Description 2");
-        HeaderJson.Add('type', Format(Item.Type, 0, 9));
-        HeaderJson.Add('baseUnitOfMeasure', Item."Base Unit of Measure");
-        HeaderJson.Add('itemCategoryCode', Item."Item Category Code");
-        HeaderJson.Add('genProdPostingGroup', Item."Gen. Prod. Posting Group");
-        HeaderJson.Add('inventoryPostingGroup', Item."Inventory Posting Group");
-        HeaderJson.Add('vatProdPostingGroup', Item."VAT Prod. Posting Group");
-        HeaderJson.Add('unitPrice', Item."Unit Price");
-        HeaderJson.Add('unitCost', Item."Unit Cost");
-        HeaderJson.Add('blocked', Item.Blocked);
-        HeaderJson.Add('gtin', Item.GTIN);
-        exit(HeaderJson);
-    end;
 
     local procedure BuildPurchaseOrderJson(RecRef: RecordRef): JsonObject
     var
@@ -255,107 +171,6 @@ codeunit 67012 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
         exit(LineJson);
     end;
 
-    local procedure BuildReceiptJson(RecRef: RecordRef): JsonObject
-    var
-        PurchRcptHeader: Record "Purch. Rcpt. Header";
-        PurchRcptLine: Record "Purch. Rcpt. Line";
-        ReceiptJson: JsonObject;
-        LinesJsonArray: JsonArray;
-    begin
-        RecRef.SetTable(PurchRcptHeader);
-        ReceiptJson.Add('header', BuildHeaderJson(PurchRcptHeader));
-
-        PurchRcptLine.SetRange("Document No.", PurchRcptHeader."No.");
-        if PurchRcptLine.FindSet() then
-            repeat
-                LinesJsonArray.Add(BuildLineJson(PurchRcptLine));
-            until PurchRcptLine.Next() = 0;
-
-        ReceiptJson.Add('lines', LinesJsonArray);
-        exit(ReceiptJson);
-    end;
-
-    local procedure BuildHeaderJson(PurchRcptHeader: Record "Purch. Rcpt. Header"): JsonObject
-    var
-        HeaderJson: JsonObject;
-    begin
-        HeaderJson.Add('no', PurchRcptHeader."No.");
-        HeaderJson.Add('buyFromVendorNo', PurchRcptHeader."Buy-from Vendor No.");
-        HeaderJson.Add('postingDate', Format(PurchRcptHeader."Posting Date", 0, 9));
-        HeaderJson.Add('orderNo', PurchRcptHeader."Order No.");
-        HeaderJson.Add('vendorShipmentNo', PurchRcptHeader."Vendor Shipment No.");
-        HeaderJson.Add('locationCode', PurchRcptHeader."Location Code");
-        exit(HeaderJson);
-    end;
-
-    local procedure BuildLineJson(PurchRcptLine: Record "Purch. Rcpt. Line"): JsonObject
-    var
-        LineJson: JsonObject;
-    begin
-        LineJson.Add('lineNo', PurchRcptLine."Line No.");
-        LineJson.Add('type', Format(PurchRcptLine.Type, 0, 9));
-        LineJson.Add('no', PurchRcptLine."No.");
-        LineJson.Add('description', PurchRcptLine.Description);
-        LineJson.Add('quantity', PurchRcptLine.Quantity);
-        LineJson.Add('unitOfMeasureCode', PurchRcptLine."Unit of Measure Code");
-        LineJson.Add('locationCode', PurchRcptLine."Location Code");
-        LineJson.Add('variantCode', PurchRcptLine."Variant Code");
-        LineJson.Add('orderNo', PurchRcptLine."Order No.");
-        LineJson.Add('orderLineNo', PurchRcptLine."Order Line No.");
-        exit(LineJson);
-    end;
-
-    local procedure BuildShipmentJson(RecRef: RecordRef): JsonObject
-    var
-        SalesShipmentHeader: Record "Sales Shipment Header";
-        SalesShipmentLine: Record "Sales Shipment Line";
-        ShipmentJson: JsonObject;
-        LinesJsonArray: JsonArray;
-    begin
-        RecRef.SetTable(SalesShipmentHeader);
-        ShipmentJson.Add('header', BuildHeaderJson(SalesShipmentHeader));
-
-        SalesShipmentLine.SetRange("Document No.", SalesShipmentHeader."No.");
-        if SalesShipmentLine.FindSet() then
-            repeat
-                LinesJsonArray.Add(BuildLineJson(SalesShipmentLine));
-            until SalesShipmentLine.Next() = 0;
-
-        ShipmentJson.Add('lines', LinesJsonArray);
-        exit(ShipmentJson);
-    end;
-
-    local procedure BuildHeaderJson(SalesShipmentHeader: Record "Sales Shipment Header"): JsonObject
-    var
-        HeaderJson: JsonObject;
-    begin
-        HeaderJson.Add('no', SalesShipmentHeader."No.");
-        HeaderJson.Add('sellToCustomerNo', SalesShipmentHeader."Sell-to Customer No.");
-        HeaderJson.Add('postingDate', Format(SalesShipmentHeader."Posting Date", 0, 9));
-        HeaderJson.Add('orderNo', SalesShipmentHeader."Order No.");
-        HeaderJson.Add('externalDocumentNo', SalesShipmentHeader."External Document No.");
-        HeaderJson.Add('locationCode', SalesShipmentHeader."Location Code");
-        exit(HeaderJson);
-    end;
-
-    local procedure BuildLineJson(SalesShipmentLine: Record "Sales Shipment Line"): JsonObject
-    var
-        LineJson: JsonObject;
-    begin
-        LineJson.Add('lineNo', SalesShipmentLine."Line No.");
-        LineJson.Add('type', Format(SalesShipmentLine.Type, 0, 9));
-        LineJson.Add('no', SalesShipmentLine."No.");
-        LineJson.Add('description', SalesShipmentLine.Description);
-        LineJson.Add('quantity', SalesShipmentLine.Quantity);
-        LineJson.Add('unitOfMeasureCode', SalesShipmentLine."Unit of Measure Code");
-        LineJson.Add('locationCode', SalesShipmentLine."Location Code");
-        LineJson.Add('variantCode', SalesShipmentLine."Variant Code");
-        LineJson.Add('orderNo', SalesShipmentLine."Order No.");
-        LineJson.Add('orderLineNo', SalesShipmentLine."Order Line No.");
-        exit(LineJson);
-    end;
-
-    */
     #endregion BuildPayloadFunctions
 
     #region ProcessStaging

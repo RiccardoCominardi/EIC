@@ -104,8 +104,6 @@ codeunit 67007 "EOS IC Entries Management"
     var
         StgSalesHeader: Record "EOS IC Stg. Sales Header";
         StgPurchHeader: Record "EOS IC Stg. Purch. Header";
-        StgShptHeader: Record "EOS IC Stg. Shpt. Header";
-        StgRcptHeader: Record "EOS IC Stg. Rcpt. Header";
         StgItem: Record "EOS IC Stg. Item";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
     begin
@@ -113,41 +111,29 @@ codeunit 67007 "EOS IC Entries Management"
             exit;
 
         case ICEntries."Target Document Type" of
-            ICEntries."Target Document Type"::"ES Sales Order":
+            ICEntries."Target Document Type"::"Sales Order":
                 begin
                     StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgSalesHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
                 end;
-            ICEntries."Target Document Type"::"ES Purchase Order":
+            ICEntries."Target Document Type"::"Purchase Order":
                 begin
                     StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgPurchHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Purch. Order", StgPurchHeader);
                 end;
-            ICEntries."Target Document Type"::"ES Shipment":
-                begin
-                    StgShptHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgShptHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Shipment", StgShptHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Receipt":
-                begin
-                    StgRcptHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgRcptHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Receipt", StgRcptHeader);
-                end;
-            ICEntries."Target Document Type"::"ES Item":
+            ICEntries."Target Document Type"::"Item":
                 begin
                     StgItem.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgItem.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Item Card", StgItem);
                 end;
+            else
+                OnHandleDocsShowStagingRecord(ICEntries);
         end;
     end;
 
@@ -253,44 +239,29 @@ codeunit 67007 "EOS IC Entries Management"
     var
         SalesHeader: Record "Sales Header";
         PurchaseHeader: Record "Purchase Header";
-        SalesShipmentHeader: Record "Sales Shipment Header";
-        PurchRcptHeader: Record "Purch. Rcpt. Header";
         Item: Record Item;
-        UnsupportedTableErr: Label 'The table %1 is not supported as an intercompany source.', Comment = '%1 = table name';
     begin
         case RecRef.Number of
             Database::"Sales Header":
                 begin
                     RecRef.SetTable(SalesHeader);
-                    DocumentType := DocumentType::"ES Sales Order";
+                    DocumentType := DocumentType::"Sales Order";
                     DocumentNo := SalesHeader."No.";
                 end;
             Database::"Purchase Header":
                 begin
                     RecRef.SetTable(PurchaseHeader);
-                    DocumentType := DocumentType::"ES Purchase Order";
+                    DocumentType := DocumentType::"Purchase Order";
                     DocumentNo := PurchaseHeader."No.";
-                end;
-            Database::"Sales Shipment Header":
-                begin
-                    RecRef.SetTable(SalesShipmentHeader);
-                    DocumentType := DocumentType::"ES Shipment";
-                    DocumentNo := SalesShipmentHeader."No.";
-                end;
-            Database::"Purch. Rcpt. Header":
-                begin
-                    RecRef.SetTable(PurchRcptHeader);
-                    DocumentType := DocumentType::"ES Receipt";
-                    DocumentNo := PurchRcptHeader."No.";
                 end;
             Database::Item:
                 begin
                     RecRef.SetTable(Item);
-                    DocumentType := DocumentType::"ES Item";
+                    DocumentType := DocumentType::"Item";
                     DocumentNo := Item."No.";
                 end;
             else
-                Error(UnsupportedTableErr, RecRef.Name);
+                OnHandleGetSourceInfo(RecRef, DocumentType, DocumentNo);
         end;
     end;
     #endregion CreateEntry
@@ -591,5 +562,15 @@ codeunit 67007 "EOS IC Entries Management"
                 end;
         end;
         ICEntries.Modify();
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnHandleGetSourceInfo(RecRef: RecordRef; var DocumentType: Enum "EOS IC Document Types"; var DocumentNo: Code[50])
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries")
+    begin
     end;
 }

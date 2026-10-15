@@ -6,7 +6,7 @@ page 67017 "EOS IC Stg. Purch. Orders"
     PageType = List;
     SourceTable = "EOS IC Stg. Purch. Header";
     CardPageId = "EOS IC Stg. Purch. Order";
-    UsageCategory = Lists;
+    UsageCategory = None;
     ApplicationArea = All;
     InsertAllowed = false;
     DeleteAllowed = false;

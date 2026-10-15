@@ -1,7 +1,4 @@
 namespace EOS.Solutions.Intercompany;
-
-using System.Security.User;
-
 page 67027 "EOS IC Stg. Item Card"
 {
     Caption = 'IC Staging Item (EIC)';

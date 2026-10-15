@@ -1,14 +1,12 @@
 namespace EOS.Solutions.Intercompany;
 
-using System.Security.User;
-
-page 67020 "EOS IC Stg. Shipments"
+page 67014 "EOS IC Stg. Sales Orders"
 {
-    Caption = 'IC Staging Shipments (EIC)';
+    Caption = 'IC Staging Sales Orders (EIC)';
     PageType = List;
-    SourceTable = "EOS IC Stg. Shpt. Header";
-    CardPageId = "EOS IC Stg. Shipment";
-    UsageCategory = Lists;
+    SourceTable = "EOS IC Stg. Sales Header";
+    CardPageId = "EOS IC Stg. Sales Order";
+    UsageCategory = None;
     ApplicationArea = All;
     InsertAllowed = false;
     DeleteAllowed = false;
@@ -23,9 +21,15 @@ page 67020 "EOS IC Stg. Shipments"
                 field("IC Entry No."; Rec."IC Entry No.") { }
                 field("No."; Rec."No.") { }
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.") { }
+                field("Order Date"; Rec."Order Date") { }
                 field("Posting Date"; Rec."Posting Date") { }
-                field("Order No."; Rec."Order No.") { }
+                field("Document Date"; Rec."Document Date") { }
+                field("Requested Delivery Date"; Rec."Requested Delivery Date") { }
+                field("Currency Code"; Rec."Currency Code") { }
                 field("External Document No."; Rec."External Document No.") { }
+                field("Your Reference"; Rec."Your Reference") { }
+                field("Payment Terms Code"; Rec."Payment Terms Code") { }
+                field("Shipment Method Code"; Rec."Shipment Method Code") { }
                 field("Location Code"; Rec."Location Code") { }
             }
         }
