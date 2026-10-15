@@ -82,7 +82,7 @@ table 67006 "EOS IC Entries"
         field(14; "Target System Id"; Guid)
         {
             DataClassification = CustomerContent;
-            Caption = 'Source System Id';
+            Caption = 'Target System Id';
         }
         field(15; Status; Enum "EOS IC Entry Status")
         {
