@@ -30,7 +30,7 @@ codeunit 67001 "EOS IC Functions"
     local procedure GetCompaniesEndpoint(ICConnections: Record "EOS IC Connections"): Text
     var
         SaaSEndpointLbl: Label '%1/v2.0/%2/%3/api/v2.0/companies', Locked = true;
-        OnPremEndpointLbl: Label '%1/api/v2.0/companies', Locked = true;
+        OnPremEndpointLbl: Label '%1:%2/%3/api/v2.0/companies', Locked = true;
     begin
         ICConnections.TestField("API Base Url");
         case ICConnections."Environment Type" of
@@ -41,7 +41,14 @@ codeunit 67001 "EOS IC Functions"
                     exit(StrSubstNo(SaaSEndpointLbl, ICConnections."API Base Url", ICConnections."Tenant ID", ICConnections."Environment Name"));
                 end;
             ICConnections."Environment Type"::OnPrem:
-                exit(StrSubstNo(OnPremEndpointLbl, ICConnections."API Base Url"));
+                begin
+                    ICConnections.TestField("Server Port");
+                    ICConnections.TestField("Instance Name");
+                    exit(StrSubstNo(OnPremEndpointLbl,
+                          NormalizeApiBaseUrl(ICConnections."API Base Url"),
+                          ICConnections."Server Port",
+                          ICConnections."Instance Name"));
+                end;
         end;
     end;
 
@@ -227,7 +234,7 @@ codeunit 67001 "EOS IC Functions"
     var
         RemoteCompanyGuid: Guid;
         SaaSEndpointLbl: Label '%1/v2.0/%2/%3/api/eos/eci/v1.0/companies(%4)/%5', Locked = true;
-        OnPremEndpointLbl: Label '%1/api/eos/eci/v1.0/companies(%2)/%3', Locked = true;
+        OnPremEndpointLbl: Label '%1:%2/%3/api/eos/eci/v1.0/companies(%4)/%5', Locked = true;
         InvalidRemoteCompanyIdErr: Label 'The remote company id "%1" is not a valid GUID.', Comment = '%1 = remote company id';
     begin
         ICConnections.TestField("API Base Url");
@@ -248,10 +255,16 @@ codeunit 67001 "EOS IC Functions"
                           EntitySetName));
                 end;
             ICConnections."Environment Type"::OnPrem:
-                exit(StrSubstNo(OnPremEndpointLbl,
-                      NormalizeApiBaseUrl(ICConnections."API Base Url"),
-                      GetGuidText(RemoteCompanyGuid),
-                      EntitySetName));
+                begin
+                    ICConnections.TestField("Server Port");
+                    ICConnections.TestField("Instance Name");
+                    exit(StrSubstNo(OnPremEndpointLbl,
+                          NormalizeApiBaseUrl(ICConnections."API Base Url"),
+                          ICConnections."Server Port",
+                          ICConnections."Instance Name",
+                          GetGuidText(RemoteCompanyGuid),
+                          EntitySetName));
+                end;
         end;
     end;
 

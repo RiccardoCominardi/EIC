@@ -2474,6 +2474,14 @@
           <source>The mapping %1 is not an outbound mapping.</source>
           <target>La mappatura %1 non è una mappatura in uscita.</target>
         </trans-unit>
+        <trans-unit id="Table 2075170370 - Field 1998797858 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Instance</source>
+          <target>Istanza</target>
+        </trans-unit>
+        <trans-unit id="Table 2075170370 - Field 3455630760 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Port</source>
+          <target>Porta</target>
+        </trans-unit>
       </group>
     </body>
   </file>

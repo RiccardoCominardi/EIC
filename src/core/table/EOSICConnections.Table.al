@@ -69,6 +69,16 @@ table 67001 "EOS IC Connections"
             DataClassification = CustomerContent;
             Caption = 'Scope';
         }
+        field(13; "Server Port"; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Port';
+        }
+        field(14; "Instance Name"; Text[100])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Instance';
+        }
     }
 
     keys

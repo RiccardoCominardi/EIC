@@ -25,14 +25,42 @@ page 67002 "EOS IC Connection Card"
                 field("Environment Type"; Rec."Environment Type")
                 {
                     ApplicationArea = All;
+                    trigger OnValidate()
+
+                    begin
+                        CleanEnvDatas()
+                    end;
                 }
-                field("Environment Name"; Rec."Environment Name")
+                group(OnPrem)
                 {
-                    ApplicationArea = All;
+                    ShowCaption = false;
+                    Visible = Rec."Environment Type" = Rec."Environment Type"::OnPrem;
+                    field("OnPrem API Base Url"; Rec."API Base Url")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Server Port"; Rec."Server Port")
+                    {
+                        ApplicationArea = All;
+                        BlankZero = true;
+                    }
+                    field("Instance Name"; Rec."Instance Name")
+                    {
+                        ApplicationArea = All;
+                    }
                 }
-                field("API Base Url"; Rec."API Base Url")
+                group(SaaS)
                 {
-                    ApplicationArea = All;
+                    ShowCaption = false;
+                    Visible = Rec."Environment Type" = Rec."Environment Type"::SaaS;
+                    field("SaaS API Base Url"; Rec."API Base Url")
+                    {
+                        ApplicationArea = All;
+                    }
+                    field("Environment Name"; Rec."Environment Name")
+                    {
+                        ApplicationArea = All;
+                    }
                 }
             }
             group(Authentication)
@@ -116,6 +144,14 @@ page 67002 "EOS IC Connection Card"
     trigger OnOpenPage()
     begin
         SecretId := ' ';
+    end;
+
+    local procedure CleanEnvDatas()
+    begin
+        Rec."API Base Url" := '';
+        Rec."Environment Name" := '';
+        Rec."Instance Name" := '';
+        Rec."Server Port" := 0;
     end;
 
     var

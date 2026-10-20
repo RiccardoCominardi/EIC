@@ -28,10 +28,6 @@ page 67001 "EOS IC Connections List"
                 {
                     ApplicationArea = All;
                 }
-                field("Environment Name"; Rec."Environment Name")
-                {
-                    ApplicationArea = All;
-                }
                 field("Authentication Type"; Rec."Authentication Type")
                 {
                     ApplicationArea = All;
