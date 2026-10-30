@@ -131,6 +131,11 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                 }
+                field("Transliteration Code"; Rec."Transliteration Code")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the transliteration applied to the value after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).';
+                }
                 field("Encode to Base64"; Rec."Encode to Base64")
                 {
                     ApplicationArea = All;

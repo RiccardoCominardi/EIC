@@ -181,6 +181,10 @@ xmlport 67000 "EOS IC Out. Mapping Impex"
                     {
                         MinOccurs = Zero;
                     }
+                    fieldelement(TransliterationCode; ICOutMappingLine."Transliteration Code")
+                    {
+                        MinOccurs = Zero;
+                    }
 
                     tableelement(ICTableRelationHeader; "EOS IC Table Relation Header")
                     {
@@ -293,6 +297,46 @@ xmlport 67000 "EOS IC Out. Mapping Impex"
                         }
                         fieldelement(ExtractFromDateType; TransformationRuleTable."Extract From Date Type")
                         {
+                        }
+                    }
+
+                    tableelement(ICTransliterationHeader; "EOS IC Transliteration Header")
+                    {
+                        AutoReplace = true;
+                        LinkFields = Code = field("Transliteration Code");
+                        LinkTable = ICOutMappingLine;
+                        MinOccurs = Zero;
+                        SourceTableView = sorting(Code);
+                        XmlName = 'TransliterationHeader';
+
+                        fieldelement(Code; ICTransliterationHeader.Code)
+                        {
+                        }
+                        fieldelement(Description; ICTransliterationHeader.Description)
+                        {
+                        }
+
+                        tableelement(ICTransliterationLine; "EOS IC Transliteration Line")
+                        {
+                            AutoReplace = true;
+                            LinkFields = Code = field(Code);
+                            LinkTable = ICTransliterationHeader;
+                            MinOccurs = Zero;
+                            SourceTableView = sorting(Code);
+                            XmlName = 'TransliterationLine';
+
+                            fieldelement(Code; ICTransliterationLine.Code)
+                            {
+                            }
+                            fieldelement(LineNo; ICTransliterationLine."Line No.")
+                            {
+                            }
+                            fieldelement(Character; ICTransliterationLine.Character)
+                            {
+                            }
+                            fieldelement(Transformation; ICTransliterationLine.Transformation)
+                            {
+                            }
                         }
                     }
                 }

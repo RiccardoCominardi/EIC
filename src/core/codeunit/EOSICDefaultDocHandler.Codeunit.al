@@ -32,15 +32,15 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     var
         UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
     begin
-        case ICEntries."Target Document Type" of
-            ICEntries."Target Document Type"::"Sales Order":
+        case ICEntries."Target Flow Type" of
+            ICEntries."Target Flow Type"::"Sales Order":
                 CreateSalesOrder(ICEntries);
-            ICEntries."Target Document Type"::"Purchase Order":
+            ICEntries."Target Flow Type"::"Purchase Order":
                 CreatePurchaseOrder(ICEntries);
-            ICEntries."Target Document Type"::"Item":
+            ICEntries."Target Flow Type"::"Item":
                 CreateItem(ICEntries);
             else
-                Error(UnsupportedDocumentTypeErr, ICEntries."Target Document Type");
+                Error(UnsupportedDocumentTypeErr, ICEntries."Target Flow Type");
         end;
     end;
 
@@ -179,6 +179,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     var
         StgSalesHeader: Record "EOS IC Stg. Sales Header";
         SalesHeader: Record "Sales Header";
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
     begin
         StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
@@ -187,7 +188,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
         CreateSalesHeader(SalesHeader, StgSalesHeader);
         CreateSalesLines(SalesHeader, StgSalesHeader."Entry No.");
-        SetTargetDocument(ICEntries, Database::"Sales Header", SalesHeader."No.", SalesHeader.SystemId);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Sales Header", SalesHeader."No.", SalesHeader.SystemId);
     end;
 
     procedure CreateSalesHeader(var SalesHeader: Record "Sales Header"; StgSalesHeader: Record "EOS IC Stg. Sales Header")
@@ -276,6 +277,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     var
         StgPurchHeader: Record "EOS IC Stg. Purch. Header";
         PurchaseHeader: Record "Purchase Header";
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
     begin
         StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
@@ -284,7 +286,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
         CreatePurchaseHeader(PurchaseHeader, StgPurchHeader);
         CreatePurchaseLines(PurchaseHeader, StgPurchHeader."Entry No.");
-        SetTargetDocument(ICEntries, Database::"Purchase Header", PurchaseHeader."No.", PurchaseHeader.SystemId);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Purchase Header", PurchaseHeader."No.", PurchaseHeader.SystemId);
     end;
 
     local procedure CreatePurchaseHeader(var PurchaseHeader: Record "Purchase Header"; StgPurchHeader: Record "EOS IC Stg. Purch. Header")
@@ -373,6 +375,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     var
         StgItem: Record "EOS IC Stg. Item";
         Item: Record Item;
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
         ItemType: Enum "Item Type";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
         ItemAlreadyExistsErr: Label 'The item %1 already exists.', Comment = '%1 = item no.';
@@ -415,14 +418,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         Item.Validate(GTIN, StgItem.GTIN);
         Item.Modify(true);
 
-        SetTargetDocument(ICEntries, Database::Item, Item."No.", Item.SystemId);
-    end;
-
-    local procedure SetTargetDocument(var ICEntries: Record "EOS IC Entries"; TableId: Integer; DocumentNo: Code[50]; SystemId: Guid)
-    begin
-        ICEntries."Target Table Id" := TableId;
-        ICEntries."Target Document No." := DocumentNo;
-        ICEntries."Target System Id" := SystemId;
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::Item, Item."No.", Item.SystemId);
     end;
 
     #endregion ProcessStaging

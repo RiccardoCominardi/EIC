@@ -31,11 +31,11 @@ page 67008 "EOS IC Remote Flows Lookup"
                 {
                     ApplicationArea = All;
                 }
-                field("Local Document Type"; Rec."Local Document Type")
+                field("Local Flow Type"; Rec."Local Flow Type")
                 {
                     ApplicationArea = All;
                 }
-                field("External Document Type"; Rec."External Document Type")
+                field("External Flow Type"; Rec."External Flow Type")
                 {
                     ApplicationArea = All;
                 }

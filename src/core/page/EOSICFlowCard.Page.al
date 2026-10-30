@@ -44,30 +44,30 @@ page 67006 "EOS IC Flow Card"
                 {
                     ShowCaption = false;
                     Visible = Rec.Direction = Rec.Direction::Inbound;
-                    field("Inbound External Document Type"; Rec."External Document Type")
+                    field("Inbound External Flow Type"; Rec."External Flow Type")
                     {
                         ApplicationArea = All;
-                        Caption = 'Document to receive';
+                        Caption = 'Flow to receive';
                     }
-                    field("Inbound Local Document Type"; Rec."Local Document Type")
+                    field("Inbound Local Flow Type"; Rec."Local Flow Type")
                     {
                         ApplicationArea = All;
-                        Caption = 'Document to create';
+                        Caption = 'Flow to create';
                     }
                 }
                 group(Outbound)
                 {
                     ShowCaption = false;
                     Visible = Rec.Direction = Rec.Direction::Outbound;
-                    field("Outbound Local Document Type"; Rec."Local Document Type")
+                    field("Outbound Local Flow Type"; Rec."Local Flow Type")
                     {
                         ApplicationArea = All;
-                        Caption = 'Document to send';
+                        Caption = 'Flow to send';
                     }
-                    field("Outbound External Document Type"; Rec."External Document Type")
+                    field("Outbound External Flow Type"; Rec."External Flow Type")
                     {
                         ApplicationArea = All;
-                        Caption = 'Document to create';
+                        Caption = 'Flow to create';
                     }
                 }
                 field("Mapping Code"; Rec."Mapping Code")

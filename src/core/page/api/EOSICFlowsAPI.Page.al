@@ -51,24 +51,24 @@ page 67007 "EOS IC Flows API"
                     Caption = 'Direction Ordinal';
                     Editable = false;
                 }
-                field(localDocumentType; Rec."Local Document Type")
+                field(localDocumentType; Rec."Local Flow Type")
                 {
-                    Caption = 'Local Document Type';
+                    Caption = 'Local Flow Type';
                     Editable = false;
                 }
                 field(localDocumentTypeOrdinal; LocalDocumentTypeOrdinal)
                 {
-                    Caption = 'Local Document Type Ordinal';
+                    Caption = 'Local Flow Type Ordinal';
                     Editable = false;
                 }
-                field(externalDocumentType; Rec."External Document Type")
+                field(externalDocumentType; Rec."External Flow Type")
                 {
-                    Caption = 'External Document Type';
+                    Caption = 'External Flow Type';
                     Editable = false;
                 }
                 field(externalDocumentTypeOrdinal; ExternalDocumentTypeOrdinal)
                 {
-                    Caption = 'External Document Type Ordinal';
+                    Caption = 'External Flow Type Ordinal';
                     Editable = false;
                 }
                 field(flowPairId; Rec."Flow Pair Id")
@@ -92,8 +92,8 @@ page 67007 "EOS IC Flows API"
     trigger OnAfterGetRecord()
     begin
         DirectionOrdinal := Rec.Direction.AsInteger();
-        LocalDocumentTypeOrdinal := Rec."Local Document Type".AsInteger();
-        ExternalDocumentTypeOrdinal := Rec."External Document Type".AsInteger();
+        LocalDocumentTypeOrdinal := Rec."Local Flow Type".AsInteger();
+        ExternalDocumentTypeOrdinal := Rec."External Flow Type".AsInteger();
     end;
 
     var

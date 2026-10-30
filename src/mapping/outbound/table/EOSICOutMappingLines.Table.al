@@ -48,6 +48,7 @@ table 67019 "EOS IC Out. Mapping Lines"
                 end;
 
                 Rec.Validate("Encode to Base64");
+                Rec.Validate("Transliteration Code");
             end;
         }
         field(5; "Table No."; Integer)
@@ -89,6 +90,7 @@ table 67019 "EOS IC Out. Mapping Lines"
                     Rec."Field Type" := CopyStr(Format(Field.Type, 0, 9), 1, MaxStrLen(Rec."Field Type"));
 
                 Rec.Validate("Encode to Base64");
+                Rec.Validate("Transliteration Code");
             end;
         }
         field(7; "Field Name"; Text[80])
@@ -147,6 +149,7 @@ table 67019 "EOS IC Out. Mapping Lines"
                 end;
                 Rec.Validate("Field No.");
                 Rec.Validate("Encode to Base64");
+                Rec.Validate("Transliteration Code");
 
                 if Rec."Attribute Type" <> Rec."Attribute Type"::Constant then
                     Rec."Constant Type" := Rec."Constant Type"::" ";
@@ -249,6 +252,31 @@ table 67019 "EOS IC Out. Mapping Lines"
             begin
                 if Rec."Constant Type" <> Rec."Constant Type"::" " then
                     Rec.TestField("Attribute Type", Rec."Attribute Type"::Constant);
+            end;
+        }
+        field(62; "Transliteration Code"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Transliteration Code';
+            TableRelation = "EOS IC Transliteration Header"."Code";
+
+            trigger OnValidate()
+            var
+                Field: Record Field;
+                MustBeLbl: Label 'must be %1 if %2 is %3.', Comment = '%1 = required value, %2 = field caption, %3 = field value';
+                OrLbl: Label '%1 or %2', Comment = '%1 = first value, %2 = second value';
+            begin
+                if Rec."Transliteration Code" = '' then
+                    exit;
+
+                if Rec."Line Type" <> Rec."Line Type"::Attribute then
+                    Rec.FieldError("Line Type", StrSubstNo(MustBeLbl, Rec."Line Type"::Attribute, Rec.FieldCaption("Transliteration Code"), Rec."Transliteration Code"));
+
+                if Rec."Attribute Type" <> Rec."Attribute Type"::Field then
+                    Rec.FieldError("Attribute Type", StrSubstNo(MustBeLbl, Rec."Attribute Type"::Field, Rec.FieldCaption("Transliteration Code"), Rec."Transliteration Code"));
+
+                if not (Rec."Field Type" in [Format(Field.Type::Code, 0, 9), Format(Field.Type::Text, 0, 9)]) then
+                    Rec.FieldError("Field Type", StrSubstNo(MustBeLbl, StrSubstNo(OrLbl, Field.Type::Code, Field.Type::Text), Rec.FieldCaption("Transliteration Code"), Rec."Transliteration Code"));
             end;
         }
     }

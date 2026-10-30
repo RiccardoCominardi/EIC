@@ -114,11 +114,11 @@ codeunit 67002 "EOS IC Try Functions"
     begin
         PayloadObject.Add('icTransactionId', Format(ICEntries."IC Transaction ID", 0, 4));
         PayloadObject.Add('flowPairId', ICFlows."Flow Pair Id");
-        PayloadObject.Add('sourceDocumentTypeOrdinal', ICEntries."Source Document Type".AsInteger());
+        PayloadObject.Add('sourceDocumentTypeOrdinal', ICEntries."Source Flow Type".AsInteger());
         PayloadObject.Add('sourceDocumentNo', ICEntries."Source Document No.");
         PayloadObject.Add('sourceTableId', ICEntries."Source Table Id");
         PayloadObject.Add('sourceSystemId', Format(ICEntries."Source System Id", 0, 4));
-        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntries."Target Document Type".AsInteger());
+        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntries."Target Flow Type".AsInteger());
         PayloadObject.Add('requestPayload', Base64Convert.ToBase64(ICEntries.GetBlobFields(ICEntries.FieldNo("Request Payload"))));
         PayloadObject.WriteTo(PayloadText);
     end;

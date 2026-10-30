@@ -846,10 +846,6 @@
           <source>Source Document No.</source>
           <target>Nr. documento origine</target>
         </trans-unit>
-        <trans-unit id="Table 910390347 - Field 587895070 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Source Document Type</source>
-          <target>Tipo documento origine</target>
-        </trans-unit>
         <trans-unit id="Table 910390347 - Field 2847409975 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Source System Id</source>
           <target>System id origine</target>
@@ -865,22 +861,6 @@
         <trans-unit id="Table 910390347 - Field 634438274 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Target Company</source>
           <target>Società destinazione</target>
-        </trans-unit>
-        <trans-unit id="Table 910390347 - Field 613208907 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Document No.</source>
-          <target>Nr. documento destinazione</target>
-        </trans-unit>
-        <trans-unit id="Table 910390347 - Field 2165486786 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Document Type</source>
-          <target>Tipo documento destinazione</target>
-        </trans-unit>
-        <trans-unit id="Table 910390347 - Field 2228918483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target System Id</source>
-          <target>System Id destinazione</target>
-        </trans-unit>
-        <trans-unit id="Table 910390347 - Field 598236158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Table Id</source>
-          <target>Table Id destinazione</target>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Flows (EIC)</source>
@@ -910,17 +890,9 @@
           <source>Enabled</source>
           <target>Abilita</target>
         </trans-unit>
-        <trans-unit id="Table 2290985398 - Field 3978473510 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>External Document Type</source>
-          <target>Tipo documento esterno</target>
-        </trans-unit>
         <trans-unit id="Table 2290985398 - Field 2585542399 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Flow Pair Id</source>
           <target>Collegamento flusso Id</target>
-        </trans-unit>
-        <trans-unit id="Table 2290985398 - Field 1884385390 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Local Document Type</source>
-          <target>Tipo documento locale</target>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Field 4021610987 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Mapping Code</source>
@@ -1022,14 +994,6 @@
           <source>Source Table Id</source>
           <target>Table Id origine</target>
         </trans-unit>
-        <trans-unit id="Page 1924839786 - Control 3001771861 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transaction ID</source>
-          <target>ID Transazione</target>
-        </trans-unit>
-        <trans-unit id="Page 1924839786 - Control 897925545 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Document No.</source>
-          <target>Nr. documento destinazione</target>
-        </trans-unit>
         <trans-unit id="Page 2290985398 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Flows (EIC)</source>
           <target>Flussi (EIC)</target>
@@ -1055,11 +1019,11 @@
           <target>Abilita</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 2096232830 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>External Document Type</source>
+          <source>External Flow Type</source>
           <target>Tipo documento esterno</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 2603542598 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Local Document Type</source>
+          <source>Local Flow Type</source>
           <target>Tipo documento locale</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 2686962215 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -1067,11 +1031,11 @@
           <target>Id</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 1647485019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>External Document Type Ordinal</source>
+          <source>External Flow Type Ordinal</source>
           <target>Tipo documento esterno ordine</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 2262867107 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Local Document Type Ordinal</source>
+          <source>Local Flow Type Ordinal</source>
           <target>Tipo documento locale ordine</target>
         </trans-unit>
         <trans-unit id="Page 2049423069 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -1146,10 +1110,6 @@
           <source>Id</source>
           <target>Id</target>
         </trans-unit>
-        <trans-unit id="Page 1924839786 - Control 2686962215 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Id</source>
-          <target>Id</target>
-        </trans-unit>
         <trans-unit id="Page 3819397511 - Action 1707695669 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Shows the relations between the tables that can be used by the lines of the outbound mappings.</source>
           <target>Mostra la relazione tra i record da usare per compilare il mapping in uscita per Json innestati</target>
@@ -1214,22 +1174,6 @@
           <source>The flow entry does not contain a valid "code" value.</source>
           <target>Il flusso non contiene un valore valido per il campo "code"</target>
         </trans-unit>
-        <trans-unit id="Page 2564205215 - Control 2103119369 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document to receive</source>
-          <target>Documento da ricevere</target>
-        </trans-unit>
-        <trans-unit id="Page 2564205215 - Control 387720425 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document to create</source>
-          <target>Documento da creare</target>
-        </trans-unit>
-        <trans-unit id="Page 2564205215 - Control 775397010 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document to create</source>
-          <target>Documento da creare</target>
-        </trans-unit>
-        <trans-unit id="Page 2564205215 - Control 372980762 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document to send</source>
-          <target>Documento da inviare</target>
-        </trans-unit>
         <trans-unit id="Page 2564205215 - Action 1603149868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Pair Flow</source>
           <target>Collega flusso</target>
@@ -1265,10 +1209,6 @@
         <trans-unit id="Page 2564205215 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Flow Card (EIC)</source>
           <target>Card flusso (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Page 1924839786 - Control 2067135191 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Document Type Ordinal</source>
-          <target>Tipo documento esterno ordinale</target>
         </trans-unit>
         <trans-unit id="Page 1667147491 - Control 2067135191 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Target Document Type Ordinal</source>
@@ -1361,18 +1301,6 @@
         <trans-unit id="Enum 3132266909 - EnumValue 3665605423 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Completed</source>
           <target>Completato</target>
-        </trans-unit>
-        <trans-unit id="Enum 327433921 - EnumValue 1673401186 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order</source>
-          <target>Ordine vendita</target>
-        </trans-unit>
-        <trans-unit id="Enum 327433921 - EnumValue 387971303 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order</source>
-          <target>Ordine acquisto</target>
-        </trans-unit>
-        <trans-unit id="Enum 327433921 - EnumValue 3276313895 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Item</source>
-          <target>Articolo</target>
         </trans-unit>
         <trans-unit id="Enum 2199874466 - EnumValue 3221732535 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Inbound</source>
@@ -1944,15 +1872,15 @@
         </trans-unit>
         <trans-unit id="Table 2749412492 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Staging Purchase Header (EIC)</source>
-          <target>Staging ordine acquisto (EIC)</target>
+          <target>Staging documenti acquisto (EIC)</target>
         </trans-unit>
         <trans-unit id="Table 2913546931 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Staging Purchase Line (EIC)</source>
-          <target>Staging righe ordine acquisto (EIC)</target>
+          <target>Staging righe documenti acquisto (EIC)</target>
         </trans-unit>
         <trans-unit id="Table 2592994182 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Staging Sales Header (EIC)</source>
-          <target>Staging ordine vendita (EIC)</target>
+          <target>Staging documenti vendita (EIC)</target>
         </trans-unit>
         <trans-unit id="Table 2592994182 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Entry No.</source>
@@ -1964,7 +1892,7 @@
         </trans-unit>
         <trans-unit id="Table 2224744141 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Staging Sales Line (EIC)</source>
-          <target>Staging righe ordine vendita (EIC)</target>
+          <target>Staging righe documenti vendita (EIC)</target>
         </trans-unit>
         <trans-unit id="Table 1733395880 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Table Relation Header (EIC)</source>
@@ -2073,14 +2001,6 @@
         <trans-unit id="Enum 3602152798 - EnumValue 4077356876 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>PFCH ES</source>
           <target>PFCH ES</target>
-        </trans-unit>
-        <trans-unit id="Enum 327433921 - EnumValue 1400726 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>ES Receipt</source>
-          <target>ES Carico</target>
-        </trans-unit>
-        <trans-unit id="Enum 327433921 - EnumValue 2496363146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>ES Shipment</source>
-          <target>ES Spedizione</target>
         </trans-unit>
         <trans-unit id="TableExtension 876641161 - Field 2202265920 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Company</source>
@@ -2481,6 +2401,290 @@
         <trans-unit id="Table 2075170370 - Field 3455630760 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Port</source>
           <target>Porta</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2425708366 - Method 1697129847 - NamedType 3041773116" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The target document %1 was not found.</source>
+          <target>Il documento di destinazione %1 non è stato trovato</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2425708366 - Method 732789857 - NamedType 2408383932" size-unit="char" translate="yes" xml:space="preserve">
+          <source>All target documents for entry %1 must have the same document type and table.</source>
+          <target>Tutti i documenti di destinazione per il Movimento (EIC) %1 devono avere lo stesso tipo documento e stessa tabella</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2425708366 - Method 732789857 - NamedType 3041773116" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The target document %1 was not found.</source>
+          <target>Il documento di destinazione %1 non è stato trovato</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2425708366 - Method 2335469442 - NamedType 337087475" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No target documents are linked to entry %1.</source>
+          <target>Nessuno documento di destinazione collegato al movimento %1</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Method 3372236453 - NamedType 2791289126" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No outbound entry was found for IC transaction ID %1.</source>
+          <target>Nessun movimento in uscita trovato per l'ID transazione %1</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry No.</source>
+          <target>Nr. movimento IC</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 2686962215 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Id</source>
+          <target>Id</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Field 598236158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Table Id</source>
+          <target>Table Id destinazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 3001771861 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transaction ID</source>
+          <target>ID Transazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 2067135191 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Document Type Ordinal</source>
+          <target>Tipo documento esterno ordinale</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 3033465582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Table Id</source>
+          <target>Table Id destinazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 897925545 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Document No.</source>
+          <target>Nr. documento destinazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 2124811003 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target System Id</source>
+          <target>System Id destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Field 2228918483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target System Id</source>
+          <target>System Id destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Field 613208907 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Document No.</source>
+          <target>Nr. documento destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry Target Document</source>
+          <target>Tipo documento destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 2601663154 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Documents Count</source>
+          <target>Nr. documenti destinazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3616923711 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry Target Documents (EIC)</source>
+          <target>Documenti destinazione (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 1441502928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transliteration Code</source>
+          <target>Cod. traslitterazione</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 1441502928 - Method 2126772001 - NamedType 1002409097" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must not be %1.</source>
+          <target>non deve essere %1.</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 1441502928 - Method 2126772001 - NamedType 1877585225" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must be a field of type Text or Code.</source>
+          <target>deve essere un campo di tipo Testo o Codice.</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 1441502928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transliteration Code</source>
+          <target>Cod. traslitterazione</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 1441502928 - Method 2126772001 - NamedType 928238982" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must be %1 if %2 is %3.</source>
+          <target>deve essere %1 se %2 è %3.</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 1441502928 - Method 2126772001 - NamedType 2038339145" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 or %2</source>
+          <target>%1 o %2</target>
+        </trans-unit>
+        <trans-unit id="Table 2205026071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transliteration Header (EIC)</source>
+          <target>Testata traslitterazioni (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 2205026071 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <target>Codice</target>
+        </trans-unit>
+        <trans-unit id="Table 2205026071 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <target>Descrizione</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transliteration Line (EIC)</source>
+          <target>Righe traslitterazioni (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Method 109749268 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The character %1 is already defined in the line %2 of the transliteration %3.</source>
+          <target>Il carattere %1 è già definito nella riga %2 della traslitterazione %3.</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Field 3597746779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Character</source>
+          <target>Carattere</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <target>Codice</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Line No.</source>
+          <target>Num. riga</target>
+        </trans-unit>
+        <trans-unit id="Table 1499061712 - Field 3071184163 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transformation</source>
+          <target>Trasformazione</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 3660337750 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the transliterations that can be assigned to the lines of the mappings.</source>
+          <target>Mostra le traslitterazioni assegnabili alle righe delle mappature.</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 3660337750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transliterations</source>
+          <target>Traslitterazioni</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3660337750 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the transliterations that can be assigned to the lines of the mappings.</source>
+          <target>Mostra le traslitterazioni assegnabili alle righe delle mappature.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3660337750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transliterations</source>
+          <target>Traslitterazioni</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Control 1441502928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the transliteration applied to the text read from the Json before it is written in the target field (Text and Code fields only).</source>
+          <target>Specifica la traslitterazione applicata al testo letto dal Json prima della scrittura nel campo di destinazione (solo campi Testo e Codice).</target>
+        </trans-unit>
+        <trans-unit id="Page 1277141442 - Control 1441502928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the transliteration applied to the value after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).</source>
+          <target>Specifica la traslitterazione applicata al valore dopo la regola di trasformazione e prima del limite di lunghezza e della codifica Base64 (solo campi Testo e Codice).</target>
+        </trans-unit>
+        <trans-unit id="Page 4095929970 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transliteration Card (EIC)</source>
+          <target>Card traslitterazione (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 4095929970 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target>Generale</target>
+        </trans-unit>
+        <trans-unit id="Page 4095929970 - Control 3471137671 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lines</source>
+          <target>Righe</target>
+        </trans-unit>
+        <trans-unit id="Page 1086266225 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transliteration Lines (EIC)</source>
+          <target>Righe traslitterazione (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 1086266225 - Control 3597746779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the character, or the sequence of characters, to be replaced. Upper and lower case are different characters.</source>
+          <target>Specifica il carattere, o la sequenza di caratteri, da sostituire. Maiuscole e minuscole sono caratteri diversi.</target>
+        </trans-unit>
+        <trans-unit id="Page 1086266225 - Control 3071184163 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the text that replaces the character. Leave it blank to remove the character.</source>
+          <target>Specifica il testo che sostituisce il carattere. Lasciare vuoto per rimuovere il carattere.</target>
+        </trans-unit>
+        <trans-unit id="Page 1007216483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Transliterations (EIC)</source>
+          <target>Traslitterazioni (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 2290985398 - Field 1369908409 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Local Flow Type</source>
+          <target>Tipo flusso locale</target>
+        </trans-unit>
+        <trans-unit id="Table 2290985398 - Field 3502718241 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>External Flow Type</source>
+          <target>Tipo flusso esterno</target>
+        </trans-unit>
+        <trans-unit id="Table 2085461979 - Field 3006094725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Flow Type</source>
+          <target>Tipo flusso destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 3006094725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Flow Type</source>
+          <target>Tipo flusso destinazione</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 1125068873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Flow Type</source>
+          <target>Tipo flusso origine</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Action 3097581009 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the intercompany entry for this order and sends it to the intercompany company.</source>
+          <target>Crea la registrazione interaziendale per questo ordine e la invia alla società interaziendale.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Action 3097581009 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Intercompany (EIC)</source>
+          <target>Invio Intercompany (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 2564205215 - Control 565999885 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Flow to send</source>
+          <target>Flusso da inviare</target>
+        </trans-unit>
+        <trans-unit id="Page 2564205215 - Control 3499859701 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Flow to create</source>
+          <target>Flusso da creare</target>
+        </trans-unit>
+        <trans-unit id="Page 2564205215 - Control 3969997694 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Flow to create</source>
+          <target>Flusso da creare</target>
+        </trans-unit>
+        <trans-unit id="Page 2564205215 - Control 4131298462 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Flow to receive</source>
+          <target>Flusso da ricevere</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 1673401186 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sales Order</source>
+          <target>Ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 387971303 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Purchase Order</source>
+          <target>Ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 3276313895 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Item</source>
+          <target>Articolo</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 2821274657 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Confirm Purchase Order</source>
+          <target>Conferma ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 391998728 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Confirm Sales Order</source>
+          <target>Conferma ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 1400726 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ES Receipt</source>
+          <target>ES Carico</target>
+        </trans-unit>
+        <trans-unit id="Enum 3288802766 - EnumValue 2496363146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ES Shipment</source>
+          <target>ES Spedizione</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 2607439498 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Document No. (EIC)</source>
+          <target>Nr. documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 4047318561 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Document No. (EIC)</source>
+          <target>Nr. documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 4187932378 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Document No. (EIC)</source>
+          <target>Nr. documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 4187932378 - Field 3510154225 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Line No. (EIC)</source>
+          <target>Nr. riga documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 2475892408 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Document No. (EIC)</source>
+          <target>Nr. documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 213599487 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Document No. (EIC)</source>
+          <target>Nr. documento origine (EIC)</target>
+        </trans-unit>
+        <trans-unit id="TableExtension 213599487 - Field 3510154225 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Line No. (EIC)</source>
+          <target>Nr. riga documento origine (EIC)</target>
         </trans-unit>
       </group>
     </body>

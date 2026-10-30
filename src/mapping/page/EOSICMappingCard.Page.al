@@ -242,6 +242,14 @@ page 67010 "EOS IC Mapping Card"
                 RunObject = page "EOS IC Table Relation List";
                 ToolTip = 'Shows the relations between the tables that can be used by the lines of the outbound mappings.';
             }
+            action(Transliterations)
+            {
+                ApplicationArea = All;
+                Caption = 'Transliterations';
+                Image = Translations;
+                RunObject = page "EOS IC Transliterations";
+                ToolTip = 'Shows the transliterations that can be assigned to the lines of the mappings.';
+            }
         }
         area(Promoted)
         {

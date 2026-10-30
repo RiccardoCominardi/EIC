@@ -17,5 +17,10 @@ tableextension 67003 "EOS IC Purchase Header" extends "Purchase Header"
             DataClassification = CustomerContent;
             Caption = 'IC Entries';
         }
+        field(67002; "EOS IC Source Document No."; Code[50])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Source Document No. (EIC)';
+        }
     }
 }

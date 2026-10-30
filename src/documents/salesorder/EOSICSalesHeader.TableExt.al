@@ -17,5 +17,10 @@ tableextension 67002 "EOS IC Sales Header" extends "Sales Header"
             DataClassification = CustomerContent;
             Caption = 'IC Entries';
         }
+        field(67002; "EOS IC Source Document No."; Code[50])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Source Document No. (EIC)';
+        }
     }
 }

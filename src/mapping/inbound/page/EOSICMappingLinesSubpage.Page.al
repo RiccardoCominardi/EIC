@@ -78,6 +78,13 @@ page 67011 "EOS IC Mapping Lines Subpage"
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
                 }
+                field("Transliteration Code"; Rec."Transliteration Code")
+                {
+                    ApplicationArea = All;
+                    Editable = NodeEditable;
+                    HideValue = not NodeEditable;
+                    ToolTip = 'Specifies the transliteration applied to the text read from the Json before it is written in the target field (Text and Code fields only).';
+                }
             }
         }
     }

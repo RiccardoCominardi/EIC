@@ -36,15 +36,15 @@ table 67003 "EOS IC Flows"
             DataClassification = CustomerContent;
             Caption = 'Direction';
         }
-        field(6; "Local Document Type"; Enum "EOS IC Document Types")
+        field(6; "Local Flow Type"; Enum "EOS IC Flow Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'Local Document Type';
+            Caption = 'Local Flow Type';
         }
-        field(7; "External Document Type"; Enum "EOS IC Document Types")
+        field(7; "External Flow Type"; Enum "EOS IC Flow Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'External Document Type';
+            Caption = 'External Flow Type';
         }
         field(8; "Auto Send"; Boolean)
         {

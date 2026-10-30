@@ -131,6 +131,29 @@ table 67017 "EOS IC Mapping Lines"
                     Rec.TestField("Target Field No.");
             end;
         }
+        field(15; "Transliteration Code"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Transliteration Code';
+            TableRelation = "EOS IC Transliteration Header"."Code";
+
+            trigger OnValidate()
+            var
+                Field: Record Field;
+                MustNotBeLbl: Label 'must not be %1.', Comment = '%1 = mapping type';
+                MustBeTextLbl: Label 'must be a field of type Text or Code.';
+            begin
+                if Rec."Transliteration Code" = '' then
+                    exit;
+
+                if Rec."Mapping Type" = Rec."Mapping Type"::Constant then
+                    Rec.FieldError("Mapping Type", StrSubstNo(MustNotBeLbl, Rec."Mapping Type"));
+
+                if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
+                    if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
+                        Rec.FieldError("Target Field No.", MustBeTextLbl);
+            end;
+        }
     }
 
     keys

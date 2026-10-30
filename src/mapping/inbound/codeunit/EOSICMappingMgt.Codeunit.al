@@ -9,6 +9,7 @@ codeunit 67013 "EOS IC Mapping Mgt."
         TempICMappingLine: Record "EOS IC Mapping Lines" temporary;
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
         ICMappingValidation: Codeunit "EOS IC Mapping Validation";
+        TransliterationMgt: Codeunit "EOS IC Transliteration Mgt.";
         ContextElements: Dictionary of [Text, JsonToken];
         TableContext: Dictionary of [Integer, Text];
         TablesOfContext: Dictionary of [Text, List of [Integer]];
@@ -435,11 +436,11 @@ codeunit 67013 "EOS IC Mapping Mgt."
                 if ICMappingLine."Json Path" <> '' then
                     if ResolveValue(ICMappingLine."Json Path", JsonValue) then
                         if (ICMappingLine."Source Value" <> '') and (JsonValue.AsText() = ICMappingLine."Source Value") then
-                            SetFieldText(FieldRef, ICMappingLine."Target Value")
+                            SetFieldText(FieldRef, ICMappingLine."Target Value", '')
                         else
-                            SetFieldValue(FieldRef, JsonValue);
+                            SetFieldValue(FieldRef, JsonValue, ICMappingLine."Transliteration Code");
             ICMappingLine."Mapping Type"::Constant:
-                SetFieldText(FieldRef, ICMappingLine."Target Value");
+                SetFieldText(FieldRef, ICMappingLine."Target Value", '');
             ICMappingLine."Mapping Type"::Transformation:
                 begin
                     if ICMappingLine."Json Path" <> '' then
@@ -448,12 +449,12 @@ codeunit 67013 "EOS IC Mapping Mgt."
                     GetTableElement(ICMappingLine."Target Table ID", ContextElement);
                     OnTransformValue(ICMappingLine, ContextElement, CurrentValue, Result, Handled);
                     if Handled then
-                        SetFieldText(FieldRef, Result);
+                        SetFieldText(FieldRef, Result, ICMappingLine."Transliteration Code");
                 end;
         end;
     end;
 
-    local procedure SetFieldValue(var FieldRef: FieldRef; JsonValue: JsonValue)
+    local procedure SetFieldValue(var FieldRef: FieldRef; JsonValue: JsonValue; TransliterationCode: Code[20])
     begin
         case FieldRef.Type of
             FieldType::Integer:
@@ -465,12 +466,12 @@ codeunit 67013 "EOS IC Mapping Mgt."
             FieldType::Boolean:
                 FieldRef.Value := JsonValue.AsBoolean();
             else
-                SetFieldText(FieldRef, JsonValue.AsText());
+                SetFieldText(FieldRef, JsonValue.AsText(), TransliterationCode);
         end;
     end;
 
-    // Blank text leaves the field untouched; text longer than the field is truncated.
-    local procedure SetFieldText(var FieldRef: FieldRef; ValueText: Text)
+    // Blank text leaves the field untouched; text longer than the field is truncated (after the transliteration, which applies to Text/Code fields only).
+    local procedure SetFieldText(var FieldRef: FieldRef; ValueText: Text; TransliterationCode: Code[20])
     var
         ConfigValidateMgt: Codeunit "Config. Validate Management";
         ErrorText: Text;
@@ -479,8 +480,10 @@ codeunit 67013 "EOS IC Mapping Mgt."
         if ValueText = '' then
             exit;
 
-        if FieldRef.Type in [FieldType::Text, FieldType::Code] then
+        if FieldRef.Type in [FieldType::Text, FieldType::Code] then begin
+            ValueText := TransliterationMgt.Transliterate(TransliterationCode, ValueText);
             ValueText := CopyStr(ValueText, 1, FieldRef.Length);
+        end;
 
         ErrorText := ConfigValidateMgt.EvaluateValue(FieldRef, ValueText, false);
         if ErrorText <> '' then

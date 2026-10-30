@@ -11,6 +11,7 @@ codeunit 67017 "EOS IC Out. Mapping Mgt."
         TempMappingLine: Record "EOS IC Out. Mapping Lines" temporary;
         TempRelationLine: Record "EOS IC Table Relation Line" temporary;
         ICFlowsContext: Record "EOS IC Flows";
+        TransliterationMgt: Codeunit "EOS IC Transliteration Mgt.";
         LineFilters: Dictionary of [Integer, Text];
         ChildLineNos: Dictionary of [Integer, List of [Integer]];
         RelationTargets: Dictionary of [Text, Integer];
@@ -433,6 +434,9 @@ codeunit 67017 "EOS IC Out. Mapping Mgt."
 
         if MappingLine."Transformation Rule" <> '' then
             TextValue := TransformValue(MappingLine, TextValue);
+
+        if MappingLine."Transliteration Code" <> '' then
+            TextValue := TransliterationMgt.Transliterate(MappingLine."Transliteration Code", TextValue);
 
         if MappingLine.Length <> 0 then
             TextValue := CopyStr(TextValue, 1, MappingLine.Length);

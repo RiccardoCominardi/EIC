@@ -148,8 +148,8 @@ codeunit 67001 "EOS IC Functions"
         SelectedFlowCode: Code[20];
         SelectedFlowPairId: Text[100];
         SelectedFlowDirection: Enum "EOS IC Direction";
-        SelectedFlowLocalDocumentType: Enum "EOS IC Document Types";
-        SelectedFlowExternalDocumentType: Enum "EOS IC Document Types";
+        SelectedFlowLocalDocumentType: Enum "EOS IC Flow Types";
+        SelectedFlowExternalDocumentType: Enum "EOS IC Flow Types";
         NewPairId: Text[100];
         CurrentFlowAlreadyPairedErr: Label 'The current flow is already paired. Remove the existing pair before creating a new one.';
         RemoteFlowAlreadyPairedErr: Label 'The selected remote flow %1 is already paired. Remove the existing pair before creating a new one.', Comment = '%1 = remote flow code';
@@ -272,13 +272,17 @@ codeunit 67001 "EOS IC Functions"
     var
         ICCompanies: Record "EOS IC Companies";
         ICConnections: Record "EOS IC Connections";
+        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
         ICAuthentication: Interface "EOS IC Authentication";
         AccessToken: SecretText;
-        EntriesEndpoint: Text;
+        EntryTargetDocumentsEndpoint: Text;
     begin
         ICEntries.TestField(Direction, ICEntries.Direction::Inbound);
         ICEntries.TestField("IC Transaction ID");
-        ICEntries.TestField("Target Document No.");
+
+        ICEntryTargetDocument.SetRange("IC Entry No.", ICEntries."Entry No.");
+        if ICEntryTargetDocument.IsEmpty() then
+            exit;
 
         ICCompanies.Get(ICEntries."Source Company");
         ICCompanies.TestField("Connection Code");
@@ -288,21 +292,25 @@ codeunit 67001 "EOS IC Functions"
         ICAuthentication := ICConnections."Authentication Type";
         AccessToken := ICAuthentication.GetToken(ICConnections);
 
-        EntriesEndpoint := GetRemoteApiEndpoint(ICConnections, ICCompanies."Remote Company Id", 'entryUpdates');
-        ExecutePatchRequest(GetEntryByTransactionIdEndpoint(EntriesEndpoint, ICEntries."IC Transaction ID"), AccessToken, BuildEntryUpdatePayload(ICEntries));
+        EntryTargetDocumentsEndpoint := GetRemoteApiEndpoint(ICConnections, ICCompanies."Remote Company Id", 'entryTargetDocuments');
+        if ICEntryTargetDocument.FindSet() then
+            repeat
+                ICEntryTargetDocument.TestField("Target Document No.");
+                ICEntryTargetDocument.TestField("Target Table Id");
+                ICEntryTargetDocument.TestField("Target System Id");
+                ExecutePostRequest(EntryTargetDocumentsEndpoint, AccessToken, BuildEntryTargetDocumentPayload(ICEntries, ICEntryTargetDocument));
+            until ICEntryTargetDocument.Next() = 0;
     end;
 
-    local procedure GetEntryByTransactionIdEndpoint(EntriesEndpoint: Text; ICTransactionId: Guid): Text
-    begin
-        exit(EntriesEndpoint + '?$filter=icTransactionId%20eq%20' + GetGuidText(ICTransactionId));
-    end;
-
-    local procedure BuildEntryUpdatePayload(ICEntries: Record "EOS IC Entries") PayloadText: Text
+    local procedure BuildEntryTargetDocumentPayload(ICEntries: Record "EOS IC Entries"; ICEntryTargetDocument: Record "EOS IC Entry Target Document") PayloadText: Text
     var
         PayloadObject: JsonObject;
     begin
-        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntries."Target Document Type".AsInteger());
-        PayloadObject.Add('targetDocumentNo', ICEntries."Target Document No.");
+        PayloadObject.Add('icTransactionId', GetGuidText(ICEntries."IC Transaction ID"));
+        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntryTargetDocument."Target Flow Type".AsInteger());
+        PayloadObject.Add('targetDocumentNo', ICEntryTargetDocument."Target Document No.");
+        PayloadObject.Add('targetTableId', ICEntryTargetDocument."Target Table Id");
+        PayloadObject.Add('targetSystemId', GetGuidText(ICEntryTargetDocument."Target System Id"));
         PayloadObject.WriteTo(PayloadText);
     end;
 
@@ -323,7 +331,7 @@ codeunit 67001 "EOS IC Functions"
         exit(StrSubstNo(FlowEndpointLbl, FlowsEndpoint, FlowId));
     end;
 
-    local procedure ResolveRemoteFlowFromResponse(ResponseText: Text; DefaultCompanyCode: Code[20]; var SelectedFlowId: Text[100]; var SelectedFlowCode: Code[20]; var SelectedFlowPairId: Text[100]; var SelectedFlowDirection: Enum "EOS IC Direction"; var SelectedFlowLocalDocumentType: Enum "EOS IC Document Types"; var SelectedFlowExternalDocumentType: Enum "EOS IC Document Types"): Boolean
+    local procedure ResolveRemoteFlowFromResponse(ResponseText: Text; DefaultCompanyCode: Code[20]; var SelectedFlowId: Text[100]; var SelectedFlowCode: Code[20]; var SelectedFlowPairId: Text[100]; var SelectedFlowDirection: Enum "EOS IC Direction"; var SelectedFlowLocalDocumentType: Enum "EOS IC Flow Types"; var SelectedFlowExternalDocumentType: Enum "EOS IC Flow Types"): Boolean
     var
         TempRemoteFlows: Record "EOS IC Flows" temporary;
         FlowsArray: JsonArray;
@@ -384,8 +392,8 @@ codeunit 67001 "EOS IC Functions"
         TempRemoteFlows.Description := CopyStr(GetText(FlowObject, 'description'), 1, MaxStrLen(TempRemoteFlows.Description));
         TempRemoteFlows."Flow Pair Id" := FlowPairId;
         TempRemoteFlows.Direction := GetDirectionFromJson(FlowObject, TempRemoteFlows.Direction);
-        TempRemoteFlows."Local Document Type" := GetFlowDocumentTypeFromJson(FlowObject, 'localDocumentTypeOrdinal', 'localDocumentType', TempRemoteFlows."Local Document Type");
-        TempRemoteFlows."External Document Type" := GetFlowDocumentTypeFromJson(FlowObject, 'externalDocumentTypeOrdinal', 'externalDocumentType', TempRemoteFlows."External Document Type");
+        TempRemoteFlows."Local Flow Type" := GetFlowDocumentTypeFromJson(FlowObject, 'localDocumentTypeOrdinal', 'localDocumentType', TempRemoteFlows."Local Flow Type");
+        TempRemoteFlows."External Flow Type" := GetFlowDocumentTypeFromJson(FlowObject, 'externalDocumentTypeOrdinal', 'externalDocumentType', TempRemoteFlows."External Flow Type");
         TempRemoteFlows."Auto Send" := GetJsonBooleanOrDefault(FlowObject, 'autoSend', false);
         TempRemoteFlows."Auto Process" := GetJsonBooleanOrDefault(FlowObject, 'autoProcess', false);
         TempRemoteFlows."Auto Create Documents" := GetJsonBooleanOrDefault(FlowObject, 'autoCreateDocuments', false);
@@ -393,7 +401,7 @@ codeunit 67001 "EOS IC Functions"
         TempRemoteFlows.Insert(false, true);
     end;
 
-    local procedure SelectRemoteFlowFromTemporaryList(var TempRemoteFlows: Record "EOS IC Flows" temporary; var SelectedFlowId: Text[100]; var SelectedFlowCode: Code[20]; var SelectedFlowPairId: Text[100]; var SelectedFlowDirection: Enum "EOS IC Direction"; var SelectedFlowLocalDocumentType: Enum "EOS IC Document Types"; var SelectedFlowExternalDocumentType: Enum "EOS IC Document Types"): Boolean
+    local procedure SelectRemoteFlowFromTemporaryList(var TempRemoteFlows: Record "EOS IC Flows" temporary; var SelectedFlowId: Text[100]; var SelectedFlowCode: Code[20]; var SelectedFlowPairId: Text[100]; var SelectedFlowDirection: Enum "EOS IC Direction"; var SelectedFlowLocalDocumentType: Enum "EOS IC Flow Types"; var SelectedFlowExternalDocumentType: Enum "EOS IC Flow Types"): Boolean
     var
         RemoteFlowsLookupPage: Page "EOS IC Remote Flows Lookup";
         SelectedFlowGuid: Guid;
@@ -414,12 +422,12 @@ codeunit 67001 "EOS IC Functions"
         SelectedFlowCode := TempRemoteFlows.Code;
         SelectedFlowPairId := TempRemoteFlows."Flow Pair Id";
         SelectedFlowDirection := TempRemoteFlows.Direction;
-        SelectedFlowLocalDocumentType := TempRemoteFlows."Local Document Type";
-        SelectedFlowExternalDocumentType := TempRemoteFlows."External Document Type";
+        SelectedFlowLocalDocumentType := TempRemoteFlows."Local Flow Type";
+        SelectedFlowExternalDocumentType := TempRemoteFlows."External Flow Type";
         exit(true);
     end;
 
-    local procedure ValidateSelectedFlowCongruence(CurrentFlow: Record "EOS IC Flows"; SelectedFlowCode: Code[20]; SelectedFlowDirection: Enum "EOS IC Direction"; SelectedFlowLocalDocumentType: Enum "EOS IC Document Types"; SelectedFlowExternalDocumentType: Enum "EOS IC Document Types")
+    local procedure ValidateSelectedFlowCongruence(CurrentFlow: Record "EOS IC Flows"; SelectedFlowCode: Code[20]; SelectedFlowDirection: Enum "EOS IC Direction"; SelectedFlowLocalDocumentType: Enum "EOS IC Flow Types"; SelectedFlowExternalDocumentType: Enum "EOS IC Flow Types")
     var
         ExpectedRemoteDirection: Enum "EOS IC Direction";
         IncompatibleRemoteFlowErr: Label 'The selected remote flow %1 is not compatible with flow %2. Expected remote values: Direction=%3, Local Document Type=%4, External Document Type=%5. Current remote values: Direction=%6, Local Document Type=%7, External Document Type=%8.', Comment = '%1 = remote flow code, %2 = current flow code, %3 = expected remote direction, %4 = expected remote local document type, %5 = expected remote external document type, %6 = current remote direction, %7 = current remote local document type, %8 = current remote external document type';
@@ -427,16 +435,16 @@ codeunit 67001 "EOS IC Functions"
         ExpectedRemoteDirection := GetOppositeDirection(CurrentFlow.Direction);
 
         if (SelectedFlowDirection = ExpectedRemoteDirection) and
-           (SelectedFlowLocalDocumentType = CurrentFlow."External Document Type") and
-           (SelectedFlowExternalDocumentType = CurrentFlow."Local Document Type") then
+           (SelectedFlowLocalDocumentType = CurrentFlow."External Flow Type") and
+           (SelectedFlowExternalDocumentType = CurrentFlow."Local Flow Type") then
             exit;
 
         Error(IncompatibleRemoteFlowErr,
           SelectedFlowCode,
           CurrentFlow."Code",
           Format(ExpectedRemoteDirection),
-          Format(CurrentFlow."External Document Type"),
-          Format(CurrentFlow."Local Document Type"),
+          Format(CurrentFlow."External Flow Type"),
+          Format(CurrentFlow."Local Flow Type"),
           Format(SelectedFlowDirection),
           Format(SelectedFlowLocalDocumentType),
           Format(SelectedFlowExternalDocumentType));
@@ -492,9 +500,9 @@ codeunit 67001 "EOS IC Functions"
         exit(DefaultDirection);
     end;
 
-    local procedure GetFlowDocumentTypeFromJson(FlowObject: JsonObject; OrdinalPropertyName: Text; LegacyPropertyName: Text; DefaultDocumentType: Enum "EOS IC Document Types"): Enum "EOS IC Document Types"
+    local procedure GetFlowDocumentTypeFromJson(FlowObject: JsonObject; OrdinalPropertyName: Text; LegacyPropertyName: Text; DefaultDocumentType: Enum "EOS IC Flow Types"): Enum "EOS IC Flow Types"
     var
-        FlowDocumentType: Enum "EOS IC Document Types";
+        FlowDocumentType: Enum "EOS IC Flow Types";
     begin
         if TryParseFlowDocumentTypeByOrdinal(FlowObject, OrdinalPropertyName, FlowDocumentType) then
             exit(FlowDocumentType);
@@ -515,14 +523,14 @@ codeunit 67001 "EOS IC Functions"
         exit(Evaluate(FlowDirection, Format(DirectionOrdinal)));
     end;
 
-    local procedure TryParseFlowDocumentTypeByOrdinal(FlowObject: JsonObject; PropertyName: Text; var FlowDocumentType: Enum "EOS IC Document Types"): Boolean
+    local procedure TryParseFlowDocumentTypeByOrdinal(FlowObject: JsonObject; PropertyName: Text; var FlowType: Enum "EOS IC Flow Types"): Boolean
     var
         DocumentTypeOrdinal: Integer;
     begin
         if not TryGetJsonInteger(FlowObject, PropertyName, DocumentTypeOrdinal) then
             exit(false);
 
-        exit(Evaluate(FlowDocumentType, Format(DocumentTypeOrdinal)));
+        exit(Evaluate(FlowType, Format(DocumentTypeOrdinal)));
     end;
 
     local procedure TryGetJsonInteger(SourceObject: JsonObject; PropertyName: Text; var Value: Integer): Boolean

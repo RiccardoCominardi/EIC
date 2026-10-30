@@ -28,6 +28,14 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
+                field("Local Flow Type"; Rec."Local Flow Type")
+                {
+                    ApplicationArea = All;
+                }
+                field("External Flow Type"; Rec."External Flow Type")
+                {
+                    ApplicationArea = All;
+                }
                 field("Mapping Code"; Rec."Mapping Code")
                 {
                     ApplicationArea = All;

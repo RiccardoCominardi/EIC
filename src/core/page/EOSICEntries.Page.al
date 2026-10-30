@@ -47,7 +47,7 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
-                field("Source Document Type"; Rec."Source Document Type")
+                field("Source Flow Type"; Rec."Source Flow Type")
                 {
                     ApplicationArea = All;
                 }
@@ -55,11 +55,11 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
-                field("Target Document Type"; Rec."Target Document Type")
+                field("Target Flow Type"; Rec."Target Flow Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Document No."; Rec."Target Document No.")
+                field("Target Documents Count"; Rec."Target Documents Count")
                 {
                     ApplicationArea = All;
                 }
@@ -104,6 +104,7 @@ page 67012 "EOS IC Entries"
                 trigger OnAction()
                 var
                     PageManagement: Codeunit "Page Management";
+                    ICEntriesMgt: Codeunit "EOS IC Entries Management";
                     RecRef: RecordRef;
                     DocVariant: Variant;
                 begin
@@ -112,15 +113,12 @@ page 67012 "EOS IC Entries"
                             begin
                                 RecRef.Open(Rec."Source Table Id");
                                 RecRef.GetBySystemId(Rec."Source System Id");
+                                DocVariant := RecRef;
+                                PageManagement.PageRun(DocVariant);
                             end;
                         Rec.Direction::Inbound:
-                            begin
-                                RecRef.Open(Rec."Target Table Id");
-                                RecRef.GetBySystemId(Rec."Target System Id");
-                            end;
+                            ICEntriesMgt.ShowTargetDocuments(Rec);
                     end;
-                    DocVariant := RecRef;
-                    PageManagement.PageRun(DocVariant);
                 end;
             }
         }

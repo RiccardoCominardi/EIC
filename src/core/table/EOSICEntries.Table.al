@@ -44,10 +44,10 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Target Company';
         }
-        field(7; "Source Document Type"; Enum "EOS IC Document Types")
+        field(7; "Source Flow Type"; Enum "EOS IC Flow Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'Source Document Type';
+            Caption = 'Source Flow Type';
         }
         field(8; "Source Document No."; Code[50])
         {
@@ -64,25 +64,10 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Source System Id';
         }
-        field(11; "Target Document Type"; Enum "EOS IC Document Types")
+        field(11; "Target Flow Type"; Enum "EOS IC Flow Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'Target Document Type';
-        }
-        field(12; "Target Document No."; Code[50])
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Document No.';
-        }
-        field(13; "Target Table Id"; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Table Id';
-        }
-        field(14; "Target System Id"; Guid)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target System Id';
+            Caption = 'Target Flow Type';
         }
         field(15; Status; Enum "EOS IC Entry Status")
         {
@@ -133,6 +118,13 @@ table 67006 "EOS IC Entries"
         {
             DataClassification = CustomerContent;
             Caption = 'Staging Status';
+            Editable = false;
+        }
+        field(25; "Target Documents Count"; Integer)
+        {
+            Caption = 'Target Documents Count';
+            FieldClass = FlowField;
+            CalcFormula = count("EOS IC Entry Target Document" where("IC Entry No." = field("Entry No.")));
             Editable = false;
         }
     }

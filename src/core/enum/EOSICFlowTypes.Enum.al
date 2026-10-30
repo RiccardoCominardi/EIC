@@ -1,6 +1,6 @@
 namespace EOS.Solutions.Intercompany;
 
-enum 67001 "EOS IC Document Types"
+enum 67001 "EOS IC Flow Types"
 {
     Extensible = true;
 
@@ -12,7 +12,15 @@ enum 67001 "EOS IC Document Types"
     {
         Caption = 'Purchase Order';
     }
-    value(2; "Item")
+    value(2; "Confirm Sales Order")
+    {
+        Caption = 'Confirm Sales Order';
+    }
+    value(3; "Confirm Purchase Order")
+    {
+        Caption = 'Confirm Purchase Order';
+    }
+    value(4; "Item")
     {
         Caption = 'Item';
     }
