@@ -1,14 +1,14 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67020 "EOS IC Entry Target Docs"
+page 67020 "EOS IC Entry Created Docs"
 {
-    Caption = 'IC Entry Target Documents (EIC)';
+    Caption = 'IC Entry Created Documents (EIC)';
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
     PageType = List;
-    SourceTable = "EOS IC Entry Target Document";
+    SourceTable = "EOS IC Entry Created Document";
     ApplicationArea = All;
     UsageCategory = Lists;
 
@@ -18,11 +18,11 @@ page 67020 "EOS IC Entry Target Docs"
         {
             repeater(General)
             {
-                field("Target Flow Type"; Rec."Target Flow Type")
+                field("Target Flow Type"; Rec."Flow Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Document No."; Rec."Target Document No.")
+                field("Target Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
 

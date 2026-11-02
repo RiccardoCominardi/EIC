@@ -51,24 +51,25 @@ page 67007 "EOS IC Flows API"
                     Caption = 'Direction Ordinal';
                     Editable = false;
                 }
-                field(localDocumentType; Rec."Local Flow Type")
+                field(relationTableId; Rec."Relation Table Id")
                 {
-                    Caption = 'Local Flow Type';
-                    Editable = false;
+                    Caption = 'Relation Table Id';
                 }
-                field(localDocumentTypeOrdinal; LocalDocumentTypeOrdinal)
+                field(relationOptionType; Rec."Relation Option Type")
                 {
-                    Caption = 'Local Flow Type Ordinal';
-                    Editable = false;
+                    Caption = 'Relation Option Type';
                 }
-                field(externalDocumentType; Rec."External Flow Type")
+                field(relationTableName; Rec."Relation Table Name")
                 {
-                    Caption = 'External Flow Type';
-                    Editable = false;
+                    Caption = 'Relation Table Name';
                 }
-                field(externalDocumentTypeOrdinal; ExternalDocumentTypeOrdinal)
+                field(flowType; Rec."Flow Type")
                 {
-                    Caption = 'External Flow Type Ordinal';
+                    Caption = 'Flow Type';
+                }
+                field(flowTypeOrdinal; flowTypeOrdinal)
+                {
+                    Caption = 'Flow Type Ordinal';
                     Editable = false;
                 }
                 field(flowPairId; Rec."Flow Pair Id")
@@ -92,10 +93,9 @@ page 67007 "EOS IC Flows API"
     trigger OnAfterGetRecord()
     begin
         DirectionOrdinal := Rec.Direction.AsInteger();
-        LocalDocumentTypeOrdinal := Rec."Local Flow Type".AsInteger();
-        ExternalDocumentTypeOrdinal := Rec."External Flow Type".AsInteger();
+        flowTypeOrdinal := Rec."Flow Type".AsInteger();
     end;
 
     var
-        DirectionOrdinal, LocalDocumentTypeOrdinal, ExternalDocumentTypeOrdinal : Integer;
+        DirectionOrdinal, flowTypeOrdinal : Integer;
 }

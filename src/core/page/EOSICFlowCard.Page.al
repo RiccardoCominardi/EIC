@@ -40,51 +40,58 @@ page 67006 "EOS IC Flow Card"
                 {
                     ApplicationArea = All;
                 }
+                field("Relation Table Id"; Rec."Relation Table Id")
+                {
+                    ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update();
+                    end;
+                }
+                field("Relation Table Name"; Rec."Relation Table Name")
+                {
+                    ApplicationArea = All;
+                }
+                field("Relation Option Type"; Rec."Relation Option Type")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    trigger OnDrillDown()
+                    var
+                        ICFunctions: Codeunit "EOS IC Functions";
+                    begin
+                        ICFunctions.AssistTableOptionTypeList(Rec);
+                    end;
+                }
+                field("Mapping Code"; Rec."Mapping Code")
+                {
+                    ApplicationArea = All;
+                }
                 group(Inbound)
                 {
                     ShowCaption = false;
                     Visible = Rec.Direction = Rec.Direction::Inbound;
-                    field("Inbound External Flow Type"; Rec."External Flow Type")
+                    field("Flow Type"; Rec."Flow Type")
                     {
                         ApplicationArea = All;
-                        Caption = 'Flow to receive';
                     }
-                    field("Inbound Local Flow Type"; Rec."Local Flow Type")
+                    field("Auto Process"; Rec."Auto Process")
                     {
                         ApplicationArea = All;
-                        Caption = 'Flow to create';
+                    }
+                    field("Auto Create Documents"; Rec."Auto Create Documents")
+                    {
+                        ApplicationArea = All;
                     }
                 }
                 group(Outbound)
                 {
                     ShowCaption = false;
                     Visible = Rec.Direction = Rec.Direction::Outbound;
-                    field("Outbound Local Flow Type"; Rec."Local Flow Type")
+                    field("Auto Send"; Rec."Auto Send")
                     {
                         ApplicationArea = All;
-                        Caption = 'Flow to send';
                     }
-                    field("Outbound External Flow Type"; Rec."External Flow Type")
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Flow to create';
-                    }
-                }
-                field("Mapping Code"; Rec."Mapping Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Auto Send"; Rec."Auto Send")
-                {
-                    ApplicationArea = All;
-                }
-                field("Auto Process"; Rec."Auto Process")
-                {
-                    ApplicationArea = All;
-                }
-                field("Auto Create Documents"; Rec."Auto Create Documents")
-                {
-                    ApplicationArea = All;
                 }
             }
         }

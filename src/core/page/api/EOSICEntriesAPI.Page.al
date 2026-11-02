@@ -36,26 +36,6 @@ page 67013 "EOS IC Entries API"
                 {
                     Caption = 'Flow Pair Id';
                 }
-                field(sourceDocumentTypeOrdinal; SourceDocumentTypeOrdinal)
-                {
-                    Caption = 'Source Document Type Ordinal';
-                }
-                field(sourceDocumentNo; Rec."Source Document No.")
-                {
-                    Caption = 'Source Document No.';
-                }
-                field(sourceTableId; Rec."Source Table Id")
-                {
-                    Caption = 'Source Table Id';
-                }
-                field(sourceSystemId; Rec."Source System Id")
-                {
-                    Caption = 'Source System Id';
-                }
-                field(targetDocumentTypeOrdinal; TargetDocumentTypeOrdinal)
-                {
-                    Caption = 'Target Document Type Ordinal';
-                }
                 field(requestPayload; RequestPayload)
                 {
                     Caption = 'Request Payload';
@@ -90,8 +70,9 @@ page 67013 "EOS IC Entries API"
         Rec.Direction := Rec.Direction::Inbound;
         Rec."Source Company" := ICFlows."Company Code";
         Rec."Target Company" := ICSetup."Company Code";
-        Rec."Source Flow Type" := Enum::"EOS IC Flow Types".FromInteger(SourceDocumentTypeOrdinal);
-        Rec."Target Flow Type" := Enum::"EOS IC Flow Types".FromInteger(TargetDocumentTypeOrdinal);
+        Rec."Relation Table Id" := ICFlows."Relation Table Id";
+        Rec."Relation Option Type" := ICFlows."Relation Option Type";
+        Rec."Flow Type" := ICFlows."Flow Type";
         Rec.Status := Rec.Status::Pending;
         Rec.SetBlobFields(Rec.FieldNo("Received Payload"), Base64Convert.FromBase64(RequestPayload), false);
         Rec.Insert(true);
@@ -105,5 +86,4 @@ page 67013 "EOS IC Entries API"
     var
         FlowPairId: Text[100];
         RequestPayload: Text;
-        SourceDocumentTypeOrdinal, TargetDocumentTypeOrdinal : Integer;
 }

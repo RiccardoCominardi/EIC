@@ -28,11 +28,19 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
-                field("Local Flow Type"; Rec."Local Flow Type")
+                field("Relation Table Id"; Rec."Relation Table Id")
                 {
                     ApplicationArea = All;
                 }
-                field("External Flow Type"; Rec."External Flow Type")
+                field("Relation Table Name"; Rec."Relation Table Name")
+                {
+                    ApplicationArea = All;
+                }
+                field("Relation Option Type"; Rec."Relation Option Type")
+                {
+                    ApplicationArea = All;
+                }
+                field("Flow Type"; Rec."Flow Type")
                 {
                     ApplicationArea = All;
                 }

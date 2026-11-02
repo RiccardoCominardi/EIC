@@ -97,6 +97,7 @@ codeunit 67017 "EOS IC Out. Mapping Mgt."
         FileNameLbl: Label '%1.json', Locked = true, Comment = '%1 = mapping code';
     begin
         ICMapping.TestField(Direction, ICMapping.Direction::Outbound);
+        TestTableFilterIsSet(ICMapping);
 
         SampleMode := true;
         JsonFile := CreateJson(ICMapping.Code, ICMapping.GetTableFilter(), ICFlows);
@@ -117,6 +118,24 @@ codeunit 67017 "EOS IC Out. Mapping Mgt."
     #endregion PublicProcedures
 
     #region Preparation
+    // A view with only the sorting has no filter, so the filters are read back from the record.
+    local procedure TestTableFilterIsSet(ICMapping: Record "EOS IC Mapping Headers")
+    var
+        SourceRecRef: RecordRef;
+        TableFilterText: Text;
+        NoTableFilterErr: Label 'Set at least one filter in the example table filter of the mapping %1 before downloading the Json example.', Comment = '%1 = mapping code';
+    begin
+        TableFilterText := ICMapping.GetTableFilter();
+        if TableFilterText <> '' then begin
+            SourceRecRef.Open(ICMapping."Source Table No.");
+            SourceRecRef.SetView(TableFilterText);
+            if SourceRecRef.GetFilters() <> '' then
+                exit;
+        end;
+
+        Error(NoTableFilterErr, ICMapping.Code);
+    end;
+
     local procedure GetOutboundMapping(MappingCode: Code[20]; var ICMapping: Record "EOS IC Mapping Headers")
     begin
         ICMapping.Get(MappingCode);

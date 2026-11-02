@@ -32,15 +32,13 @@ codeunit 67003 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
     var
         UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
     begin
-        case ICEntries."Target Flow Type" of
-            ICEntries."Target Flow Type"::"Sales Order":
+        case ICEntries."Flow Type" of
+            ICEntries."Flow Type"::"Sales Order Creation":
                 CreateSalesOrder(ICEntries);
-            ICEntries."Target Flow Type"::"Purchase Order":
+            ICEntries."Flow Type"::"Purchase Order Creation":
                 CreatePurchaseOrder(ICEntries);
-            ICEntries."Target Flow Type"::"Item":
-                CreateItem(ICEntries);
             else
-                Error(UnsupportedDocumentTypeErr, ICEntries."Target Flow Type");
+                Error(UnsupportedDocumentTypeErr, ICEntries."Flow Type");
         end;
     end;
 
@@ -370,56 +368,5 @@ codeunit 67003 "EOS IC PFCH ES Doc. Handler" implements "EOS IC Document Handler
             Error(InvalidLineTypeErr, TypeText);
         exit(PurchaseLineType);
     end;
-
-    procedure CreateItem(var ICEntries: Record "EOS IC Entries")
-    var
-        StgItem: Record "EOS IC Stg. Item";
-        Item: Record Item;
-        ICEntriesMgt: Codeunit "EOS IC Entries Management";
-        ItemType: Enum "Item Type";
-        StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
-        ItemAlreadyExistsErr: Label 'The item %1 already exists.', Comment = '%1 = item no.';
-        InvalidItemTypeErr: Label 'The item type "%1" is not valid.', Comment = '%1 = item type';
-    begin
-        StgItem.SetRange("IC Entry No.", ICEntries."Entry No.");
-        if not StgItem.FindFirst() then
-            Error(StagingNotFoundErr, ICEntries."Entry No.");
-
-        StgItem.TestField("No.");
-        if Item.Get(StgItem."No.") then
-            Error(ItemAlreadyExistsErr, StgItem."No.");
-
-        if StgItem.Type <> '' then
-            if not Evaluate(ItemType, StgItem.Type, 9) then
-                Error(InvalidItemTypeErr, StgItem.Type);
-
-        Item.Init();
-        Item."No." := StgItem."No.";
-        Item.Insert(true);
-
-        // Type and category are validated first because they set defaults that the explicit values must override.
-        if StgItem.Type <> '' then
-            Item.Validate(Type, ItemType);
-        if StgItem."Item Category Code" <> '' then
-            Item.Validate("Item Category Code", StgItem."Item Category Code");
-        Item.Validate(Description, StgItem.Description);
-        Item.Validate("Description 2", StgItem."Description 2");
-        if StgItem."Base Unit of Measure" <> '' then
-            Item.Validate("Base Unit of Measure", StgItem."Base Unit of Measure");
-        if StgItem."Gen. Prod. Posting Group" <> '' then
-            Item.Validate("Gen. Prod. Posting Group", StgItem."Gen. Prod. Posting Group");
-        if StgItem."Inventory Posting Group" <> '' then
-            Item.Validate("Inventory Posting Group", StgItem."Inventory Posting Group");
-        if StgItem."VAT Prod. Posting Group" <> '' then
-            Item.Validate("VAT Prod. Posting Group", StgItem."VAT Prod. Posting Group");
-        Item.Validate("Unit Price", StgItem."Unit Price");
-        Item.Validate("Unit Cost", StgItem."Unit Cost");
-        Item.Validate(Blocked, StgItem.Blocked);
-        Item.Validate(GTIN, StgItem.GTIN);
-        Item.Modify(true);
-
-        ICEntriesMgt.SetTargetDocument(ICEntries, Database::Item, Item."No.", Item.SystemId);
-    end;
-
     #endregion ProcessStaging
 }

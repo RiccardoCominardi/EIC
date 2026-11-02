@@ -44,30 +44,20 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Target Company';
         }
-        field(7; "Source Flow Type"; Enum "EOS IC Flow Types")
+        field(8; "Document No."; Code[50])
         {
             DataClassification = CustomerContent;
-            Caption = 'Source Flow Type';
+            Caption = 'Document No.';
         }
-        field(8; "Source Document No."; Code[50])
+        field(10; "Doc. System Id"; Guid)
         {
             DataClassification = CustomerContent;
-            Caption = 'Source Document No.';
+            Caption = 'Doc. System Id';
         }
-        field(9; "Source Table Id"; Integer)
+        field(11; "Flow Type"; Enum "EOS IC Flow Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'Source Table Id';
-        }
-        field(10; "Source System Id"; Guid)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Source System Id';
-        }
-        field(11; "Target Flow Type"; Enum "EOS IC Flow Types")
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Flow Type';
+            Caption = 'Flow Type';
         }
         field(15; Status; Enum "EOS IC Entry Status")
         {
@@ -120,12 +110,55 @@ table 67006 "EOS IC Entries"
             Caption = 'Staging Status';
             Editable = false;
         }
-        field(25; "Target Documents Count"; Integer)
+        field(25; "Created Documents Count"; Integer)
         {
-            Caption = 'Target Documents Count';
+            Caption = 'Created Documents Count';
             FieldClass = FlowField;
-            CalcFormula = count("EOS IC Entry Target Document" where("IC Entry No." = field("Entry No.")));
+            CalcFormula = count("EOS IC Entry Created Document" where("IC Entry No." = field("Entry No.")));
             Editable = false;
+        }
+        field(26; "Relation Table Id"; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Relation Table Id';
+            BlankZero = true;
+            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
+
+            trigger OnLookup()
+            var
+                ICFunctions: Codeunit "EOS IC Functions";
+                NewObjectID: Integer;
+                ObjType: Option "TableData","Table",,"Report",,"Codeunit";
+            begin
+                if ICFunctions.LookupObjectID(NewObjectID, ObjType::Table, Rec."Relation Table Id") then
+                    Rec.Validate("Relation Table Id", NewObjectID);
+            end;
+
+            trigger OnValidate()
+            var
+                AllObj: Record AllObj;
+                ObjType: option "TableData","Table",,"Report",,"Codeunit";
+                ObjNotFoundErr: Label 'There is no Table with ID %1';
+            begin
+                if Rec."Relation Table Id" = 0 then
+                    exit;
+
+                if not AllObj.Get(ObjType::Table, Rec."Relation Table Id") then
+                    Error(ObjNotFoundErr, Rec."Relation Table Id");
+            end;
+        }
+        field(27; "Relation Table Name"; Text[249])
+        {
+            Caption = 'Relation Table Name';
+            FieldClass = FlowField;
+            CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = filter(Table), "Object ID" = field("Relation Table Id")));
+            Editable = false;
+        }
+        field(28; "Relation Option Type"; Option)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Relation Option Type';
+            OptionMembers = "0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19";
         }
     }
 

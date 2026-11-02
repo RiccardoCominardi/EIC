@@ -87,11 +87,10 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntries.Direction := ICFlows.Direction;
         ICEntries."Source Company" := ICSetup."Company Code";
         ICEntries."Target Company" := ICFlows."Company Code";
-        ICEntries."Source Flow Type" := ICFlows."Local Flow Type";
-        ICEntries."Source Document No." := SourceDocumentNo;
-        ICEntries."Source Table Id" := RecRef.Number;
-        ICEntries."Source System Id" := SourceSystemId;
-        ICEntries."Target Flow Type" := ICFlows."External Flow Type";
+        ICEntries."Relation Table Id" := ICFlows."Relation Table Id";
+        ICEntries."Relation Option Type" := ICFlows."Relation Option Type";
+        ICEntries."Document No." := SourceDocumentNo;
+        ICEntries."Doc. System Id" := SourceSystemId;
         ICEntries.Status := ICEntries.Status::Pending;
         ICEntries.SetBlobFields(ICEntries.FieldNo("Request Payload"), PayloadText, false);
         ICEntries.Insert(true);
@@ -111,13 +110,14 @@ codeunit 67007 "EOS IC Entries Management"
         EntryCreatedMsg: Label 'The entry %1 has been created for the document %2 %3 and is waiting to be sent to company %4.', Comment = '%1 = entry no., %2 = document type, %3 = document no., %4 = target company';
         EntryErrorMsg: Label 'The entry %1 has been created but the sending to company %2 failed.\%3', Comment = '%1 = entry no., %2 = target company, %3 = error message';
     begin
+        ICEntries.CalcFields("Relation Table Name");
         case ICEntries.Status of
             ICEntries.Status::Completed:
-                Message(EntrySentMsg, ICEntries."Source Flow Type", ICEntries."Source Document No.", ICEntries."Target Company", ICEntries."Entry No.");
+                Message(EntrySentMsg, ICEntries."Relation Table Name", ICEntries."Document No.", ICEntries."Target Company", ICEntries."Entry No.");
             ICEntries.Status::Error:
                 Message(EntryErrorMsg, ICEntries."Entry No.", ICEntries."Target Company", ICEntries."Error Message");
             else
-                Message(EntryCreatedMsg, ICEntries."Entry No.", ICEntries."Source Flow Type", ICEntries."Source Document No.", ICEntries."Target Company");
+                Message(EntryCreatedMsg, ICEntries."Entry No.", ICEntries."Relation Table Name", ICEntries."Document No.", ICEntries."Target Company");
         end;
     end;
 
@@ -125,51 +125,43 @@ codeunit 67007 "EOS IC Entries Management"
     var
         StgSalesHeader: Record "EOS IC Stg. Sales Header";
         StgPurchHeader: Record "EOS IC Stg. Purch. Header";
-        StgItem: Record "EOS IC Stg. Item";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
     begin
         if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
             exit;
 
-        case ICEntries."Target Flow Type" of
-            ICEntries."Target Flow Type"::"Sales Order":
+        case ICEntries."Flow Type" of
+            ICEntries."Flow Type"::"Sales Order Creation":
                 begin
                     StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgSalesHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
                 end;
-            ICEntries."Target Flow Type"::"Purchase Order":
+            ICEntries."Flow Type"::"Purchase Order Creation":
                 begin
                     StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgPurchHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Purch. Order", StgPurchHeader);
                 end;
-            ICEntries."Target Flow Type"::"Item":
-                begin
-                    StgItem.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgItem.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Item Card", StgItem);
-                end;
             else
                 OnHandleDocsShowStagingRecord(ICEntries);
         end;
     end;
 
-    procedure ShowTargetDocument(TargetDocument: Record "EOS IC Entry Target Document")
+    procedure ShowTargetDocument(TargetDocument: Record "EOS IC Entry Created Document")
     var
         PageManagement: Codeunit "Page Management";
         RecRef: RecordRef;
         DocVariant: Variant;
         TargetDocumentNotFoundErr: Label 'The target document %1 was not found.', Comment = '%1 = target document no.';
     begin
-        TargetDocument.TestField("Target Table Id");
-        TargetDocument.TestField("Target System Id");
-        RecRef.Open(TargetDocument."Target Table Id");
-        if not RecRef.GetBySystemId(TargetDocument."Target System Id") then
-            Error(TargetDocumentNotFoundErr, TargetDocument."Target Document No.");
+        TargetDocument.TestField("Table Id");
+        TargetDocument.TestField("Doc. System Id");
+        RecRef.Open(TargetDocument."Table Id");
+        if not RecRef.GetBySystemId(TargetDocument."Doc. System Id") then
+            Error(TargetDocumentNotFoundErr, TargetDocument."Document No.");
 
         DocVariant := RecRef;
         PageManagement.PageRun(DocVariant);
@@ -177,7 +169,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure ShowTargetDocuments(ICEntries: Record "EOS IC Entries")
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
         NoTargetDocumentsErr: Label 'No target documents are linked to entry %1.', Comment = '%1 = entry no.';
     begin
         ICEntryTargetDocument.SetRange("IC Entry No.", ICEntries."Entry No.");
@@ -194,7 +186,7 @@ codeunit 67007 "EOS IC Entries Management"
         end;
     end;
 
-    local procedure ShowTargetDocumentList(ICEntryTargetDocument: Record "EOS IC Entry Target Document"; ICEntryNo: Integer)
+    local procedure ShowTargetDocumentList(ICEntryTargetDocument: Record "EOS IC Entry Created Document"; ICEntryNo: Integer)
     var
         PageManagement: Codeunit "Page Management";
         RecRef: RecordRef;
@@ -207,16 +199,16 @@ codeunit 67007 "EOS IC Entries Management"
         if not ICEntryTargetDocument.FindSet() then
             exit;
 
-        TargetFlowType := ICEntryTargetDocument."Target Flow Type";
-        TargetTableId := ICEntryTargetDocument."Target Table Id";
+        TargetFlowType := ICEntryTargetDocument."Flow Type";
+        TargetTableId := ICEntryTargetDocument."Table Id";
         RecRef.Open(TargetTableId);
         repeat
-            if (ICEntryTargetDocument."Target Flow Type" <> TargetFlowType) or
-               (ICEntryTargetDocument."Target Table Id" <> TargetTableId) then
+            if (ICEntryTargetDocument."Flow Type" <> TargetFlowType) or
+               (ICEntryTargetDocument."Table Id" <> TargetTableId) then
                 Error(InconsistentTargetsErr, ICEntryNo);
 
-            if not RecRef.GetBySystemId(ICEntryTargetDocument."Target System Id") then
-                Error(TargetDocumentNotFoundErr, ICEntryTargetDocument."Target Document No.");
+            if not RecRef.GetBySystemId(ICEntryTargetDocument."Doc. System Id") then
+                Error(TargetDocumentNotFoundErr, ICEntryTargetDocument."Document No.");
             RecRef.Mark(true);
         until ICEntryTargetDocument.Next() = 0;
 
@@ -229,12 +221,12 @@ codeunit 67007 "EOS IC Entries Management"
     procedure GetFlowCode(SourceRecord: Variant; CompanyCode: Code[20]): Code[20]
     var
         ICFlows: Record "EOS IC Flows";
+        ICFunctions: Codeunit "EOS IC Functions";
         ICFlowsPage: Page "EOS IC Flows";
         RecRef: RecordRef;
-        SourceFlowTypes: List of [Enum "EOS IC Flow Types"];
-        SourceFlowType: Enum "EOS IC Flow Types";
-        SourceDocumentNo: Code[50];
-        FlowTypesText: Text;
+        OptionFieldRef: FieldRef;
+        OptionFieldNo, RelationOptionType : Integer;
+        DocumentTypeText: Text;
         MissingCompanyCodeErr: Label 'The IC company code is required to determine the flow.';
         NoFlowFoundErr: Label 'No enabled outbound flow was found for company %1 and document type %2.', Comment = '%1 = company code, %2 = document type';
         MultipleFlowsFoundErr: Label 'More than one enabled outbound flow was found for company %1 and document type %2.', Comment = '%1 = company code, %2 = document type';
@@ -243,31 +235,25 @@ codeunit 67007 "EOS IC Entries Management"
             Error(MissingCompanyCodeErr);
 
         RecRef := GetSourceRecordRef(SourceRecord);
-        GetSourceInfo(RecRef, SourceFlowTypes, SourceDocumentNo);
+        DocumentTypeText := RecRef.Caption();
+
+        // Flows are grouped by relation table and by the value of the option field of the source primary key (0 when absent).
+        OptionFieldNo := ICFunctions.GetRecordPKOptionField(RecRef, false);
+        if OptionFieldNo <> 0 then begin
+            OptionFieldRef := RecRef.Field(OptionFieldNo);
+            RelationOptionType := OptionFieldRef.Value();
+            DocumentTypeText += ' ' + Format(OptionFieldRef.Value());
+        end;
 
         ICFlows.SetRange("Company Code", CompanyCode);
         ICFlows.SetRange(Direction, ICFlows.Direction::Outbound);
         ICFlows.SetRange(Enabled, true);
-
-        // Each flow type can have at most one enabled flow; different flow types of the same group are alternatives.
-        foreach SourceFlowType in SourceFlowTypes do begin
-            if FlowTypesText <> '' then
-                FlowTypesText += ', ';
-            FlowTypesText += Format(SourceFlowType);
-
-            ICFlows.SetRange("Local Flow Type", SourceFlowType);
-            if ICFlows.Count() > 1 then
-                Error(MultipleFlowsFoundErr, CompanyCode, SourceFlowType);
-            if ICFlows.FindFirst() then
-                ICFlows.Mark(true);
-        end;
-
-        ICFlows.SetRange("Local Flow Type");
-        ICFlows.MarkedOnly(true);
+        ICFlows.SetRange("Relation Table Id", RecRef.Number());
+        ICFlows.SetRange("Relation Option Type", RelationOptionType);
 
         case ICFlows.Count() of
             0:
-                Error(NoFlowFoundErr, CompanyCode, FlowTypesText);
+                Error(NoFlowFoundErr, CompanyCode, DocumentTypeText);
             1:
                 begin
                     ICFlows.FindFirst();
@@ -276,7 +262,7 @@ codeunit 67007 "EOS IC Entries Management"
         end;
 
         if not GuiAllowed() then
-            Error(MultipleFlowsFoundErr, CompanyCode, FlowTypesText);
+            Error(MultipleFlowsFoundErr, CompanyCode, DocumentTypeText);
 
         ICFlowsPage.SetTableView(ICFlows);
         ICFlowsPage.LookupMode(true);
@@ -295,8 +281,8 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntries.SetRange(Direction, ICEntries.Direction::Outbound);
         ICEntries.SetRange("Target Company", ICFlows."Company Code");
         ICEntries.SetRange("IC Flow Code", ICFlows.Code);
-        ICEntries.SetRange("Source Table Id", SourceTableId);
-        ICEntries.SetRange("Source System Id", SourceSystemId);
+        ICEntries.SetRange("Relation Table Id", SourceTableId);
+        ICEntries.SetRange("Doc. System Id", SourceSystemId);
         ICEntries.SetRange(Status, ICEntries.Status::Completed);
         if not ICEntries.FindLast() then
             exit(true);
@@ -365,22 +351,16 @@ codeunit 67007 "EOS IC Entries Management"
             Database::"Sales Header":
                 begin
                     RecRef.SetTable(SalesHeader);
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Sales Order");
+                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Sales Order Creation");
                     FlowTypes.Add(Enum::"EOS IC Flow Types"::"Confirm Sales Order");
                     DocumentNo := SalesHeader."No.";
                 end;
             Database::"Purchase Header":
                 begin
                     RecRef.SetTable(PurchaseHeader);
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Purchase Order");
+                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Purchase Order Creation");
                     FlowTypes.Add(Enum::"EOS IC Flow Types"::"Confirm Purchase Order");
                     DocumentNo := PurchaseHeader."No.";
-                end;
-            Database::Item:
-                begin
-                    RecRef.SetTable(Item);
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Item");
-                    DocumentNo := Item."No.";
                 end;
             else begin
                 OnHandleGetSourceInfo(RecRef, FlowType, DocumentNo);
@@ -394,7 +374,7 @@ codeunit 67007 "EOS IC Entries Management"
     procedure ShowDocumentEntries(DocumentRecord: Variant)
     var
         ICEntries: Record "EOS IC Entries";
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
         ICEntriesPage: Page "EOS IC Entries";
         RecRef: RecordRef;
         SystemIdFieldRef: FieldRef;
@@ -405,15 +385,15 @@ codeunit 67007 "EOS IC Entries Management"
         DocumentSystemId := SystemIdFieldRef.Value;
 
         ICEntries.Reset();
-        ICEntries.SetRange("Source Table Id", RecRef.Number);
-        ICEntries.SetRange("Source System Id", DocumentSystemId);
+        ICEntries.SetRange("Relation Table Id", RecRef.Number);
+        ICEntries.SetRange("Doc. System Id", DocumentSystemId);
         if ICEntries.FindSet() then
             repeat
                 ICEntries.Mark(true);
             until ICEntries.Next() = 0;
 
-        ICEntryTargetDocument.SetRange("Target Table Id", RecRef.Number);
-        ICEntryTargetDocument.SetRange("Target System Id", DocumentSystemId);
+        ICEntryTargetDocument.SetRange("Table Id", RecRef.Number);
+        ICEntryTargetDocument.SetRange("Doc. System Id", DocumentSystemId);
         if ICEntryTargetDocument.FindSet() then
             repeat
                 if ICEntries.Get(ICEntryTargetDocument."IC Entry No.") then
@@ -421,8 +401,8 @@ codeunit 67007 "EOS IC Entries Management"
                         ICEntries.Mark(true);
             until ICEntryTargetDocument.Next() = 0;
 
-        ICEntries.SetRange("Source Table Id");
-        ICEntries.SetRange("Source System Id");
+        ICEntries.SetRange("Relation Table Id");
+        ICEntries.SetRange("Doc. System Id");
         ICEntries.MarkedOnly(true);
 
         ICEntriesPage.SetTableView(ICEntries);
@@ -433,7 +413,7 @@ codeunit 67007 "EOS IC Entries Management"
     var
         ICSetup: Record "EOS IC Setup";
         ICEntries: Record "EOS IC Entries";
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
     begin
         ICSetup.Get();
         if ICSetup."IC Entry Field No." = 0 then
@@ -445,7 +425,7 @@ codeunit 67007 "EOS IC Entries Management"
                     if ICEntry."Status" <> ICEntry."Status"::Completed then
                         exit;
 
-                    UpdateDocumentEntryCount(ICSetup, ICEntries, ICEntry.Direction, ICEntry."Source Table Id", ICEntry."Source System Id");
+                    UpdateDocumentEntryCount(ICSetup, ICEntries, ICEntry.Direction, ICEntry."Relation Table Id", ICEntry."Doc. System Id");
                 end;
             ICEntry.Direction::Inbound:
                 begin
@@ -455,7 +435,7 @@ codeunit 67007 "EOS IC Entries Management"
                     ICEntryTargetDocument.SetRange("IC Entry No.", ICEntry."Entry No.");
                     if ICEntryTargetDocument.FindSet() then
                         repeat
-                            UpdateDocumentEntryCount(ICSetup, ICEntries, ICEntry.Direction, ICEntryTargetDocument."Target Table Id", ICEntryTargetDocument."Target System Id");
+                            UpdateDocumentEntryCount(ICSetup, ICEntries, ICEntry.Direction, ICEntryTargetDocument."Table Id", ICEntryTargetDocument."Doc. System Id");
                         until ICEntryTargetDocument.Next() = 0;
                 end;
         end;
@@ -484,15 +464,15 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure MarkDocumentEntries(ICEntries: Record "EOS IC Entries"; Direction: Enum "EOS IC Direction"; TableId: Integer; SystemId: Guid) TotalEntry: Integer
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
     begin
         case Direction of
             Direction::Outbound:
                 begin
                     ICEntries.Reset();
                     ICEntries.SetRange(Direction, ICEntries.Direction::Outbound);
-                    ICEntries.SetRange("Source Table Id", TableId);
-                    ICEntries.SetRange("Source System Id", SystemId);
+                    ICEntries.SetRange("Relation Table Id", TableId);
+                    ICEntries.SetRange("Doc. System Id", SystemId);
                     TotalEntry := ICEntries.Count();
                 end;
 
@@ -500,8 +480,8 @@ codeunit 67007 "EOS IC Entries Management"
                 begin
                     ICEntries.Reset();
                     ICEntryTargetDocument.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    ICEntryTargetDocument.SetRange("Target Table Id", TableId);
-                    ICEntryTargetDocument.SetRange("Target System Id", SystemId);
+                    ICEntryTargetDocument.SetRange("Table Id", TableId);
+                    ICEntryTargetDocument.SetRange("Doc. System Id", SystemId);
                     TotalEntry := ICEntryTargetDocument.Count();
                 end;
         end;
@@ -636,7 +616,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure UpdateSourceICEntry(ICEntries: Record "EOS IC Entries")
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
         ICFunctions: Codeunit "EOS IC Functions";
     begin
         if ICEntries."Staging Status" <> ICEntries."Staging Status"::Completed then
@@ -704,14 +684,14 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure SetTargetDocument(var ICEntries: Record "EOS IC Entries"; TableId: Integer; DocumentNo: Code[50]; SystemId: Guid)
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Target Document";
+        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
     begin
         ICEntryTargetDocument.Init();
         ICEntryTargetDocument."IC Entry No." := ICEntries."Entry No.";
-        ICEntryTargetDocument."Target Flow Type" := ICEntries."Target Flow Type";
-        ICEntryTargetDocument."Target Document No." := DocumentNo;
-        ICEntryTargetDocument."Target Table Id" := TableId;
-        ICEntryTargetDocument."Target System Id" := SystemId;
+        ICEntryTargetDocument."Flow Type" := ICEntries."Flow Type";
+        ICEntryTargetDocument."Document No." := DocumentNo;
+        ICEntryTargetDocument."Table Id" := TableId;
+        ICEntryTargetDocument."Doc. System Id" := SystemId;
         ICEntryTargetDocument.Insert(true);
     end;
 

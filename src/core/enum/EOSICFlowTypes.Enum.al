@@ -4,24 +4,24 @@ enum 67001 "EOS IC Flow Types"
 {
     Extensible = true;
 
-    value(0; "Sales Order")
+    value(0; " ")
     {
-        Caption = 'Sales Order';
+        Caption = ' ', Locked = true;
     }
-    value(1; "Purchase Order")
+    value(1; "Sales Order Creation")
     {
-        Caption = 'Purchase Order';
+        Caption = 'Sales Order Creation';
     }
-    value(2; "Confirm Sales Order")
+    value(2; "Purchase Order Creation")
+    {
+        Caption = 'Purchase Order Creation';
+    }
+    value(3; "Confirm Sales Order")
     {
         Caption = 'Confirm Sales Order';
     }
-    value(3; "Confirm Purchase Order")
+    value(4; "Confirm Purchase Order")
     {
         Caption = 'Confirm Purchase Order';
-    }
-    value(4; "Item")
-    {
-        Caption = 'Item';
     }
 }

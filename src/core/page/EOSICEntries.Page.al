@@ -47,19 +47,19 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
-                field("Source Flow Type"; Rec."Source Flow Type")
+                field("Relation Table Name"; Rec."Relation Table Name")
                 {
                     ApplicationArea = All;
                 }
-                field("Source Document No."; Rec."Source Document No.")
+                field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Flow Type"; Rec."Target Flow Type")
+                field("Flow Type"; Rec."Flow Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Documents Count"; Rec."Target Documents Count")
+                field("Created Documents Count"; Rec."Created Documents Count")
                 {
                     ApplicationArea = All;
                 }
@@ -111,8 +111,8 @@ page 67012 "EOS IC Entries"
                     case Rec.Direction of
                         Rec.Direction::Outbound:
                             begin
-                                RecRef.Open(Rec."Source Table Id");
-                                RecRef.GetBySystemId(Rec."Source System Id");
+                                RecRef.Open(Rec."Relation Table Id");
+                                RecRef.GetBySystemId(Rec."Doc. System Id");
                                 DocVariant := RecRef;
                                 PageManagement.PageRun(DocVariant);
                             end;

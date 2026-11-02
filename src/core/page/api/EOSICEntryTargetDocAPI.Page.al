@@ -6,9 +6,9 @@ page 67028 "EOS IC Entry Target Doc API"
     APIPublisher = 'eos';
     APIGroup = 'eci';
     APIVersion = 'v1.0';
-    EntityName = 'entryTargetDocument';
-    EntitySetName = 'entryTargetDocuments';
-    SourceTable = "EOS IC Entry Target Document";
+    EntityName = 'entryCreatedDocument';
+    EntitySetName = 'entryCreatedDocuments';
+    SourceTable = "EOS IC Entry Created Document";
     ODataKeyFields = SystemId;
     DelayedInsert = true;
     InsertAllowed = true;
@@ -35,15 +35,15 @@ page 67028 "EOS IC Entry Target Doc API"
                 {
                     Caption = 'Target Document Type Ordinal';
                 }
-                field(targetDocumentNo; Rec."Target Document No.")
+                field(targetDocumentNo; Rec."Document No.")
                 {
                     Caption = 'Target Document No.';
                 }
-                field(targetTableId; Rec."Target Table Id")
+                field(targetTableId; Rec."Table Id")
                 {
                     Caption = 'Target Table Id';
                 }
-                field(targetSystemId; Rec."Target System Id")
+                field(targetSystemId; Rec."Doc. System Id")
                 {
                     Caption = 'Target System Id';
                 }
@@ -54,7 +54,7 @@ page 67028 "EOS IC Entry Target Doc API"
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         ICEntries: Record "EOS IC Entries";
-        ExistingTargetDocument: Record "EOS IC Entry Target Document";
+        ExistingTargetDocument: Record "EOS IC Entry Created Document";
         EntryNotFoundErr: Label 'No outbound entry was found for IC transaction ID %1.', Comment = '%1 = IC transaction ID';
     begin
         ICEntries.SetRange("IC Transaction ID", ICTransactionId);
@@ -63,12 +63,12 @@ page 67028 "EOS IC Entry Target Doc API"
             Error(EntryNotFoundErr, Format(ICTransactionId, 0, 4));
 
         Rec."IC Entry No." := ICEntries."Entry No.";
-        Rec."Target Flow Type" := Enum::"EOS IC Flow Types".FromInteger(TargetDocumentTypeOrdinal);
-        Rec.TestField("Target Document No.");
-        Rec.TestField("Target Table Id");
-        Rec.TestField("Target System Id");
+        Rec."Flow Type" := Enum::"EOS IC Flow Types".FromInteger(TargetDocumentTypeOrdinal);
+        Rec.TestField("Document No.");
+        Rec.TestField("Table Id");
+        Rec.TestField("Doc. System Id");
 
-        if ExistingTargetDocument.Get(Rec."IC Entry No.", Rec."Target Table Id", Rec."Target System Id") then begin
+        if ExistingTargetDocument.Get(Rec."IC Entry No.", Rec."Table Id", Rec."Doc. System Id") then begin
             Rec := ExistingTargetDocument;
             exit(false);
         end;
