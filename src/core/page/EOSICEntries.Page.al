@@ -55,10 +55,6 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
-                field("Flow Type"; Rec."Flow Type")
-                {
-                    ApplicationArea = All;
-                }
                 field("Created Documents Count"; Rec."Created Documents Count")
                 {
                     ApplicationArea = All;

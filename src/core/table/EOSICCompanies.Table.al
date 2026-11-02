@@ -55,9 +55,14 @@ table 67002 "EOS IC Companies"
     trigger OnDelete()
     var
         ICFlows: Record "EOS IC Flows";
+        ICFunctions: Record "EOS IC Functions";
     begin
         ICFlows.Reset();
         ICFlows.SetRange("Company Code", "Code");
         ICFlows.DeleteAll(true);
+
+        ICFunctions.Reset();
+        ICFunctions.SetRange("Company Code", "Code");
+        ICFunctions.DeleteAll(true);
     end;
 }

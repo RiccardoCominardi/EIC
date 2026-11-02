@@ -39,11 +39,6 @@ table 67003 "EOS IC Flows"
             DataClassification = CustomerContent;
             Caption = 'Direction';
         }
-        field(7; "Flow Type"; Enum "EOS IC Flow Types")
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Flow Type';
-        }
         field(8; "Auto Send"; Boolean)
         {
             DataClassification = CustomerContent;

@@ -31,9 +31,9 @@ page 67028 "EOS IC Entry Target Doc API"
                 {
                     Caption = 'IC Transaction ID';
                 }
-                field(targetDocumentTypeOrdinal; TargetDocumentTypeOrdinal)
+                field(targetDocumentType; Rec."Document Type")
                 {
-                    Caption = 'Target Document Type Ordinal';
+                    Caption = 'Target Document Type';
                 }
                 field(targetDocumentNo; Rec."Document No.")
                 {
@@ -63,7 +63,6 @@ page 67028 "EOS IC Entry Target Doc API"
             Error(EntryNotFoundErr, Format(ICTransactionId, 0, 4));
 
         Rec."IC Entry No." := ICEntries."Entry No.";
-        Rec."Flow Type" := Enum::"EOS IC Flow Types".FromInteger(TargetDocumentTypeOrdinal);
         Rec.TestField("Document No.");
         Rec.TestField("Table Id");
         Rec.TestField("Doc. System Id");
@@ -79,5 +78,4 @@ page 67028 "EOS IC Entry Target Doc API"
 
     var
         ICTransactionId: Guid;
-        TargetDocumentTypeOrdinal: Integer;
 }

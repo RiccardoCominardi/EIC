@@ -54,11 +54,6 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Doc. System Id';
         }
-        field(11; "Flow Type"; Enum "EOS IC Flow Types")
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Flow Type';
-        }
         field(15; Status; Enum "EOS IC Entry Status")
         {
             DataClassification = CustomerContent;

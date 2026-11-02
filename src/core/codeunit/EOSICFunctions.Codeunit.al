@@ -305,7 +305,6 @@ codeunit 67001 "EOS IC Functions"
         PayloadObject: JsonObject;
     begin
         PayloadObject.Add('icTransactionId', GetGuidText(ICEntries."IC Transaction ID"));
-        PayloadObject.Add('targetDocumentTypeOrdinal', ICEntryTargetDocument."Flow Type".AsInteger());
         PayloadObject.Add('targetDocumentNo', ICEntryTargetDocument."Document No.");
         PayloadObject.Add('targetTableId', ICEntryTargetDocument."Table Id");
         PayloadObject.Add('targetSystemId', GetGuidText(ICEntryTargetDocument."Doc. System Id"));
@@ -393,7 +392,6 @@ codeunit 67001 "EOS IC Functions"
         TempRemoteFlows."Relation Table Id" := GetJsonIntegerOrDefault(FlowObject, 'relationTableId', 0);
         TempRemoteFlows."Relation Option Type" := GetJsonIntegerOrDefault(FlowObject, 'relationOptionType', 0);
         TempRemoteFlows."Relation Table Name" := CopyStr(GetText(FlowObject, 'relationTableName'), 1, MaxStrLen(TempRemoteFlows."Relation Table Name"));
-        TempRemoteFlows."Flow Type" := GetFlowDocumentTypeFromJson(FlowObject, 'flowTypeOrdinal', 'flowType', TempRemoteFlows."Flow Type");
         TempRemoteFlows."Auto Send" := GetJsonBooleanOrDefault(FlowObject, 'autoSend', false);
         TempRemoteFlows."Auto Process" := GetJsonBooleanOrDefault(FlowObject, 'autoProcess', false);
         TempRemoteFlows."Auto Create Documents" := GetJsonBooleanOrDefault(FlowObject, 'autoCreateDocuments', false);
@@ -474,19 +472,6 @@ codeunit 67001 "EOS IC Functions"
         exit(DefaultDirection);
     end;
 
-    local procedure GetFlowDocumentTypeFromJson(FlowObject: JsonObject; OrdinalPropertyName: Text; LegacyPropertyName: Text; DefaultDocumentType: Enum "EOS IC Flow Types"): Enum "EOS IC Flow Types"
-    var
-        FlowDocumentType: Enum "EOS IC Flow Types";
-    begin
-        if TryParseFlowDocumentTypeByOrdinal(FlowObject, OrdinalPropertyName, FlowDocumentType) then
-            exit(FlowDocumentType);
-
-        if TryParseFlowDocumentTypeByOrdinal(FlowObject, LegacyPropertyName, FlowDocumentType) then
-            exit(FlowDocumentType);
-
-        exit(DefaultDocumentType);
-    end;
-
     local procedure TryParseDirectionByOrdinal(FlowObject: JsonObject; PropertyName: Text; var FlowDirection: Enum "EOS IC Direction"): Boolean
     var
         DirectionOrdinal: Integer;
@@ -495,16 +480,6 @@ codeunit 67001 "EOS IC Functions"
             exit(false);
 
         exit(Evaluate(FlowDirection, Format(DirectionOrdinal)));
-    end;
-
-    local procedure TryParseFlowDocumentTypeByOrdinal(FlowObject: JsonObject; PropertyName: Text; var FlowType: Enum "EOS IC Flow Types"): Boolean
-    var
-        DocumentTypeOrdinal: Integer;
-    begin
-        if not TryGetJsonInteger(FlowObject, PropertyName, DocumentTypeOrdinal) then
-            exit(false);
-
-        exit(Evaluate(FlowType, Format(DocumentTypeOrdinal)));
     end;
 
     local procedure TryGetJsonInteger(SourceObject: JsonObject; PropertyName: Text; var Value: Integer): Boolean

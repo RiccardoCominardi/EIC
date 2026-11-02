@@ -15,10 +15,10 @@ table 67004 "EOS IC Entry Created Document"
             Caption = 'IC Entry No.';
             TableRelation = "EOS IC Entries"."Entry No.";
         }
-        field(2; "Flow Type"; Enum "EOS IC Flow Types")
+        field(2; "Document Type"; Text[100])
         {
             DataClassification = CustomerContent;
-            Caption = 'Flow Type';
+            Caption = 'Document Type';
         }
         field(3; "Document No."; Code[50])
         {

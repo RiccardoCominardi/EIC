@@ -45,7 +45,6 @@ codeunit 67007 "EOS IC Entries Management"
         RecRef: RecordRef;
         SystemIdFieldRef: FieldRef;
         ICDocumentHandler: Interface "EOS IC Document Handler";
-        SourceFlowTypes: List of [Enum "EOS IC Flow Types"];
         SourceDocumentNo: Code[50];
         SourceSystemId: Guid;
         PayloadJson: JsonObject;
@@ -56,7 +55,7 @@ codeunit 67007 "EOS IC Entries Management"
         ICFlows.TestField(Enabled);
 
         RecRef := GetSourceRecordRef(SourceRecord);
-        GetSourceInfo(RecRef, SourceFlowTypes, SourceDocumentNo);
+        GetSourceInfo(RecRef, SourceDocumentNo);
 
         ICCompanies.Get(ICFlows."Company Code");
         ICCompanies.TestField(Enabled);
@@ -123,6 +122,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries")
     var
+        ICFunctions: Record "EOS IC Functions";
         StgSalesHeader: Record "EOS IC Stg. Sales Header";
         StgPurchHeader: Record "EOS IC Stg. Purch. Header";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
@@ -130,15 +130,16 @@ codeunit 67007 "EOS IC Entries Management"
         if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
             exit;
 
-        case ICEntries."Flow Type" of
-            ICEntries."Flow Type"::"Sales Order Creation":
+        ICFunctions.Get(ICEntries."Target Company", ICEntries.Direction);
+        case true of
+            ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
                 begin
                     StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgSalesHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
                 end;
-            ICEntries."Flow Type"::"Purchase Order Creation":
+            ICFunctions."Purchase Order Creation Flow" = ICEntries."IC Flow Code":
                 begin
                     StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgPurchHeader.FindFirst() then
@@ -191,7 +192,6 @@ codeunit 67007 "EOS IC Entries Management"
         PageManagement: Codeunit "Page Management";
         RecRef: RecordRef;
         DocVariant: Variant;
-        TargetFlowType: Enum "EOS IC Flow Types";
         TargetTableId: Integer;
         InconsistentTargetsErr: Label 'All target documents for entry %1 must have the same document type and table.', Comment = '%1 = entry no.';
         TargetDocumentNotFoundErr: Label 'The target document %1 was not found.', Comment = '%1 = target document no.';
@@ -199,12 +199,10 @@ codeunit 67007 "EOS IC Entries Management"
         if not ICEntryTargetDocument.FindSet() then
             exit;
 
-        TargetFlowType := ICEntryTargetDocument."Flow Type";
         TargetTableId := ICEntryTargetDocument."Table Id";
         RecRef.Open(TargetTableId);
         repeat
-            if (ICEntryTargetDocument."Flow Type" <> TargetFlowType) or
-               (ICEntryTargetDocument."Table Id" <> TargetTableId) then
+            if ICEntryTargetDocument."Table Id" <> TargetTableId then
                 Error(InconsistentTargetsErr, ICEntryNo);
 
             if not RecRef.GetBySystemId(ICEntryTargetDocument."Doc. System Id") then
@@ -339,33 +337,24 @@ codeunit 67007 "EOS IC Entries Management"
         RecRef.GetTable(SourceRecord);
     end;
 
-    local procedure GetSourceInfo(RecRef: RecordRef; var FlowTypes: List of [Enum "EOS IC Flow Types"]; var DocumentNo: Code[50])
+    local procedure GetSourceInfo(RecRef: RecordRef; var DocumentNo: Code[50])
     var
         SalesHeader: Record "Sales Header";
         PurchaseHeader: Record "Purchase Header";
-        Item: Record Item;
-        FlowType: Enum "EOS IC Flow Types";
     begin
-        Clear(FlowTypes);
-        case RecRef.Number of
+        case RecRef.Number() of
             Database::"Sales Header":
                 begin
                     RecRef.SetTable(SalesHeader);
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Sales Order Creation");
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Confirm Sales Order");
                     DocumentNo := SalesHeader."No.";
                 end;
             Database::"Purchase Header":
                 begin
                     RecRef.SetTable(PurchaseHeader);
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Purchase Order Creation");
-                    FlowTypes.Add(Enum::"EOS IC Flow Types"::"Confirm Purchase Order");
                     DocumentNo := PurchaseHeader."No.";
                 end;
-            else begin
-                OnHandleGetSourceInfo(RecRef, FlowType, DocumentNo);
-                FlowTypes.Add(FlowType);
-            end;
+            else
+                OnHandleGetSourceInfo(RecRef, DocumentNo);
         end;
     end;
     #endregion CreateEntry
@@ -682,13 +671,13 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntries.Modify();
     end;
 
-    procedure SetTargetDocument(var ICEntries: Record "EOS IC Entries"; TableId: Integer; DocumentNo: Code[50]; SystemId: Guid)
+    procedure SetTargetDocument(var ICEntries: Record "EOS IC Entries"; TableId: Integer; DocumentType: Text[100]; DocumentNo: Code[50]; SystemId: Guid)
     var
         ICEntryTargetDocument: Record "EOS IC Entry Created Document";
     begin
         ICEntryTargetDocument.Init();
         ICEntryTargetDocument."IC Entry No." := ICEntries."Entry No.";
-        ICEntryTargetDocument."Flow Type" := ICEntries."Flow Type";
+        ICEntryTargetDocument."Document Type" := DocumentType;
         ICEntryTargetDocument."Document No." := DocumentNo;
         ICEntryTargetDocument."Table Id" := TableId;
         ICEntryTargetDocument."Doc. System Id" := SystemId;
@@ -696,12 +685,12 @@ codeunit 67007 "EOS IC Entries Management"
     end;
 
     [IntegrationEvent(false, false)]
-    local procedure OnHandleGetSourceInfo(RecRef: RecordRef; var FlowType: Enum "EOS IC Flow Types"; var DocumentNo: Code[50])
+    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries")
     begin
     end;
 
     [IntegrationEvent(false, false)]
-    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries")
+    local procedure OnHandleGetSourceInfo(RecRef: RecordRef; var DocumentNo: Code[50])
     begin
     end;
 }

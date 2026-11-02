@@ -534,10 +534,6 @@
           <source>IC Entries</source>
           <target>Movimenti IC</target>
         </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 1151670590 - NamedType 2352083081" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The document type %1 is not supported by the document creation process.</source>
-          <target>Il tipo documento %1 non è supportato dal processo di creazione documento</target>
-        </trans-unit>
         <trans-unit id="Codeunit 2425708366 - Method 3216754651 - NamedType 2443652144" size-unit="char" translate="yes" xml:space="preserve">
           <source>The document has already been sent to company %1 with the entry %2. Do you want to send it again?</source>
           <target>Il documento è già stato inviato alla società %1 con il movimento %2. Vuoi reinviarlo?</target>
@@ -577,10 +573,6 @@
         <trans-unit id="Codeunit 2425708366 - Method 2737334402 - NamedType 1174045151" size-unit="char" translate="yes" xml:space="preserve">
           <source>The entry %1 has been created but the sending to company %2 failed.\%3</source>
           <target>Il movimento %1 è stato creato ma l'invio alla società %2 è fallito.\%3</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 1151670590 - NamedType 2352083081" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The document type %1 is not supported by the document creation process.</source>
-          <target>Il tipo documento %1 non è supportato dal processo di creazione documento</target>
         </trans-unit>
         <trans-unit id="Page 378817272 - Control 4078144722 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Document Fields</source>
@@ -2258,10 +2250,6 @@
           <source>IC Transaction ID</source>
           <target>ID Transazione</target>
         </trans-unit>
-        <trans-unit id="Page 3272544074 - Control 2067135191 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Document Type Ordinal</source>
-          <target>Tipo documento esterno ordinale</target>
-        </trans-unit>
         <trans-unit id="Page 3272544074 - Control 3033465582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Target Table Id</source>
           <target>Table Id destinazione</target>
@@ -2394,22 +2382,6 @@
           <source>Send Intercompany (EIC)</source>
           <target>Invio Intercompany (EIC)</target>
         </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 2821274657 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Confirm Purchase Order</source>
-          <target>Conferma ordine acquisto</target>
-        </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 391998728 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Confirm Sales Order</source>
-          <target>Conferma ordine vendita</target>
-        </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 1400726 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>ES Receipt</source>
-          <target>ES Carico</target>
-        </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 2496363146 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>ES Shipment</source>
-          <target>ES Spedizione</target>
-        </trans-unit>
         <trans-unit id="TableExtension 4047318561 - Field 4198550426 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Source Document No. (EIC)</source>
           <target>Nr. documento origine (EIC)</target>
@@ -2441,10 +2413,6 @@
         <trans-unit id="Table 2760821220 - Field 2066789741 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Table Id</source>
           <target>Id tabella</target>
-        </trans-unit>
-        <trans-unit id="Table 2290985398 - Field 1780264958 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Flow Type</source>
-          <target>Tipo flusso</target>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Field 2609259055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Option Type</source>
@@ -2478,10 +2446,6 @@
           <source>Relation Table Name</source>
           <target>Nome tabella relazione</target>
         </trans-unit>
-        <trans-unit id="Table 910390347 - Field 1780264958 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Flow Type</source>
-          <target>Tipo flusso</target>
-        </trans-unit>
         <trans-unit id="Table 910390347 - Field 2609259055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Option Type</source>
           <target>Tipo documento relazione</target>
@@ -2510,10 +2474,6 @@
           <source>Relation Option Type</source>
           <target>Tipo documento relazione</target>
         </trans-unit>
-        <trans-unit id="Page 2689497934 - Control 1606716918 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Flow Type</source>
-          <target>Tipo flusso</target>
-        </trans-unit>
         <trans-unit id="Page 2689497934 - Control 3790693683 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Flow Type Ordinal</source>
           <target>Tipo flusso ordinale</target>
@@ -2521,10 +2481,6 @@
         <trans-unit id="Page 1015787352 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Entry Created Documents (EIC)</source>
           <target>Documenti creati (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 1780264958 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Flow Type</source>
-          <target>Tipo flusso</target>
         </trans-unit>
         <trans-unit id="Table 2760821220 - Field 701488602 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Doc. System Id</source>
@@ -2541,14 +2497,6 @@
         <trans-unit id="Codeunit 1961673553 - Method 2121242092 - NamedType 3450732878" size-unit="char" translate="yes" xml:space="preserve">
           <source>Set at least one filter in the example table filter of the mapping %1 before downloading the Json example.</source>
           <target>Imposta almeno un filtro nel campo "Esempio filtro tabella" prima di fare il download del Json di esempio</target>
-        </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 2166276672 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order Creation</source>
-          <target>Creazione ordini acquisto</target>
-        </trans-unit>
-        <trans-unit id="Enum 3288802766 - EnumValue 3734251505 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order Creation</source>
-          <target>Creazione ordini vendita</target>
         </trans-unit>
         <trans-unit id="Page 3814203472 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Table Value Type List (EIC)</source>
@@ -2569,6 +2517,82 @@
         <trans-unit id="Table 2290985398 - Field 2891538263 - Method 2126772001 - NamedType 2105272611" size-unit="char" translate="yes" xml:space="preserve">
           <source>The flow %1 is not paired and cannot be enabled. Pair it first.</source>
           <target>Il flusso %1 non è collegato e non può essere abilitato</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 39585143 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Direction</source>
+          <target>Direzione</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 689242118 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Company Code</source>
+          <target>Codice società</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 1644281458 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Purchase Order Creation Flow</source>
+          <target>Flusso creazione ordini acquisto</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 1934957095 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sales Order Creation Flow</source>
+          <target>Flusso creazione ordini vendita</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 4052274874 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Confirm Sales Order Flow</source>
+          <target>Flusso conferma ordini vendita</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 576509431 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Confirm Purchase Order Flow</source>
+          <target>Flusso conferma ordini acquisto</target>
+        </trans-unit>
+        <trans-unit id="Page 3602152798 - Action 1929393835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Functions</source>
+          <target>Funzioni</target>
+        </trans-unit>
+        <trans-unit id="Page 1438211028 - Action 1929393835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Functions</source>
+          <target>Funzioni</target>
+        </trans-unit>
+        <trans-unit id="Page 3272544074 - Control 1648400154 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Target Document Type</source>
+          <target>Tipo documento destinazione</target>
+        </trans-unit>
+        <trans-unit id="Page 3722283190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Functions (EIC)</source>
+          <target>Funzioni (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 2760821220 - Field 2363328873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Document Type</source>
+          <target>Tipo documento</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Functions (EIC)</source>
+          <target>Funzioni (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Method 1638567241 - NamedType 864757530" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The flow %1 is already assigned to the field %2 of the same company and direction.</source>
+          <target>Il flusso %1 è già assegnato al campo %2 della stessa società e destinazione</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3345137394 - Method 1151670590 - NamedType 4204058380" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No functions found for company %1 related to the selected flow.</source>
+          <target>Nessuna funzione trovata per la società %1 legata al flusso selezionato</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3345137394 - Method 2648269774 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sales Order</source>
+          <target>Ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3345137394 - Method 1315191579 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Purchase Order</source>
+          <target>Ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2110689530 - Method 1151670590 - NamedType 4204058380" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No functions found for company %1 related to the selected flow.</source>
+          <target>Nessuna funzione trovata per la società %1 legata al flusso selezionato</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2110689530 - Method 2648269774 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sales Order</source>
+          <target>Ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2110689530 - Method 1315191579 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Purchase Order</source>
+          <target>Ordine acquisto</target>
         </trans-unit>
       </group>
     </body>

@@ -29,6 +29,7 @@ permissionset 67000 "EOS IC Intercompany"
         table "EOS IC Stg. Sales Line" = X,
         table "EOS IC Stg. Purch. Header" = X,
         table "EOS IC Stg. Purch. Line" = X,
+        table "EOS IC Functions" = X,
         tabledata "EOS IC Setup" = RIMD,
         tabledata "EOS IC Connections" = RIMD,
         tabledata "EOS IC Companies" = RIMD,
@@ -46,5 +47,6 @@ permissionset 67000 "EOS IC Intercompany"
         tabledata "EOS IC Stg. Sales Header" = RIMD,
         tabledata "EOS IC Stg. Sales Line" = RIMD,
         tabledata "EOS IC Stg. Purch. Header" = RIMD,
-        tabledata "EOS IC Stg. Purch. Line" = RIMD;
+        tabledata "EOS IC Stg. Purch. Line" = RIMD,
+        tabledata "EOS IC Functions" = RIMD;
 }

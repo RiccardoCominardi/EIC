@@ -43,10 +43,6 @@ page 67008 "EOS IC Remote Flows Lookup"
                 {
                     ApplicationArea = All;
                 }
-                field("Flow Type"; Rec."Flow Type")
-                {
-                    ApplicationArea = All;
-                }
                 field("Flow Pair Id"; Rec."Flow Pair Id")
                 {
                     ApplicationArea = All;

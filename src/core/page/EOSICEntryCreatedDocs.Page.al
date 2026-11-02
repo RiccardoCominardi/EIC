@@ -18,11 +18,11 @@ page 67020 "EOS IC Entry Created Docs"
         {
             repeater(General)
             {
-                field("Target Flow Type"; Rec."Flow Type")
+                field("Document Type"; Rec."Document Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Target Document No."; Rec."Document No.")
+                field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
 

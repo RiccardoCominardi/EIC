@@ -63,10 +63,6 @@ page 67007 "EOS IC Flows API"
                 {
                     Caption = 'Relation Table Name';
                 }
-                field(flowType; Rec."Flow Type")
-                {
-                    Caption = 'Flow Type';
-                }
                 field(flowTypeOrdinal; flowTypeOrdinal)
                 {
                     Caption = 'Flow Type Ordinal';
@@ -93,7 +89,6 @@ page 67007 "EOS IC Flows API"
     trigger OnAfterGetRecord()
     begin
         DirectionOrdinal := Rec.Direction.AsInteger();
-        flowTypeOrdinal := Rec."Flow Type".AsInteger();
     end;
 
     var

@@ -60,10 +60,19 @@ page 67003 "EOS IC Companies"
                 RunObject = page "EOS IC Flows";
                 RunPageLink = "Company Code" = field(Code);
             }
+            action(Functions)
+            {
+                ApplicationArea = All;
+                Caption = 'Functions';
+                Image = Action;
+                RunObject = page "EOS IC Functions";
+                RunPageLink = "Company Code" = field(Code);
+            }
         }
         area(Promoted)
         {
             actionref(Flows_Promoted; Flows) { }
+            actionref(Functions_Promoted; Functions) { }
         }
     }
 }

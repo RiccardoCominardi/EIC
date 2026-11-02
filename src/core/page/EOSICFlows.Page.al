@@ -40,10 +40,6 @@ page 67005 "EOS IC Flows"
                 {
                     ApplicationArea = All;
                 }
-                field("Flow Type"; Rec."Flow Type")
-                {
-                    ApplicationArea = All;
-                }
                 field("Mapping Code"; Rec."Mapping Code")
                 {
                     ApplicationArea = All;

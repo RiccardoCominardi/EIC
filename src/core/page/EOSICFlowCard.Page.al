@@ -71,10 +71,6 @@ page 67006 "EOS IC Flow Card"
                 {
                     ShowCaption = false;
                     Visible = Rec.Direction = Rec.Direction::Inbound;
-                    field("Flow Type"; Rec."Flow Type")
-                    {
-                        ApplicationArea = All;
-                    }
                     field("Auto Process"; Rec."Auto Process")
                     {
                         ApplicationArea = All;

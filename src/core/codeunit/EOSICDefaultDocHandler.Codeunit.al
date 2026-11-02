@@ -30,15 +30,17 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
     procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
     var
-        UnsupportedDocumentTypeErr: Label 'The document type %1 is not supported by the document creation process.', Comment = '%1 = document type';
+        ICFunctions: Record "EOS IC Functions";
+        Text000Err: Label 'No functions found for company %1 related to the selected flow.', Comment = '%1 = target company';
     begin
-        case ICEntries."Flow Type" of
-            ICEntries."Flow Type"::"Sales Order Creation":
+        ICFunctions.Get(ICEntries."Target Company", ICEntries.Direction);
+        case true of
+            ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
                 CreateSalesOrder(ICEntries);
-            ICEntries."Flow Type"::"Purchase Order Creation":
+            ICFunctions."Purchase Order Creation Flow" = ICEntries."IC Flow Code":
                 CreatePurchaseOrder(ICEntries);
             else
-                Error(UnsupportedDocumentTypeErr, ICEntries."Flow Type");
+                Error(Text000Err, ICEntries."Target Company");
         end;
     end;
 
@@ -179,6 +181,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         SalesHeader: Record "Sales Header";
         ICEntriesMgt: Codeunit "EOS IC Entries Management";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
+        DocumentTypeLbl: Label 'Sales Order';
     begin
         StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
         if not StgSalesHeader.FindFirst() then
@@ -186,7 +189,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
         CreateSalesHeader(SalesHeader, StgSalesHeader);
         CreateSalesLines(SalesHeader, StgSalesHeader."Entry No.");
-        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Sales Header", SalesHeader."No.", SalesHeader.SystemId);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Sales Header", DocumentTypeLbl, SalesHeader."No.", SalesHeader.SystemId);
     end;
 
     procedure CreateSalesHeader(var SalesHeader: Record "Sales Header"; StgSalesHeader: Record "EOS IC Stg. Sales Header")
@@ -277,6 +280,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         PurchaseHeader: Record "Purchase Header";
         ICEntriesMgt: Codeunit "EOS IC Entries Management";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
+        DocumentTypeLbl: Label 'Purchase Order';
     begin
         StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
         if not StgPurchHeader.FindFirst() then
@@ -284,7 +288,7 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
         CreatePurchaseHeader(PurchaseHeader, StgPurchHeader);
         CreatePurchaseLines(PurchaseHeader, StgPurchHeader."Entry No.");
-        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Purchase Header", PurchaseHeader."No.", PurchaseHeader.SystemId);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Purchase Header", DocumentTypeLbl, PurchaseHeader."No.", PurchaseHeader.SystemId);
     end;
 
     local procedure CreatePurchaseHeader(var PurchaseHeader: Record "Purchase Header"; StgPurchHeader: Record "EOS IC Stg. Purch. Header")
