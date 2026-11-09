@@ -398,6 +398,36 @@ codeunit 67017 "EOS IC Out. Mapping Mgt."
         // The example file is produced without flow, so the functions without a sample implementation are skipped.
         if not IsHandled and not SampleMode then
             Error(FunctionNotHandledErr, MappingLine."Function", MappingLine."Line No.", MappingLine."Mapping Code");
+
+        if IsHandled then
+            ApplyFunctionStringTransformations(MappingLine, MasterJson);
+    end;
+
+    local procedure ApplyFunctionStringTransformations(MappingLine: Record "EOS IC Out. Mapping Lines"; var MasterJson: JsonObject)
+    var
+        FunctionResult: JsonToken;
+        FunctionValue: JsonValue;
+        SerializedFunctionValue: Text;
+        ResultText: Text;
+        FunctionOutputNotTextErr: Label 'The function %1 must provide a text value for the Json tag %2 when a string transformation is configured.', Comment = '%1 = function code, %2 = Json tag';
+    begin
+        if (MappingLine."Transliteration Code" = '') and (MappingLine."String Replacement Code" = '') then
+            exit;
+
+        if not MasterJson.Get(MappingLine."Json Tag", FunctionResult) then
+            Error(FunctionOutputNotTextErr, MappingLine."Function", MappingLine."Json Tag");
+
+        if not FunctionResult.IsValue() then
+            Error(FunctionOutputNotTextErr, MappingLine."Function", MappingLine."Json Tag");
+
+        FunctionValue := FunctionResult.AsValue();
+        FunctionValue.WriteTo(SerializedFunctionValue);
+        if CopyStr(SerializedFunctionValue, 1, 1) <> '"' then
+            Error(FunctionOutputNotTextErr, MappingLine."Function", MappingLine."Json Tag");
+
+        ResultText := StringTransformationMgt.ApplyTransformations(MappingLine."Transliteration Code", MappingLine."String Replacement Code", MappingLine."Transformation Order", FunctionValue.AsText());
+        MasterJson.Remove(MappingLine."Json Tag");
+        MasterJson.Add(MappingLine."Json Tag", ResultText);
     end;
 
     local procedure ManageJsonField(ParentRecRef: RecordRef; MappingLine: Record "EOS IC Out. Mapping Lines"; var MasterJson: JsonObject)

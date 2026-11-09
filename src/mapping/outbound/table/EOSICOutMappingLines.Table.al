@@ -293,6 +293,7 @@ table 67019 "EOS IC Out. Mapping Lines"
                 Field: Record Field;
                 MustBeLbl: Label 'must be %1 if %2 is %3.', Comment = '%1 = required value, %2 = field caption, %3 = field value';
                 OrLbl: Label '%1 or %2', Comment = '%1 = first value, %2 = second value';
+                MustBeFieldOrFunctionLbl: Label 'must be %1 or %2.', Comment = '%1 = Field, %2 = Function';
             begin
                 if Rec."String Replacement Code" = '' then
                     exit;
@@ -300,11 +301,12 @@ table 67019 "EOS IC Out. Mapping Lines"
                 if Rec."Line Type" <> Rec."Line Type"::Attribute then
                     Rec.FieldError("Line Type", StrSubstNo(MustBeLbl, Rec."Line Type"::Attribute, Rec.FieldCaption("String Replacement Code"), Rec."String Replacement Code"));
 
-                if Rec."Attribute Type" <> Rec."Attribute Type"::Field then
-                    Rec.FieldError("Attribute Type", StrSubstNo(MustBeLbl, Rec."Attribute Type"::Field, Rec.FieldCaption("String Replacement Code"), Rec."String Replacement Code"));
-
-                if not (Rec."Field Type" in [Format(Field.Type::Code, 0, 9), Format(Field.Type::Text, 0, 9)]) then
-                    Rec.FieldError("Field Type", StrSubstNo(MustBeLbl, StrSubstNo(OrLbl, Field.Type::Code, Field.Type::Text), Rec.FieldCaption("String Replacement Code"), Rec."String Replacement Code"));
+                if Rec."Attribute Type" = Rec."Attribute Type"::Field then begin
+                    if not (Rec."Field Type" in [Format(Field.Type::Code, 0, 9), Format(Field.Type::Text, 0, 9)]) then
+                        Rec.FieldError("Field Type", StrSubstNo(MustBeLbl, StrSubstNo(OrLbl, Field.Type::Code, Field.Type::Text), Rec.FieldCaption("String Replacement Code"), Rec."String Replacement Code"));
+                end else
+                    if Rec."Attribute Type" <> Rec."Attribute Type"::"Function" then
+                        Rec.FieldError("Attribute Type", StrSubstNo(MustBeFieldOrFunctionLbl, Rec."Attribute Type"::Field, Rec."Attribute Type"::"Function"));
             end;
         }
         field(64; "Transformation Order"; Enum "EOS IC Transformation Order")

@@ -143,7 +143,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 field("String Replacement Code"; Rec."String Replacement Code")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the complete string replacement applied after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).';
+                    ToolTip = 'Specifies the complete string replacement applied to text output from a field or function.';
                 }
                 field("Encode to Base64"; Rec."Encode to Base64")
                 {

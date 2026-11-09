@@ -245,8 +245,12 @@ codeunit 67019 "EOS IC Out. Mapping Validation"
                 if ICOutMappingLine."Json Tag" = '' then
                     AddIssue(Issues, ICOutMappingLine, JsonTagRequiredErr);
             ICOutMappingLine."Attribute Type"::"Function":
-                if ICOutMappingLine."Function" = '' then
-                    AddIssue(Issues, ICOutMappingLine, FunctionRequiredErr);
+                begin
+                    if ICOutMappingLine."Function" = '' then
+                        AddIssue(Issues, ICOutMappingLine, FunctionRequiredErr);
+                    if (ICOutMappingLine."String Replacement Code" <> '') and (ICOutMappingLine."Json Tag" = '') then
+                        AddIssue(Issues, ICOutMappingLine, JsonTagRequiredErr);
+                end;
         end;
     end;
 
