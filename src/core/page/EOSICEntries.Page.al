@@ -10,6 +10,7 @@ page 67012 "EOS IC Entries"
     DeleteAllowed = false;
     PageType = List;
     SourceTable = "EOS IC Entries";
+    SourceTableView = sorting("Entry No.") order(descending);
     UsageCategory = Lists;
     ApplicationArea = All;
 

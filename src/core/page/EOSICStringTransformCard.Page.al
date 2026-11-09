@@ -1,10 +1,10 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67035 "EOS IC Transliteration Card"
+page 67035 "EOS IC String Transform Card"
 {
-    Caption = 'IC Transliteration Card (EIC)';
+    Caption = 'IC String Transformation Card (EIC)';
     PageType = Card;
-    SourceTable = "EOS IC Transliteration Header";
+    SourceTable = "EOS IC String Transform Header";
     UsageCategory = None;
 
     layout
@@ -22,8 +22,12 @@ page 67035 "EOS IC Transliteration Card"
                 {
                     ApplicationArea = All;
                 }
+                field("Transformation Type"; Rec."Transformation Type")
+                {
+                    ApplicationArea = All;
+                }
             }
-            part(Lines; "EOS IC Transliteration Lines")
+            part(Lines; "EOS IC String Transform Lines")
             {
                 ApplicationArea = All;
                 Caption = 'Lines';

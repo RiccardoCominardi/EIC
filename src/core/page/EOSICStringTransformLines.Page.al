@@ -1,11 +1,11 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67036 "EOS IC Transliteration Lines"
+page 67036 "EOS IC String Transform Lines"
 {
-    Caption = 'IC Transliteration Lines (EIC)';
+    Caption = 'IC String Transformation Lines (EIC)';
     AutoSplitKey = true;
     PageType = ListPart;
-    SourceTable = "EOS IC Transliteration Line";
+    SourceTable = "EOS IC String Transform Line";
     UsageCategory = None;
 
     layout
@@ -17,12 +17,12 @@ page 67036 "EOS IC Transliteration Lines"
                 field(Character; Rec.Character)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the character, or the sequence of characters, to be replaced. Upper and lower case are different characters.';
+                    ToolTip = 'Specifies the source string to be matched. In character-transliteration mode, new entries can contain at most two characters. Matching is case-sensitive.';
                 }
                 field(Transformation; Rec.Transformation)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the text that replaces the character. Leave it blank to remove the character.';
+                    ToolTip = 'Specifies the text that replaces the source string. Leave it blank to remove the matched text.';
                 }
             }
         }

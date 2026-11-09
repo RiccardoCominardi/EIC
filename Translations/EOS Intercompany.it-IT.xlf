@@ -2266,58 +2266,6 @@
           <source>%1 or %2</source>
           <target>%1 o %2</target>
         </trans-unit>
-        <trans-unit id="Table 2205026071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transliteration Header (EIC)</source>
-          <target>Testata traslitterazioni (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 2205026071 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Code</source>
-          <target>Codice</target>
-        </trans-unit>
-        <trans-unit id="Table 2205026071 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Description</source>
-          <target>Descrizione</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transliteration Line (EIC)</source>
-          <target>Righe traslitterazioni (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Method 109749268 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The character %1 is already defined in the line %2 of the transliteration %3.</source>
-          <target>Il carattere %1 è già definito nella riga %2 della traslitterazione %3.</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Field 3597746779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Character</source>
-          <target>Carattere</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Code</source>
-          <target>Codice</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line No.</source>
-          <target>Num. riga</target>
-        </trans-unit>
-        <trans-unit id="Table 1499061712 - Field 3071184163 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Transformation</source>
-          <target>Trasformazione</target>
-        </trans-unit>
-        <trans-unit id="Page 2049423069 - Action 3660337750 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Shows the transliterations that can be assigned to the lines of the mappings.</source>
-          <target>Mostra le traslitterazioni assegnabili alle righe delle mappature.</target>
-        </trans-unit>
-        <trans-unit id="Page 2049423069 - Action 3660337750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Transliterations</source>
-          <target>Traslitterazioni</target>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3660337750 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Shows the transliterations that can be assigned to the lines of the mappings.</source>
-          <target>Mostra le traslitterazioni assegnabili alle righe delle mappature.</target>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3660337750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Transliterations</source>
-          <target>Traslitterazioni</target>
-        </trans-unit>
         <trans-unit id="Page 2526431623 - Control 1441502928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the transliteration applied to the text read from the Json before it is written in the target field (Text and Code fields only).</source>
           <target>Specifica la traslitterazione applicata al testo letto dal Json prima della scrittura nel campo di destinazione (solo campi Testo e Codice).</target>
@@ -2325,34 +2273,6 @@
         <trans-unit id="Page 1277141442 - Control 1441502928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Specifies the transliteration applied to the value after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).</source>
           <target>Specifica la traslitterazione applicata al valore dopo la regola di trasformazione e prima del limite di lunghezza e della codifica Base64 (solo campi Testo e Codice).</target>
-        </trans-unit>
-        <trans-unit id="Page 4095929970 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transliteration Card (EIC)</source>
-          <target>Card traslitterazione (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Page 4095929970 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target>Generale</target>
-        </trans-unit>
-        <trans-unit id="Page 4095929970 - Control 3471137671 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Lines</source>
-          <target>Righe</target>
-        </trans-unit>
-        <trans-unit id="Page 1086266225 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transliteration Lines (EIC)</source>
-          <target>Righe traslitterazione (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Page 1086266225 - Control 3597746779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the character, or the sequence of characters, to be replaced. Upper and lower case are different characters.</source>
-          <target>Specifica il carattere, o la sequenza di caratteri, da sostituire. Maiuscole e minuscole sono caratteri diversi.</target>
-        </trans-unit>
-        <trans-unit id="Page 1086266225 - Control 3071184163 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the text that replaces the character. Leave it blank to remove the character.</source>
-          <target>Specifica il testo che sostituisce il carattere. Lasciare vuoto per rimuovere il carattere.</target>
-        </trans-unit>
-        <trans-unit id="Page 1007216483 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Transliterations (EIC)</source>
-          <target>Traslitterazioni (EIC)</target>
         </trans-unit>
         <trans-unit id="PageExtension 1695062298 - Action 3097581009 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Creates the intercompany entry for this order and sends it to the intercompany company.</source>
@@ -2569,6 +2489,174 @@
         <trans-unit id="Page 910390347 - Action 366713437 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Show</source>
           <target>Mostra</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <target>Codice</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <target>Descrizione</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Field 3891959083 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transformation Type</source>
+          <target>Tipo trasformazione</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Field 3597746779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source String</source>
+          <target>Testo origine</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Code</source>
+          <target>Codice</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Line No.</source>
+          <target>Nr. riga</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Field 3071184163 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Replacement</source>
+          <target>Sostituzione</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 316711105 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transformation Order</source>
+          <target>Ordine trasformazione</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 3064613770 - Method 2126772001 - NamedType 2038339145" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 or %2</source>
+          <target>%1 o %2</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 3064613770 - Method 2126772001 - NamedType 928238982" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must be %1 if %2 is %3.</source>
+          <target>deve essere %1 se %2 è %3</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 3064613770 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String Replacement Code</source>
+          <target>Cod. sostituzione testo</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 316711105 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transformation Order</source>
+          <target>Ordine trasformazione</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3064613770 - Method 2126772001 - NamedType 1877585225" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must be a field of type Text or Code.</source>
+          <target>deve essere un campo di tipo Testo o Code</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3064613770 - Method 2126772001 - NamedType 1002409097" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must not be %1.</source>
+          <target>non deve essere %1</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC String Transformation Header (EIC)</source>
+          <target>Trasformazione testo (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 4150431018 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC String Transformation Card (EIC)</source>
+          <target>Trasformazione testo (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 3585818265 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC String Transformation Lines (EIC)</source>
+          <target>Righe trasformazione testo (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 2622921776 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC String Transformations (EIC)</source>
+          <target>Trasformazione testo (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Enum 4167496688 - EnumValue 3239900837 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Transliteration First</source>
+          <target>Prima traslitterazione</target>
+        </trans-unit>
+        <trans-unit id="Enum 4167496688 - EnumValue 1000970571 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String Replacement First</source>
+          <target>Prima sostituzione</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3064613770 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String Replacement Code</source>
+          <target>Cod. sostituzione testo</target>
+        </trans-unit>
+        <trans-unit id="Page 4150431018 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target>Generale</target>
+        </trans-unit>
+        <trans-unit id="Page 4150431018 - Control 3471137671 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lines</source>
+          <target>Righe</target>
+        </trans-unit>
+        <trans-unit id="Enum 976433598 - EnumValue 3482394556 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Character Transliteration</source>
+          <target>Traslitterazione</target>
+        </trans-unit>
+        <trans-unit id="Enum 976433598 - EnumValue 2608239686 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Complete String Replacement</source>
+          <target>Sostituzione</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 2221724993 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the string transformations that can be assigned to the lines of the mappings.</source>
+          <target>Mostra le trasformazione testo che possono essere assegnate alle righe dei mapping</target>
+        </trans-unit>
+        <trans-unit id="Page 2049423069 - Action 2221724993 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String Transformations</source>
+          <target>Trasformazione testo</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 2221724993 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String Transformations</source>
+          <target>Trasformazione testo</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 2221724993 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the string transformations that can be assigned to the lines of the mappings.</source>
+          <target>Mostra le trasformazione testo che possono essere assegnate alle righe dei mapping</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Control 3064613770 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the complete string replacement applied before the value is written in the target field (Text and Code fields only).</source>
+          <target>Specifica la sostituzione completa della stringa applicata prima che il valore venga scritto nel campo di destinazione (solo campi Testo e Codice).</target>
+        </trans-unit>
+        <trans-unit id="Page 1277141442 - Control 3064613770 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the complete string replacement applied after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).</source>
+          <target>Specifica la sostituzione completa della stringa applicata dopo la regola di trasformazione e prima del limite di lunghezza e della codifica Base64 (solo campi Testo e Codice).</target>
+        </trans-unit>
+        <trans-unit id="Page 3585818265 - Control 3597746779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the source string to be matched. In character-transliteration mode, new entries can contain at most two characters. Matching is case-sensitive.</source>
+          <target>Specifica la stringa sorgente da confrontare. In modalità di traslitterazione dei caratteri, le nuove voci possono contenere al massimo due caratteri. La corrispondenza distingue tra maiuscole e minuscole.</target>
+        </trans-unit>
+        <trans-unit id="Page 3585818265 - Control 3071184163 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the text that replaces the source string. Leave it blank to remove the matched text.</source>
+          <target>Specifica il testo che sostituisce la stringa di origine. Lascialo vuoto per rimuovere il testo corrispondente.</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Method 3982684195 - NamedType 2331020334" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The transformation type cannot be changed while the code is assigned to mapping lines using the other transformation mode.</source>
+          <target>Il tipo di trasformazione non può essere modificato finché il codice è assegnato a linee di mapping che utilizzano l'altra modalità di trasformazione.</target>
+        </trans-unit>
+        <trans-unit id="Table 755115487 - Method 3982684195 - NamedType 64365977" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source string cannot exceed two characters in Character Transliteration mode.</source>
+          <target>La stringa sorgente non può superare i due caratteri in modalità traslitterazione dei caratteri.</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC String Transformation Line (EIC)</source>
+          <target>Righe trasformazione testo (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Method 832723754 - NamedType 64365977" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source string cannot exceed two characters in Character Transliteration mode.</source>
+          <target>La stringa sorgente non può superare i due caratteri in modalità traslitterazione dei caratteri.</target>
+        </trans-unit>
+        <trans-unit id="Table 2575233784 - Method 3019740267 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source string %1 is already defined in the line %2 of the transformation %3.</source>
+          <target>La stringa sorgente %1 è già definita nella riga %2 della trasformazione %3.</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Action 209467748 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the intercompany confirmation entry for this order and sends it to the intercompany company.</source>
+          <target>Crea la conferma intercompany per questo ordine e la invia alla società</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 1695062298 - Action 209467748 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Confirmation Intercompany (EIC)</source>
+          <target>Invia conferma intercompany (EIC)</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 4174190279 - Action 209467748 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Confirmation Intercompany (EIC)</source>
+          <target>Invia conferma intercompany (EIC)</target>
+        </trans-unit>
+        <trans-unit id="PageExtension 4174190279 - Action 209467748 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates the intercompany confirmation entry for this order and sends it to the intercompany company.</source>
+          <target>Crea la conferma intercompany per questo ordine e la invia alla società</target>
         </trans-unit>
       </group>
     </body>

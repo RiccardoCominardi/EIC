@@ -56,19 +56,19 @@ page 67000 "EOS IC Setup"
                 Image = Log;
                 RunObject = page "EOS IC Entries";
             }
-            action(Transliterations)
+            action(StringTransformations)
             {
                 ApplicationArea = All;
-                Caption = 'Transliterations';
+                Caption = 'String Transformations';
                 Image = Translations;
-                RunObject = page "EOS IC Transliterations";
-                ToolTip = 'Shows the transliterations that can be assigned to the lines of the mappings.';
+                RunObject = page "EOS IC String Transformations";
+                ToolTip = 'Shows the string transformations that can be assigned to the lines of the mappings.';
             }
         }
         area(Promoted)
         {
             actionref(ICEntries_Promoted; ICEntries) { }
-            actionref(Transliterations_Promoted; Transliterations) { }
+            actionref(StringTransformations_Promoted; StringTransformations) { }
         }
     }
 

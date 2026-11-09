@@ -9,7 +9,7 @@ codeunit 67013 "EOS IC Mapping Mgt."
         TempICMappingLine: Record "EOS IC Mapping Lines" temporary;
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
         ICMappingValidation: Codeunit "EOS IC Mapping Validation";
-        TransliterationMgt: Codeunit "EOS IC Transliteration Mgt.";
+        StringTransformationMgt: Codeunit "EOS IC String Transform Mgt.";
         ContextElements: Dictionary of [Text, JsonToken];
         TableContext: Dictionary of [Integer, Text];
         TablesOfContext: Dictionary of [Text, List of [Integer]];
@@ -436,11 +436,11 @@ codeunit 67013 "EOS IC Mapping Mgt."
                 if ICMappingLine."Json Path" <> '' then
                     if ResolveValue(ICMappingLine."Json Path", JsonValue) then
                         if (ICMappingLine."Source Value" <> '') and (JsonValue.AsText() = ICMappingLine."Source Value") then
-                            SetFieldText(FieldRef, ICMappingLine."Target Value", '')
+                            SetFieldText(FieldRef, ICMappingLine."Target Value", '', '', ICMappingLine."Transformation Order")
                         else
-                            SetFieldValue(FieldRef, JsonValue, ICMappingLine."Transliteration Code");
+                            SetFieldValue(FieldRef, JsonValue, ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order");
             ICMappingLine."Mapping Type"::Constant:
-                SetFieldText(FieldRef, ICMappingLine."Target Value", '');
+                SetFieldText(FieldRef, ICMappingLine."Target Value", '', '', ICMappingLine."Transformation Order");
             ICMappingLine."Mapping Type"::Transformation:
                 begin
                     if ICMappingLine."Json Path" <> '' then
@@ -449,12 +449,12 @@ codeunit 67013 "EOS IC Mapping Mgt."
                     GetTableElement(ICMappingLine."Target Table ID", ContextElement);
                     OnTransformValue(ICMappingLine, ContextElement, CurrentValue, Result, Handled);
                     if Handled then
-                        SetFieldText(FieldRef, Result, ICMappingLine."Transliteration Code");
+                        SetFieldText(FieldRef, Result, ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order");
                 end;
         end;
     end;
 
-    local procedure SetFieldValue(var FieldRef: FieldRef; JsonValue: JsonValue; TransliterationCode: Code[20])
+    local procedure SetFieldValue(var FieldRef: FieldRef; JsonValue: JsonValue; TransliterationCode: Code[20]; StringReplacementCode: Code[20]; TransformationOrder: Enum "EOS IC Transformation Order")
     begin
         case FieldRef.Type of
             FieldType::Integer:
@@ -466,12 +466,12 @@ codeunit 67013 "EOS IC Mapping Mgt."
             FieldType::Boolean:
                 FieldRef.Value := JsonValue.AsBoolean();
             else
-                SetFieldText(FieldRef, JsonValue.AsText(), TransliterationCode);
+                SetFieldText(FieldRef, JsonValue.AsText(), TransliterationCode, StringReplacementCode, TransformationOrder);
         end;
     end;
 
     // Blank text leaves the field untouched; text longer than the field is truncated (after the transliteration, which applies to Text/Code fields only).
-    local procedure SetFieldText(var FieldRef: FieldRef; ValueText: Text; TransliterationCode: Code[20])
+    local procedure SetFieldText(var FieldRef: FieldRef; ValueText: Text; TransliterationCode: Code[20]; StringReplacementCode: Code[20]; TransformationOrder: Enum "EOS IC Transformation Order")
     var
         ConfigValidateMgt: Codeunit "Config. Validate Management";
         ErrorText: Text;
@@ -481,7 +481,7 @@ codeunit 67013 "EOS IC Mapping Mgt."
             exit;
 
         if FieldRef.Type in [FieldType::Text, FieldType::Code] then begin
-            ValueText := TransliterationMgt.Transliterate(TransliterationCode, ValueText);
+            ValueText := StringTransformationMgt.ApplyTransformations(TransliterationCode, StringReplacementCode, TransformationOrder, ValueText);
             ValueText := CopyStr(ValueText, 1, FieldRef.Length);
         end;
 

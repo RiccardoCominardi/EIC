@@ -185,6 +185,14 @@ xmlport 67000 "EOS IC Out. Mapping Impex"
                     {
                         MinOccurs = Zero;
                     }
+                    fieldelement(StringReplacementCode; ICOutMappingLine."String Replacement Code")
+                    {
+                        MinOccurs = Zero;
+                    }
+                    fieldelement(TransformationOrder; ICOutMappingLine."Transformation Order")
+                    {
+                        MinOccurs = Zero;
+                    }
 
                     tableelement(ICTableRelationHeader; "EOS IC Table Relation Header")
                     {
@@ -300,7 +308,7 @@ xmlport 67000 "EOS IC Out. Mapping Impex"
                         }
                     }
 
-                    tableelement(ICTransliterationHeader; "EOS IC Transliteration Header")
+                    tableelement(ICStringTransformationHeader; "EOS IC String Transform Header")
                     {
                         AutoReplace = true;
                         LinkFields = Code = field("Transliteration Code");
@@ -309,32 +317,79 @@ xmlport 67000 "EOS IC Out. Mapping Impex"
                         SourceTableView = sorting(Code);
                         XmlName = 'TransliterationHeader';
 
-                        fieldelement(Code; ICTransliterationHeader.Code)
+                        fieldelement(Code; ICStringTransformationHeader.Code)
                         {
                         }
-                        fieldelement(Description; ICTransliterationHeader.Description)
+                        fieldelement(Description; ICStringTransformationHeader.Description)
                         {
+                        }
+                        fieldelement(TransformationType; ICStringTransformationHeader."Transformation Type")
+                        {
+                            MinOccurs = Zero;
                         }
 
-                        tableelement(ICTransliterationLine; "EOS IC Transliteration Line")
+                        tableelement(ICStringTransformationLine; "EOS IC String Transform Line")
                         {
                             AutoReplace = true;
                             LinkFields = Code = field(Code);
-                            LinkTable = ICTransliterationHeader;
+                            LinkTable = ICStringTransformationHeader;
                             MinOccurs = Zero;
                             SourceTableView = sorting(Code);
                             XmlName = 'TransliterationLine';
 
-                            fieldelement(Code; ICTransliterationLine.Code)
+                            fieldelement(Code; ICStringTransformationLine.Code)
                             {
                             }
-                            fieldelement(LineNo; ICTransliterationLine."Line No.")
+                            fieldelement(LineNo; ICStringTransformationLine."Line No.")
                             {
                             }
-                            fieldelement(Character; ICTransliterationLine.Character)
+                            fieldelement(Character; ICStringTransformationLine.Character)
                             {
                             }
-                            fieldelement(Transformation; ICTransliterationLine.Transformation)
+                            fieldelement(Transformation; ICStringTransformationLine.Transformation)
+                            {
+                            }
+                        }
+                    }
+
+                    tableelement(ICStringReplacementHeader; "EOS IC String Transform Header")
+                    {
+                        AutoReplace = true;
+                        LinkFields = Code = field("String Replacement Code");
+                        LinkTable = ICOutMappingLine;
+                        MinOccurs = Zero;
+                        SourceTableView = sorting(Code);
+                        XmlName = 'StringReplacementHeader';
+
+                        fieldelement(Code; ICStringReplacementHeader.Code)
+                        {
+                        }
+                        fieldelement(Description; ICStringReplacementHeader.Description)
+                        {
+                        }
+                        fieldelement(TransformationType; ICStringReplacementHeader."Transformation Type")
+                        {
+                        }
+
+                        tableelement(ICStringReplacementLine; "EOS IC String Transform Line")
+                        {
+                            AutoReplace = true;
+                            LinkFields = Code = field(Code);
+                            LinkTable = ICStringReplacementHeader;
+                            MinOccurs = Zero;
+                            SourceTableView = sorting(Code);
+                            XmlName = 'StringReplacementLine';
+
+                            fieldelement(Code; ICStringReplacementLine.Code)
+                            {
+                            }
+                            fieldelement(LineNo; ICStringReplacementLine."Line No.")
+                            {
+                            }
+                            fieldelement(SourceString; ICStringReplacementLine.Character)
+                            {
+                            }
+                            fieldelement(Replacement; ICStringReplacementLine.Transformation)
                             {
                             }
                         }

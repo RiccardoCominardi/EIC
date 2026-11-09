@@ -40,12 +40,33 @@ pageextension 67002 "EOS IC Sales Order" extends "Sales Order"
                 Caption = 'Send Intercompany (EIC)';
                 Image = SendTo;
                 ToolTip = 'Creates the intercompany entry for this order and sends it to the intercompany company.';
-
                 trigger OnAction()
                 var
+                    ICFunctions: Record "EOS IC Functions";
+                    ICFlows: Record "EOS IC Flows";
                     ICEntriesMgt: Codeunit "EOS IC Entries Management";
                 begin
-                    ICEntriesMgt.CreateEntry(Rec);
+                    ICFunctions.Get(Rec."EOS IC Company", ICFunctions.Direction::Outbound);
+                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Sales Order Creation Flow");
+                    ICEntriesMgt.CreateEntry(Rec, ICFlows);
+                    CurrPage.Update(false);
+                end;
+            }
+            action("EOS IC Send Confirmation")
+            {
+                ApplicationArea = All;
+                Caption = 'Send Confirmation Intercompany (EIC)';
+                Image = SendTo;
+                ToolTip = 'Creates the intercompany confirmation entry for this order and sends it to the intercompany company.';
+                trigger OnAction()
+                var
+                    ICFunctions: Record "EOS IC Functions";
+                    ICFlows: Record "EOS IC Flows";
+                    ICEntriesMgt: Codeunit "EOS IC Entries Management";
+                begin
+                    ICFunctions.Get(Rec."EOS IC Company", ICFunctions.Direction::Outbound);
+                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Confirm Sales Order Flow");
+                    ICEntriesMgt.CreateEntry(Rec, ICFlows);
                     CurrPage.Update(false);
                 end;
             }

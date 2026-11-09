@@ -38,6 +38,12 @@ table 67017 "EOS IC Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Mapping Type';
+
+            trigger OnValidate()
+            begin
+                Rec.Validate("Transliteration Code");
+                Rec.Validate("String Replacement Code");
+            end;
         }
         field(5; "Target Table ID"; Integer)
         {
@@ -135,7 +141,7 @@ table 67017 "EOS IC Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Transliteration Code';
-            TableRelation = "EOS IC Transliteration Header"."Code";
+            TableRelation = "EOS IC String Transform Header"."Code" where("Transformation Type" = const("Character Transliteration"));
 
             trigger OnValidate()
             var
@@ -153,6 +159,34 @@ table 67017 "EOS IC Mapping Lines"
                     if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
                         Rec.FieldError("Target Field No.", MustBeTextLbl);
             end;
+        }
+        field(16; "String Replacement Code"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'String Replacement Code';
+            TableRelation = "EOS IC String Transform Header"."Code" where("Transformation Type" = const("Complete String Replacement"));
+
+            trigger OnValidate()
+            var
+                Field: Record Field;
+                MustNotBeLbl: Label 'must not be %1.', Comment = '%1 = mapping type';
+                MustBeTextLbl: Label 'must be a field of type Text or Code.';
+            begin
+                if Rec."String Replacement Code" = '' then
+                    exit;
+
+                if Rec."Mapping Type" = Rec."Mapping Type"::Constant then
+                    Rec.FieldError("Mapping Type", StrSubstNo(MustNotBeLbl, Rec."Mapping Type"));
+
+                if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
+                    if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
+                        Rec.FieldError("Target Field No.", MustBeTextLbl);
+            end;
+        }
+        field(17; "Transformation Order"; Enum "EOS IC Transformation Order")
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Transformation Order';
         }
     }
 
