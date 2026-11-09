@@ -510,22 +510,6 @@
           <source>The source must be a record.</source>
           <target>La sorgente deve essere un record</target>
         </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 316427380 - NamedType 3016971198" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The line type "%1" is not valid for a sales line.</source>
-          <target>Il tipo riga "%1" non è valido per una riga di vendita</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 2648269774 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No staging record was found for the entry %1.</source>
-          <target>Nessuna tabella di staging trovata per il movimento %1</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 161448877 - NamedType 3016971198" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The line type "%1" is not valid for a purchase line.</source>
-          <target>Il tipo riga "%1" non è valido per una riga di acquisto</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 1315191579 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No staging record was found for the entry %1.</source>
-          <target>Nessuna tabella di staging trovata per il movimento %1</target>
-        </trans-unit>
         <trans-unit id="TableExtension 4047318561 - Field 811614172 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Entries</source>
           <target>Movimenti IC</target>
@@ -1280,7 +1264,7 @@
         </trans-unit>
         <trans-unit id="Page 910390347 - Action 127686680 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Show Document</source>
-          <target>Mostra documento</target>
+          <target>Documento</target>
         </trans-unit>
         <trans-unit id="Page 910390347 - Action 3287604016 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Export Payload</source>
@@ -1817,10 +1801,6 @@
         <trans-unit id="TableExtension 972804559 - Field 1824473816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Admin (EIC)</source>
           <target>Admin (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Enum 3602152798 - EnumValue 4077356876 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>PFCH ES</source>
-          <target>PFCH ES</target>
         </trans-unit>
         <trans-unit id="TableExtension 876641161 - Field 2202265920 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Company</source>
@@ -2570,18 +2550,6 @@
           <source>The flow %1 is already assigned to the field %2 of the same company and direction.</source>
           <target>Il flusso %1 è già assegnato al campo %2 della stessa società e destinazione</target>
         </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 1151670590 - NamedType 4204058380" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No functions found for company %1 related to the selected flow.</source>
-          <target>Nessuna funzione trovata per la società %1 legata al flusso selezionato</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 2648269774 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order</source>
-          <target>Ordine vendita</target>
-        </trans-unit>
-        <trans-unit id="Codeunit 3345137394 - Method 1315191579 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order</source>
-          <target>Ordine acquisto</target>
-        </trans-unit>
         <trans-unit id="Codeunit 2110689530 - Method 1151670590 - NamedType 4204058380" size-unit="char" translate="yes" xml:space="preserve">
           <source>No functions found for company %1 related to the selected flow.</source>
           <target>Nessuna funzione trovata per la società %1 legata al flusso selezionato</target>
@@ -2593,6 +2561,14 @@
         <trans-unit id="Codeunit 2110689530 - Method 1315191579 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchase Order</source>
           <target>Ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Page 910390347 - Action 1065582478 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Show Staging</source>
+          <target>Staging</target>
+        </trans-unit>
+        <trans-unit id="Page 910390347 - Action 366713437 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Show</source>
+          <target>Mostra</target>
         </trans-unit>
       </group>
     </body>

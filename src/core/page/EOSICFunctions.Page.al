@@ -2,12 +2,10 @@ namespace EOS.Solutions.Intercompany;
 page 67022 "EOS IC Functions"
 {
     Caption = 'IC Functions (EIC)';
-    Editable = false;
     PageType = List;
     SourceTable = "EOS IC Functions";
     UsageCategory = None;
     ApplicationArea = All;
-
     layout
     {
         area(Content)

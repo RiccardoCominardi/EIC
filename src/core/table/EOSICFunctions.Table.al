@@ -16,7 +16,7 @@ table 67005 "EOS IC Functions"
             Caption = 'Company Code';
             NotBlank = true;
         }
-        field(2; "Direction"; Enum "IC Direction Type")
+        field(2; "Direction"; Enum "EOS IC Direction")
         {
             DataClassification = CustomerContent;
             Caption = 'Direction';
@@ -25,8 +25,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Sales Order Creation Flow';
-            TableRelation = "EOS IC Flows"."Code";
-
+            TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
                 CheckDuplicatedFunction(Rec.FieldNo("Sales Order Creation Flow"));
@@ -36,8 +35,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Purchase Order Creation Flow';
-            TableRelation = "EOS IC Flows"."Code";
-
+            TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
                 CheckDuplicatedFunction(Rec.FieldNo("Purchase Order Creation Flow"));
@@ -47,8 +45,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Confirm Sales Order Flow';
-            TableRelation = "EOS IC Flows"."Code";
-
+            TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
                 CheckDuplicatedFunction(Rec.FieldNo("Confirm Sales Order Flow"));
@@ -58,8 +55,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Confirm Purchase Order Flow';
-            TableRelation = "EOS IC Flows"."Code";
-
+            TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
                 CheckDuplicatedFunction(Rec.FieldNo("Confirm Purchase Order Flow"));

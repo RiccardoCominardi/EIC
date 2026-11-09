@@ -68,13 +68,6 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                     StyleExpr = StagingColor;
-
-                    trigger OnDrillDown()
-                    var
-                        ICEntriesManagement: Codeunit "EOS IC Entries Management";
-                    begin
-                        ICEntriesManagement.ShowStagingRecord(Rec);
-                    end;
                 }
                 field("Processed At"; Rec."Processed At")
                 {
@@ -115,6 +108,18 @@ page 67012 "EOS IC Entries"
                         Rec.Direction::Inbound:
                             ICEntriesMgt.ShowTargetDocuments(Rec);
                     end;
+                end;
+            }
+            action(ShowStaging)
+            {
+                ApplicationArea = All;
+                Caption = 'Show Staging';
+                Image = View;
+                trigger OnAction()
+                var
+                    ICEntriesManagement: Codeunit "EOS IC Entries Management";
+                begin
+                    ICEntriesManagement.ShowStagingRecord(Rec);
                 end;
             }
         }
@@ -215,7 +220,13 @@ page 67012 "EOS IC Entries"
         {
             actionref(ProcessEntries_Promoted; ProcessEntries) { }
             actionref(ProcessStaging_Promoted; ProcessStaging) { }
-            actionref(ShowDocument_Promoted; ShowDocument) { }
+            group(Show)
+            {
+                Caption = 'Show';
+                Image = View;
+                actionref(ShowDocument_Promoted; ShowDocument) { }
+                actionref(ShowStaging_Promoted; ShowStaging) { }
+            }
             group(Payload)
             {
                 Caption = 'Payload';

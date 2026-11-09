@@ -1,6 +1,5 @@
 namespace EOS.Solutions.Intercompany;
 
-using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
 using Microsoft.Sales.Document;
 
@@ -33,14 +32,14 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         ICFunctions: Record "EOS IC Functions";
         Text000Err: Label 'No functions found for company %1 related to the selected flow.', Comment = '%1 = target company';
     begin
-        ICFunctions.Get(ICEntries."Target Company", ICEntries.Direction);
+        ICFunctions.Get(ICEntries."Source Company", ICEntries.Direction);
         case true of
             ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
                 CreateSalesOrder(ICEntries);
             ICFunctions."Purchase Order Creation Flow" = ICEntries."IC Flow Code":
                 CreatePurchaseOrder(ICEntries);
             else
-                Error(Text000Err, ICEntries."Target Company");
+                Error(Text000Err, ICEntries."Source Company");
         end;
     end;
 

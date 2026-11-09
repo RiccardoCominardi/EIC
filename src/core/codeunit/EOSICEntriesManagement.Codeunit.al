@@ -1,10 +1,7 @@
 namespace EOS.Solutions.Intercompany;
 
-using Microsoft.Inventory.Item;
 using Microsoft.Purchases.Document;
-using Microsoft.Purchases.History;
 using Microsoft.Sales.Document;
-using Microsoft.Sales.History;
 using Microsoft.Utilities;
 using System.Threading;
 
@@ -130,7 +127,7 @@ codeunit 67007 "EOS IC Entries Management"
         if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
             exit;
 
-        ICFunctions.Get(ICEntries."Target Company", ICEntries.Direction);
+        ICFunctions.Get(ICEntries."Source Company", ICEntries.Direction);
         case true of
             ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
                 begin
@@ -147,7 +144,7 @@ codeunit 67007 "EOS IC Entries Management"
                     Page.Run(Page::"EOS IC Stg. Purch. Order", StgPurchHeader);
                 end;
             else
-                OnHandleDocsShowStagingRecord(ICEntries);
+                OnHandleDocsShowStagingRecord(ICEntries, ICFunctions);
         end;
     end;
 
@@ -685,7 +682,7 @@ codeunit 67007 "EOS IC Entries Management"
     end;
 
     [IntegrationEvent(false, false)]
-    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries")
+    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries"; ICFunctions: Record "EOS IC Functions")
     begin
     end;
 
