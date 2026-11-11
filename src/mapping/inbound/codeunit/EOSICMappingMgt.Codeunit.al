@@ -431,17 +431,18 @@ codeunit 67013 "EOS IC Mapping Mgt."
         Result: Text;
         Handled: Boolean;
     begin
-        case ICMappingLine."Mapping Type" of
-            ICMappingLine."Mapping Type"::Value:
+        case ICMappingLine."Value Type" of
+            ICMappingLine."Value Type"::Unchanged:
                 if ICMappingLine."Json Path" <> '' then
                     if ResolveValue(ICMappingLine."Json Path", JsonValue) then
-                        if (ICMappingLine."Source Value" <> '') and (JsonValue.AsText() = ICMappingLine."Source Value") then
-                            SetFieldText(FieldRef, ICMappingLine."Target Value", '', '', ICMappingLine."Transformation Order")
-                        else
-                            SetFieldValue(FieldRef, JsonValue, ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order");
-            ICMappingLine."Mapping Type"::Constant:
-                SetFieldText(FieldRef, ICMappingLine."Target Value", '', '', ICMappingLine."Transformation Order");
-            ICMappingLine."Mapping Type"::Transformation:
+                        SetFieldValue(FieldRef, JsonValue, '', '', ICMappingLine."Transformation Order");
+            ICMappingLine."Value Type"::Constant:
+                SetFieldText(FieldRef, ICMappingLine."Constant Text", '', '', ICMappingLine."Transformation Order");
+            ICMappingLine."Value Type"::Transformation:
+                if ICMappingLine."Json Path" <> '' then
+                    if ResolveValue(ICMappingLine."Json Path", JsonValue) then
+                        SetFieldValue(FieldRef, JsonValue, ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order");
+            ICMappingLine."Value Type"::"External Management":
                 begin
                     if ICMappingLine."Json Path" <> '' then
                         if ResolveValue(ICMappingLine."Json Path", JsonValue) then

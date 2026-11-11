@@ -1,12 +1,12 @@
 namespace EOS.Solutions.Intercompany;
 
-enum 67004 "EOS IC Mapping Type"
+enum 67004 "EOS IC Value Types"
 {
     Extensible = true;
 
-    value(0; Value)
+    value(0; Unchanged)
     {
-        Caption = 'Value';
+        Caption = 'Unchanged';
     }
     value(1; Constant)
     {
@@ -15,5 +15,9 @@ enum 67004 "EOS IC Mapping Type"
     value(2; Transformation)
     {
         Caption = 'Transformation';
+    }
+    value(3; "External Management")
+    {
+        Caption = 'External Management';
     }
 }

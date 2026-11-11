@@ -233,8 +233,8 @@ codeunit 67015 "EOS IC Mapping Validation"
         FieldNotSupportedErr: Label 'The field %1 of the table %2 cannot be mapped because it is not a normal field.', Comment = '%1 = field no., %2 = table';
         InvalidPathErr: Label 'The Json path %1 is not valid. %2', Comment = '%1 = path, %2 = error detail';
         NodeNotFoundErr: Label 'The Json path %1 does not exist in the sample Json.', Comment = '%1 = path';
-        PathRequiredErr: Label 'The Json path is required for the mapping type Value.';
-        ConstantRequiredErr: Label 'The target value is required for the mapping type Constant.';
+        PathRequiredErr: Label 'A Json path is required for this value type.';
+        ConstantRequiredErr: Label 'The constant text is required for the value type Constant.';
     begin
         if ICMappingLine."Is Structure" and (ICMappingLine."Target Table ID" = 0) and (ICMappingLine."Target Field No." = 0) then
             exit;
@@ -272,13 +272,18 @@ codeunit 67015 "EOS IC Mapping Validation"
             end;
 
         if not ForExecution then
-            case ICMappingLine."Mapping Type" of
-                ICMappingLine."Mapping Type"::Value:
+            case ICMappingLine."Value Type" of
+                ICMappingLine."Value Type"::Unchanged,
+                ICMappingLine."Value Type"::Transformation:
                     if ICMappingLine."Json Path" = '' then
                         AddPathIssue(PathIssues, PathIssueOrder, ICMappingLine."Json Path", PathRequiredErr);
-                ICMappingLine."Mapping Type"::Constant:
-                    if ICMappingLine."Target Value" = '' then
-                        AddPathIssue(PathIssues, PathIssueOrder, ICMappingLine."Json Path", ConstantRequiredErr);
+                ICMappingLine."Value Type"::Constant:
+                    begin
+                        if ICMappingLine."Json Path" = '' then
+                            AddPathIssue(PathIssues, PathIssueOrder, ICMappingLine."Json Path", PathRequiredErr);
+                        if ICMappingLine."Constant Text" = '' then
+                            AddPathIssue(PathIssues, PathIssueOrder, ICMappingLine."Json Path", ConstantRequiredErr);
+                    end;
             end;
 
         if TableExists and ((ICMappingLine."Json Path" = '') or PathIsValid) then begin

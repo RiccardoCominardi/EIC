@@ -47,6 +47,7 @@ page 67013 "EOS IC Entries API"
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         ICFlows: Record "EOS IC Flows";
+        ICMapping: Record "EOS IC Mapping Headers";
         ICSetup: Record "EOS IC Setup";
         Base64Convert: Codeunit "Base64 Convert";
         ICEntriesManagement: Codeunit "EOS IC Entries Management";
@@ -72,7 +73,10 @@ page 67013 "EOS IC Entries API"
         Rec."Target Company" := ICSetup."Company Code";
         Rec."Relation Table Id" := ICFlows."Relation Table Id";
         Rec."Relation Option Type" := ICFlows."Relation Option Type";
-        Rec."Use Staging" := ICSetup."Enable Unified Staging";
+        if ICFlows."Mapping Code" <> '' then begin
+            ICMapping.Get(ICFlows."Mapping Code");
+            Rec."Use Staging" := ICMapping."Unified Staging";
+        end;
         Rec.Status := Rec.Status::Pending;
         Rec.SetBlobFields(Rec.FieldNo("Received Payload"), Base64Convert.FromBase64(RequestPayload), false);
         Rec.Insert(true);

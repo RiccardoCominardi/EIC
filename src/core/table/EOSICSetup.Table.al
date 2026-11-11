@@ -22,11 +22,6 @@ table 67000 "EOS IC Setup"
             DataClassification = CustomerContent;
             Caption = 'Company Code';
         }
-        field(4; "Interface Company"; Enum "EOS IC Companies")
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Interface Company';
-        }
         field(5; "Company Code Field No."; Integer)
         {
             DataClassification = CustomerContent;
@@ -38,11 +33,6 @@ table 67000 "EOS IC Setup"
             DataClassification = CustomerContent;
             Caption = 'IC Entry Field No.';
             BlankZero = true;
-        }
-        field(7; "Enable Unified Staging"; Boolean)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Enable Unified Staging';
         }
     }
 

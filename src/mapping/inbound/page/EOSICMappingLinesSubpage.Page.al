@@ -109,19 +109,13 @@ page 67011 "EOS IC Mapping Lines Subpage"
                     Visible = ShowLegacyTargets;
                     ToolTip = 'Specifies that the target field is part of the primary key of the target table, after the entry number and the key fields of the parent table. Its value identifies each record created from the elements of the array.';
                 }
-                field("Mapping Type"; Rec."Mapping Type")
+                field("Value Type"; Rec."Value Type")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
                 }
-                field("Source Value"; Rec."Source Value")
-                {
-                    ApplicationArea = All;
-                    Editable = NodeEditable;
-                    HideValue = not NodeEditable;
-                }
-                field("Target Value"; Rec."Target Value")
+                field("Constant Text"; Rec."Constant Text")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
@@ -185,7 +179,7 @@ page 67011 "EOS IC Mapping Lines Subpage"
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
         NodeName, NodeStyle : Text;
         StagingFieldName: Text[80];
-        SourceValueEditable, NodeEditable, ShowLegacyTargets, ShowUnifiedTargets, CanSuggestMapping : Boolean;
+        NodeEditable, ShowLegacyTargets, ShowUnifiedTargets, CanSuggestMapping : Boolean;
 
     trigger OnAfterGetRecord()
     begin
@@ -202,7 +196,6 @@ page 67011 "EOS IC Mapping Lines Subpage"
             if Field.Get(Database::"EOS IC Staging", Rec."Staging Field No.") then
                 StagingFieldName := Field.FieldName;
 
-        SourceValueEditable := true;
         NodeEditable := true;
         NodeName := ICJsonPathMgt.GetNodeName(Rec."Json Path");
         if Rec."Is Structure" then begin
@@ -211,12 +204,8 @@ page 67011 "EOS IC Mapping Lines Subpage"
                 NodeName := '[]';
             NodeStyle := Format(PageStyle::Strong);
             NodeEditable := false;
-            SourceValueEditable := false;
-        end else begin
+        end else
             NodeStyle := Format(PageStyle::Standard);
-            if Rec."Mapping Type" in [Rec."Mapping Type"::Constant] then
-                SourceValueEditable := false;
-        end;
     end;
 
 }

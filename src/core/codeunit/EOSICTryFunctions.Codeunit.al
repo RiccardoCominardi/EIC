@@ -77,12 +77,16 @@ codeunit 67002 "EOS IC Try Functions"
     local procedure ProcessStaging(var ICEntries: Record "EOS IC Entries")
     var
         ICSetup: Record "EOS IC Setup";
+        ICCompanies: Record "EOS IC Companies";
         ICDocumentHandler: Interface "EOS IC Document Handler";
     begin
         ICSetup.Get();
         ICSetup.TestField(Enabled, true);
 
-        ICDocumentHandler := ICSetup."Interface Company";
+        ICCompanies.Get(ICEntries."Source Company");
+        ICCompanies.TestField(Enabled, true);
+
+        ICDocumentHandler := ICCompanies.Interface;
         ICDocumentHandler.ProcessStaging(ICEntries);
     end;
 

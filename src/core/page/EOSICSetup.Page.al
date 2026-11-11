@@ -27,15 +27,6 @@ page 67000 "EOS IC Setup"
                 {
                     ApplicationArea = All;
                 }
-                field("Interface Company"; Rec."Interface Company")
-                {
-                    ApplicationArea = All;
-                }
-                field("Enable Unified Staging"; Rec."Enable Unified Staging")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies that new inbound entries use the unified staging table.';
-                }
             }
             group(DocumentFields)
             {
@@ -61,7 +52,7 @@ page 67000 "EOS IC Setup"
                 ApplicationArea = All;
                 Caption = 'Create Test Inbound Entry';
                 Image = Import;
-                Enabled = Rec.Enabled and Rec."Enable Unified Staging";
+                Enabled = Rec.Enabled;
                 ToolTip = 'Creates a pending inbound EIC Entry using the TEST mapping and the sample Json payload.';
 
                 trigger OnAction()
@@ -82,7 +73,6 @@ page 67000 "EOS IC Setup"
                 begin
                     Rec.TestField(Enabled, true);
                     Rec.TestField("Company Code");
-                    Rec.TestField("Enable Unified Staging", true);
 
                     TestMappingCode := 'TEST';
                     if not ICMapping.Get(TestMappingCode) then
@@ -116,7 +106,7 @@ page 67000 "EOS IC Setup"
                     ICEntries."Target Company" := Rec."Company Code";
                     ICEntries."Relation Table Id" := ICFlows."Relation Table Id";
                     ICEntries."Relation Option Type" := ICFlows."Relation Option Type";
-                    ICEntries."Use Staging" := true;
+                    ICEntries."Use Staging" := ICMapping."Unified Staging";
                     ICEntries.Status := ICEntries.Status::Pending;
                     ICEntries."Staging Status" := ICEntries."Staging Status"::None;
                     ICEntries.SetBlobFields(ICEntries.FieldNo("Received Payload"), PayloadText, false);

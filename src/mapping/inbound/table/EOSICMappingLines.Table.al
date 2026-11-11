@@ -34,10 +34,10 @@ table 67017 "EOS IC Mapping Lines"
                 CheckDuplicatedPath();
             end;
         }
-        field(4; "Mapping Type"; Enum "EOS IC Mapping Type")
+        field(4; "Value Type"; Enum "EOS IC Value Types")
         {
             DataClassification = CustomerContent;
-            Caption = 'Mapping Type';
+            Caption = 'Value Type';
 
             trigger OnValidate()
             begin
@@ -98,16 +98,6 @@ table 67017 "EOS IC Mapping Lines"
             CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Target Table ID"), "No." = field("Target Field No.")));
             Editable = false;
         }
-        field(9; "Source Value"; Text[2048])
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Source Value';
-        }
-        field(10; "Target Value"; Text[2048])
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Value';
-        }
         field(11; "Array Context"; Text[2048])
         {
             DataClassification = CustomerContent;
@@ -161,8 +151,8 @@ table 67017 "EOS IC Mapping Lines"
                 if Rec."Transliteration Code" = '' then
                     exit;
 
-                if Rec."Mapping Type" = Rec."Mapping Type"::Constant then
-                    Rec.FieldError("Mapping Type", StrSubstNo(MustNotBeLbl, Rec."Mapping Type"));
+                if Rec."Value Type" = Rec."Value Type"::Constant then
+                    Rec.FieldError("Value Type", StrSubstNo(MustNotBeLbl, Rec."Value Type"));
 
                 if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
                     if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
@@ -184,8 +174,8 @@ table 67017 "EOS IC Mapping Lines"
                 if Rec."String Replacement Code" = '' then
                     exit;
 
-                if Rec."Mapping Type" = Rec."Mapping Type"::Constant then
-                    Rec.FieldError("Mapping Type", StrSubstNo(MustNotBeLbl, Rec."Mapping Type"));
+                if Rec."Value Type" = Rec."Value Type"::Constant then
+                    Rec.FieldError("Value Type", StrSubstNo(MustNotBeLbl, Rec."Value Type"));
 
                 if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
                     if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
@@ -302,6 +292,11 @@ table 67017 "EOS IC Mapping Lines"
                 Rec.TestField("Staging Field No.");
                 Rec.TestField("Staging Caption");
             end;
+        }
+        field(24; "Constant Text"; Text[250])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Constant Text';
         }
     }
 

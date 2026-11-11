@@ -96,8 +96,8 @@ codeunit 67003 "EOS IC Staging Mgt."
         InconsistentCaptionErr: Label 'Staging field %1 must use the same caption throughout the mapping.', Comment = '%1 = field name';
         LegacyTargetErr: Label 'Legacy target table and field must be blank in a unified staging mapping.';
         InvalidPathErr: Label 'The Json path %1 is invalid. %2', Comment = '%1 = path, %2 = error detail';
-        MissingPathErr: Label 'A Json path is required for a value mapping.';
-        MissingConstantErr: Label 'The target value is required for a constant mapping.';
+        MissingPathErr: Label 'A Json path is required for this mapping type.';
+        MissingConstantErr: Label 'The constant text is required for a constant mapping.';
         SamplePathErr: Label 'The Json path %1 does not exist in the imported sample Json.', Comment = '%1 = path';
         InvalidEnumSourceErr: Label 'Enum or Option metadata must specify a valid source table and field.';
         EnumSourceTypeErr: Label 'The source field %1 must be an Enum or Option field.', Comment = '%1 = field name';
@@ -202,13 +202,20 @@ codeunit 67003 "EOS IC Staging Mgt."
                                     if HasSample and not SamplePaths.Contains(ICMappingLine."Json Path") then
                                         Issues.Add(StrSubstNo(SamplePathErr, ICMappingLine."Json Path"));
 
-                            case ICMappingLine."Mapping Type" of
-                                ICMappingLine."Mapping Type"::Value:
+                            case ICMappingLine."Value Type" of
+                                ICMappingLine."Value Type"::Unchanged:
                                     if ICMappingLine."Json Path" = '' then
                                         Issues.Add(MissingPathErr);
-                                ICMappingLine."Mapping Type"::Constant:
-                                    if ICMappingLine."Target Value" = '' then
-                                        Issues.Add(MissingConstantErr);
+                                ICMappingLine."Value Type"::Constant:
+                                    begin
+                                        if ICMappingLine."Json Path" = '' then
+                                            Issues.Add(MissingPathErr);
+                                        if ICMappingLine."Constant Text" = '' then
+                                            Issues.Add(MissingConstantErr);
+                                    end;
+                                ICMappingLine."Value Type"::Transformation:
+                                    if ICMappingLine."Json Path" = '' then
+                                        Issues.Add(MissingPathErr);
                             end;
                         end;
             until ICMappingLine.Next() = 0;
@@ -1301,7 +1308,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         JsonValue: JsonValue;
         ValueState: Enum "EOS IC Staging Value State";
         RawValue: Text;
-        MappedValue: Text;
         CurrentValue: Text;
         ResultValue: Text;
         Handled: Boolean;
@@ -1318,8 +1324,8 @@ codeunit 67003 "EOS IC Staging Mgt."
             Clear(ResultValue);
             Clear(Handled);
 
-            case TempMappingLine."Mapping Type" of
-                TempMappingLine."Mapping Type"::Value:
+            case TempMappingLine."Value Type" of
+                TempMappingLine."Value Type"::Unchanged:
                     if ResolveToken(TempMappingLine."Json Path", ContextPath, JsonTokenValue) then begin
                         if not JsonTokenValue.IsValue() then
                             Error('The Json path %1 must resolve to a primitive value.', TempMappingLine."Json Path");
@@ -1329,19 +1335,28 @@ codeunit 67003 "EOS IC Staging Mgt."
                         else begin
                             ValueState := ValueState::Value;
                             RawValue := JsonValue.AsText();
-                            if (TempMappingLine."Source Value" <> '') and (RawValue = TempMappingLine."Source Value") then begin
-                                MappedValue := TempMappingLine."Target Value";
-                                SetFieldFromText(FieldRef, MappedValue, TempMappingLine);
-                            end else
-                                SetFieldFromJsonValue(FieldRef, RawValue, TempMappingLine);
+                            SetFieldFromJsonValue(FieldRef, RawValue, TempMappingLine);
                         end;
                     end;
-                TempMappingLine."Mapping Type"::Constant:
+                TempMappingLine."Value Type"::Constant:
                     begin
                         ValueState := ValueState::Value;
-                        SetFieldFromText(FieldRef, TempMappingLine."Target Value", TempMappingLine);
+                        SetFieldFromText(FieldRef, TempMappingLine."Constant Text", TempMappingLine, false);
                     end;
-                TempMappingLine."Mapping Type"::Transformation:
+                TempMappingLine."Value Type"::"Transformation":
+                    if ResolveToken(TempMappingLine."Json Path", ContextPath, JsonTokenValue) then
+                        if JsonTokenValue.IsValue() then begin
+                            JsonValue := JsonTokenValue.AsValue();
+                            if not JsonValue.IsNull() then begin
+                                CurrentValue := JsonValue.AsText();
+                                RawValue := CurrentValue;
+                                ValueState := ValueState::Value;
+                                SetFieldFromText(FieldRef, CurrentValue, TempMappingLine, true);
+                            end else
+                                ValueState := ValueState::Null;
+                        end else
+                            Error('The Json path %1 must resolve to a primitive value.', TempMappingLine."Json Path");
+                TempMappingLine."Value Type"::"External Management":
                     begin
                         if ResolveToken(TempMappingLine."Json Path", ContextPath, JsonTokenValue) then
                             if JsonTokenValue.IsValue() then begin
@@ -1359,7 +1374,7 @@ codeunit 67003 "EOS IC Staging Mgt."
                         if Handled then begin
                             RawValue := ResultValue;
                             ValueState := ValueState::Value;
-                            SetFieldFromText(FieldRef, ResultValue, TempMappingLine);
+                            SetFieldFromText(FieldRef, ResultValue, TempMappingLine, true);
                         end;
                     end;
             end;
@@ -1392,10 +1407,10 @@ codeunit 67003 "EOS IC Staging Mgt."
 
     local procedure SetFieldFromJsonValue(var FieldRef: FieldRef; ValueText: Text; ICMappingLine: Record "EOS IC Mapping Lines")
     begin
-        SetFieldFromText(FieldRef, ValueText, ICMappingLine);
+        SetFieldFromText(FieldRef, ValueText, ICMappingLine, false);
     end;
 
-    local procedure SetFieldFromText(var FieldRef: FieldRef; ValueText: Text; ICMappingLine: Record "EOS IC Mapping Lines")
+    local procedure SetFieldFromText(var FieldRef: FieldRef; ValueText: Text; ICMappingLine: Record "EOS IC Mapping Lines"; ApplyTransformations: Boolean)
     var
         IntegerValue: Integer;
         BigIntegerValue: BigInteger;
@@ -1409,7 +1424,8 @@ codeunit 67003 "EOS IC Staging Mgt."
         TextTooLongErr: Label 'The Json value for path %1 exceeds the %2 characters supported by staging field %3.', Comment = '%1 = Json path, %2 = maximum length, %3 = field name';
     begin
         if FieldRef.Type = FieldType::Text then begin
-            ValueText := StringTransformationMgt.ApplyTransformations(ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order", ValueText);
+            if ApplyTransformations then
+                ValueText := StringTransformationMgt.ApplyTransformations(ICMappingLine."Transliteration Code", ICMappingLine."String Replacement Code", ICMappingLine."Transformation Order", ValueText);
             if StrLen(ValueText) > FieldRef.Length then
                 Error(TextTooLongErr, ICMappingLine."Json Path", FieldRef.Length, FieldRef.Name);
             FieldRef.Value := ValueText;
