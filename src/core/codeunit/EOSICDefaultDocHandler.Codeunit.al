@@ -34,10 +34,16 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
     begin
         ICFunctions.Get(ICEntries."Source Company", ICEntries.Direction);
         case true of
-            ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
-                CreateSalesOrder(ICEntries);
-            ICFunctions."Purchase Order Creation Flow" = ICEntries."IC Flow Code":
-                CreatePurchaseOrder(ICEntries);
+            ICFunctions."Send Create Sales Order" = ICEntries."IC Flow Code":
+                if ICEntries."Use Staging" then
+                    CreateSalesOrderFromStaging(ICEntries)
+                else
+                    CreateSalesOrder(ICEntries);
+            ICFunctions."Send Create Purch. Order" = ICEntries."IC Flow Code":
+                if ICEntries."Use Staging" then
+                    CreatePurchaseOrderFromStaging(ICEntries)
+                else
+                    CreatePurchaseOrder(ICEntries);
             else
                 Error(Text000Err, ICEntries."Source Company");
         end;
@@ -372,4 +378,196 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         exit(PurchaseLineType);
     end;
     #endregion ProcessStaging
+
+    #region ProcessUnifiedStaging
+    // Unified staging examples: the header values are on the root record, the lines on its child records (Json names as written by BuildPayload).
+
+    procedure CreateSalesOrderFromStaging(var ICEntries: Record "EOS IC Entries")
+    var
+        HeaderStaging: Record "EOS IC Staging";
+        SalesHeader: Record "Sales Header";
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
+        DocumentTypeLbl: Label 'Sales Order';
+    begin
+        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", HeaderStaging);
+
+        CreateSalesHeaderFromStaging(SalesHeader, HeaderStaging);
+        CreateSalesLinesFromStaging(SalesHeader, HeaderStaging);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Sales Header", DocumentTypeLbl, SalesHeader."No.", SalesHeader.SystemId);
+    end;
+
+    procedure CreateSalesHeaderFromStaging(var SalesHeader: Record "Sales Header"; HeaderStaging: Record "EOS IC Staging")
+    var
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        Value: Variant;
+    begin
+        StagingMgt.GetRequiredStagingValue(HeaderStaging, 'sellToCustomerNo', Value);
+
+        SalesHeader.Init();
+        SalesHeader."Document Type" := SalesHeader."Document Type"::Order;
+        SalesHeader.Insert(true);
+        SalesHeader.Validate("Sell-to Customer No.", Value);
+
+        // Missing, null or blank values are not copied, so that the defaults of the customer are kept.
+        if StagingMgt.GetStagingValue(HeaderStaging, 'postingDate', Value) then
+            SalesHeader.Validate("Posting Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'orderDate', Value) then
+            SalesHeader.Validate("Order Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'documentDate', Value) then
+            SalesHeader.Validate("Document Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'requestedDeliveryDate', Value) then
+            SalesHeader.Validate("Requested Delivery Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'currencyCode', Value) then
+            SalesHeader.Validate("Currency Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'externalDocumentNo', Value) then
+            SalesHeader.Validate("External Document No.", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'yourReference', Value) then
+            SalesHeader.Validate("Your Reference", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'paymentTermsCode', Value) then
+            SalesHeader.Validate("Payment Terms Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'shipmentMethodCode', Value) then
+            SalesHeader.Validate("Shipment Method Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'locationCode', Value) then
+            SalesHeader.Validate("Location Code", Value);
+
+        SalesHeader.Modify(true);
+    end;
+
+    procedure CreateSalesLinesFromStaging(SalesHeader: Record "Sales Header"; HeaderStaging: Record "EOS IC Staging")
+    var
+        LineStaging: Record "EOS IC Staging";
+        SalesLine: Record "Sales Line";
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        Value: Variant;
+        DescriptionText: Text;
+    begin
+        StagingMgt.SetChildStagingRecords(LineStaging, HeaderStaging, 'lines');
+        if not LineStaging.FindSet() then
+            exit;
+
+        repeat
+            Clear(SalesLine);
+            SalesLine.Init();
+            SalesLine."Document Type" := SalesHeader."Document Type";
+            SalesLine."Document No." := SalesHeader."No.";
+            SalesLine."Line No." := StagingMgt.GetIntegerValue(LineStaging, 'lineNo');
+            SalesLine.Insert(true);
+
+            // The type is mapped on an Integer staging field with the Enum/Option source Sales Line > Type.
+            SalesLine.Validate(Type, "Sales Line Type".FromInteger(StagingMgt.GetIntegerValue(LineStaging, 'type')));
+            if StagingMgt.GetStagingValue(LineStaging, 'no', Value) then
+                SalesLine.Validate("No.", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'variantCode', Value) then
+                SalesLine.Validate("Variant Code", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'locationCode', Value) then
+                SalesLine.Validate("Location Code", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'unitOfMeasureCode', Value) then
+                SalesLine.Validate("Unit of Measure Code", Value);
+            SalesLine.Validate(Quantity, StagingMgt.GetDecimalValue(LineStaging, 'quantity'));
+            SalesLine.Validate("Unit Price", StagingMgt.GetDecimalValue(LineStaging, 'unitPrice'));
+            SalesLine.Validate("Line Discount %", StagingMgt.GetDecimalValue(LineStaging, 'lineDiscountPercent'));
+            if StagingMgt.GetStagingValue(LineStaging, 'requestedDeliveryDate', Value) then
+                SalesLine.Validate("Requested Delivery Date", Value);
+            DescriptionText := StagingMgt.GetTextValue(LineStaging, 'description');
+            if DescriptionText <> '' then
+                SalesLine.Description := CopyStr(DescriptionText, 1, MaxStrLen(SalesLine.Description));
+            SalesLine.Modify(true);
+        until LineStaging.Next() = 0;
+    end;
+
+    procedure CreatePurchaseOrderFromStaging(var ICEntries: Record "EOS IC Entries")
+    var
+        HeaderStaging: Record "EOS IC Staging";
+        PurchaseHeader: Record "Purchase Header";
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        ICEntriesMgt: Codeunit "EOS IC Entries Management";
+        DocumentTypeLbl: Label 'Purchase Order';
+    begin
+        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", HeaderStaging);
+
+        CreatePurchaseHeaderFromStaging(PurchaseHeader, HeaderStaging);
+        CreatePurchaseLinesFromStaging(PurchaseHeader, HeaderStaging);
+        ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Purchase Header", DocumentTypeLbl, PurchaseHeader."No.", PurchaseHeader.SystemId);
+    end;
+
+    procedure CreatePurchaseHeaderFromStaging(var PurchaseHeader: Record "Purchase Header"; HeaderStaging: Record "EOS IC Staging")
+    var
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        Value: Variant;
+    begin
+        StagingMgt.GetRequiredStagingValue(HeaderStaging, 'buyFromVendorNo', Value);
+
+        PurchaseHeader.Init();
+        PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Order;
+        PurchaseHeader.Insert(true);
+        PurchaseHeader.Validate("Buy-from Vendor No.", Value);
+
+        // Missing, null or blank values are not copied, so that the defaults of the vendor are kept.
+        if StagingMgt.GetStagingValue(HeaderStaging, 'postingDate', Value) then
+            PurchaseHeader.Validate("Posting Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'orderDate', Value) then
+            PurchaseHeader.Validate("Order Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'documentDate', Value) then
+            PurchaseHeader.Validate("Document Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'requestedReceiptDate', Value) then
+            PurchaseHeader.Validate("Requested Receipt Date", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'currencyCode', Value) then
+            PurchaseHeader.Validate("Currency Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'vendorOrderNo', Value) then
+            PurchaseHeader.Validate("Vendor Order No.", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'yourReference', Value) then
+            PurchaseHeader.Validate("Your Reference", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'paymentTermsCode', Value) then
+            PurchaseHeader.Validate("Payment Terms Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'shipmentMethodCode', Value) then
+            PurchaseHeader.Validate("Shipment Method Code", Value);
+        if StagingMgt.GetStagingValue(HeaderStaging, 'locationCode', Value) then
+            PurchaseHeader.Validate("Location Code", Value);
+
+        PurchaseHeader.Modify(true);
+    end;
+
+    procedure CreatePurchaseLinesFromStaging(PurchaseHeader: Record "Purchase Header"; HeaderStaging: Record "EOS IC Staging")
+    var
+        LineStaging: Record "EOS IC Staging";
+        PurchaseLine: Record "Purchase Line";
+        StagingMgt: Codeunit "EOS IC Staging Mgt.";
+        Value: Variant;
+        DescriptionText: Text;
+    begin
+        StagingMgt.SetChildStagingRecords(LineStaging, HeaderStaging, 'lines');
+        if not LineStaging.FindSet() then
+            exit;
+
+        repeat
+            Clear(PurchaseLine);
+            PurchaseLine.Init();
+            PurchaseLine."Document Type" := PurchaseHeader."Document Type";
+            PurchaseLine."Document No." := PurchaseHeader."No.";
+            PurchaseLine."Line No." := StagingMgt.GetIntegerValue(LineStaging, 'lineNo');
+            PurchaseLine.Insert(true);
+
+            // The type is mapped on an Integer staging field with the Enum/Option source Purchase Line > Type.
+            PurchaseLine.Validate(Type, "Purchase Line Type".FromInteger(StagingMgt.GetIntegerValue(LineStaging, 'type')));
+            if StagingMgt.GetStagingValue(LineStaging, 'no', Value) then
+                PurchaseLine.Validate("No.", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'variantCode', Value) then
+                PurchaseLine.Validate("Variant Code", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'locationCode', Value) then
+                PurchaseLine.Validate("Location Code", Value);
+            if StagingMgt.GetStagingValue(LineStaging, 'unitOfMeasureCode', Value) then
+                PurchaseLine.Validate("Unit of Measure Code", Value);
+            PurchaseLine.Validate(Quantity, StagingMgt.GetDecimalValue(LineStaging, 'quantity'));
+            PurchaseLine.Validate("Direct Unit Cost", StagingMgt.GetDecimalValue(LineStaging, 'directUnitCost'));
+            PurchaseLine.Validate("Line Discount %", StagingMgt.GetDecimalValue(LineStaging, 'lineDiscountPercent'));
+            if StagingMgt.GetStagingValue(LineStaging, 'requestedReceiptDate', Value) then
+                PurchaseLine.Validate("Requested Receipt Date", Value);
+            DescriptionText := StagingMgt.GetTextValue(LineStaging, 'description');
+            if DescriptionText <> '' then
+                PurchaseLine.Description := CopyStr(DescriptionText, 1, MaxStrLen(PurchaseLine.Description));
+            PurchaseLine.Modify(true);
+        until LineStaging.Next() = 0;
+    end;
+    #endregion ProcessUnifiedStaging
 }

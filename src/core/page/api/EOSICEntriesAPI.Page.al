@@ -72,6 +72,7 @@ page 67013 "EOS IC Entries API"
         Rec."Target Company" := ICSetup."Company Code";
         Rec."Relation Table Id" := ICFlows."Relation Table Id";
         Rec."Relation Option Type" := ICFlows."Relation Option Type";
+        Rec."Use Staging" := ICSetup."Enable Unified Staging";
         Rec.Status := Rec.Status::Pending;
         Rec.SetBlobFields(Rec.FieldNo("Received Payload"), Base64Convert.FromBase64(RequestPayload), false);
         Rec.Insert(true);

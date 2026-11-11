@@ -44,10 +44,10 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Target Company';
         }
-        field(8; "Document No."; Code[50])
+        field(8; "Source No."; Code[50])
         {
             DataClassification = CustomerContent;
-            Caption = 'Document No.';
+            Caption = 'Source No.';
         }
         field(10; "Doc. System Id"; Guid)
         {
@@ -105,11 +105,11 @@ table 67006 "EOS IC Entries"
             Caption = 'Staging Status';
             Editable = false;
         }
-        field(25; "Created Documents Count"; Integer)
+        field(25; "Created Updated Records Count"; Integer)
         {
-            Caption = 'Created Documents Count';
+            Caption = 'Created Updated Records Count';
             FieldClass = FlowField;
-            CalcFormula = count("EOS IC Entry Created Document" where("IC Entry No." = field("Entry No.")));
+            CalcFormula = count("EOS IC Created Updated Records" where("IC Entry No." = field("Entry No.")));
             Editable = false;
         }
         field(26; "Relation Table Id"; Integer)
@@ -154,6 +154,11 @@ table 67006 "EOS IC Entries"
             DataClassification = CustomerContent;
             Caption = 'Relation Option Type';
             OptionMembers = "0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19";
+        }
+        field(29; "Use Staging"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Use Staging';
         }
     }
 

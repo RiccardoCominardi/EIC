@@ -16,19 +16,19 @@ page 67022 "EOS IC Functions"
                 {
                     ApplicationArea = All;
                 }
-                field("Sales Order Creation Flow"; Rec."Sales Order Creation Flow")
+                field("Send Create Sales Order"; Rec."Send Create Sales Order")
                 {
                     ApplicationArea = All;
                 }
-                field("Purchase Order Creation Flow"; Rec."Purchase Order Creation Flow")
+                field("Send Create Purch. Order"; Rec."Send Create Purch. Order")
                 {
                     ApplicationArea = All;
                 }
-                field("Confirm Sales Order Flow"; Rec."Confirm Sales Order Flow")
+                field("Send Rec. Confirm Sales Order"; Rec."Send Rec. Confirm Sales Order")
                 {
                     ApplicationArea = All;
                 }
-                field("Confirm Purchase Order Flow"; Rec."Confirm Purchase Order Flow")
+                field("Send Rec. Confirm Purch. Order"; Rec."Send Rec. Confirm Purch. Order")
                 {
                     ApplicationArea = All;
                 }

@@ -1,11 +1,11 @@
 namespace EOS.Solutions.Intercompany;
 
-table 67004 "EOS IC Entry Created Document"
+table 67004 "EOS IC Created Updated Records"
 {
     DataClassification = CustomerContent;
-    Caption = 'IC Entry Created Document';
-    DrillDownPageId = "EOS IC Entry Created Docs";
-    LookupPageId = "EOS IC Entry Created Docs";
+    Caption = 'IC Created Updated Records';
+    DrillDownPageId = "EOS IC Created Updated Records";
+    LookupPageId = "EOS IC Created Updated Records";
 
     fields
     {

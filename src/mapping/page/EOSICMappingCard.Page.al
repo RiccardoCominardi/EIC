@@ -35,6 +35,17 @@ page 67010 "EOS IC Mapping Card"
                         CurrPage.Update(true);
                     end;
                 }
+                field("Unified Staging"; Rec."Unified Staging")
+                {
+                    ApplicationArea = All;
+                    Editable = not Rec.Enabled;
+                    Visible = Rec.Direction = Rec.Direction::Inbound;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field(Enabled; Rec.Enabled)
                 {
                     ApplicationArea = All;

@@ -29,6 +29,7 @@ codeunit 67010 "EOS IC Process Entries JQ"
                     ICEntries.SetRange(Direction, ICEntries.Direction::Inbound);
                     ICEntries.SetRange(Status, ICEntries.Status::Completed);
                     ICEntries.SetRange("Staging Status", ICEntries."Staging Status"::Pending);
+                    ICEntries.SetRange("Use Staging", false);
                     if ICEntries.FindSet() then
                         repeat
                             ICEntriesManagement.ProcessStaging(ICEntries);

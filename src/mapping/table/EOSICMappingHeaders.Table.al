@@ -109,6 +109,25 @@ table 67016 "EOS IC Mapping Headers"
             DataClassification = CustomerContent;
             Caption = 'Table Filter';
         }
+        field(14; "Unified Staging"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Unified Staging';
+
+            trigger OnValidate()
+            var
+                ICMappingLine: Record "EOS IC Mapping Lines";
+                KeyFieldExistsErr: Label 'Clear the Key Field setting on all mapping lines before enabling unified staging.';
+            begin
+                if Rec."Unified Staging" then begin
+                    Rec.TestField(Direction, Rec.Direction::Inbound);
+                    ICMappingLine.SetRange("Mapping Code", Rec.Code);
+                    ICMappingLine.SetRange("Is Key Field", true);
+                    if not ICMappingLine.IsEmpty() then
+                        Error(KeyFieldExistsErr);
+                end;
+            end;
+        }
     }
 
     keys

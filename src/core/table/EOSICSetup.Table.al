@@ -39,6 +39,11 @@ table 67000 "EOS IC Setup"
             Caption = 'IC Entry Field No.';
             BlankZero = true;
         }
+        field(7; "Enable Unified Staging"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Enable Unified Staging';
+        }
     }
 
     keys

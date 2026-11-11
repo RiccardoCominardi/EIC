@@ -132,9 +132,18 @@ table 67017 "EOS IC Mapping Lines"
             Caption = 'Key Field';
 
             trigger OnValidate()
+            var
+                ICMapping: Record "EOS IC Mapping Headers";
+                UnifiedKeyFieldErr: Label 'Key fields are not used in unified staging mappings.';
             begin
-                if Rec."Is Key Field" then
-                    Rec.TestField("Target Field No.");
+                if not Rec."Is Key Field" then
+                    exit;
+
+                if ICMapping.Get(Rec."Mapping Code") then
+                    if ICMapping."Unified Staging" then
+                        Error(UnifiedKeyFieldErr);
+
+                Rec.TestField("Target Field No.");
             end;
         }
         field(15; "Transliteration Code"; Code[20])
@@ -188,6 +197,112 @@ table 67017 "EOS IC Mapping Lines"
             DataClassification = CustomerContent;
             Caption = 'Transformation Order';
         }
+        field(18; "Staging Field No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Staging Field No.';
+            BlankZero = true;
+            TableRelation = Field."No." where(TableNo = const(Database::"EOS IC Staging"));
+
+            trigger OnValidate()
+            var
+                Field: Record Field;
+                ICMapping: Record "EOS IC Mapping Headers";
+                UnsupportedFieldErr: Label 'The field %1 cannot be used in unified staging.', Comment = '%1 = field name';
+            begin
+                if Rec."Staging Field No." = 0 then begin
+                    Rec."Show in Staging List" := false;
+                    exit;
+                end;
+
+                ICMapping.Get(Rec."Mapping Code");
+                ICMapping.TestField("Unified Staging", true);
+                Field.Get(Database::"EOS IC Staging", Rec."Staging Field No.");
+                if (Field.Class <> Field.Class::Normal) or (Field.Type in [Field.Type::Blob, Field.Type::Media, Field.Type::MediaSet]) then
+                    Error(UnsupportedFieldErr, Field."Field Caption");
+            end;
+
+            trigger OnLookup()
+            var
+                NewFieldNo: Integer;
+            begin
+                if LookupFieldsID(NewFieldNo, Database::"EOS IC Staging", Rec."Staging Field No.") then
+                    Rec.Validate("Staging Field No.", NewFieldNo);
+            end;
+        }
+        field(19; "Staging Field Name"; Text[80])
+        {
+            Caption = 'Staging Field Name';
+            FieldClass = FlowField;
+            CalcFormula = lookup(Field."Field Caption" where(TableNo = const(Database::"EOS IC Staging"), "No." = field("Staging Field No.")));
+            Editable = false;
+        }
+        field(20; "Staging Caption"; Text[100])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Staging Caption';
+        }
+        field(21; "Enum/Option Source Table No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Enum/Option Source Table No.';
+            BlankZero = true;
+            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
+
+            trigger OnValidate()
+            begin
+                if Rec."Enum/Option Source Table No." <> xRec."Enum/Option Source Table No." then
+                    Rec."Enum/Option Source Field No." := 0;
+            end;
+        }
+        field(22; "Enum/Option Source Field No."; Integer)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Enum/Option Source Field No.';
+            BlankZero = true;
+            TableRelation = Field."No." where(TableNo = field("Enum/Option Source Table No."));
+
+            trigger OnValidate()
+            var
+                Field: Record Field;
+                SourceFieldRequiredErr: Label 'The source field must be an Enum or Option field.';
+            begin
+                if Rec."Enum/Option Source Field No." = 0 then
+                    exit;
+
+                Rec.TestField("Enum/Option Source Table No.");
+                Field.Get(Rec."Enum/Option Source Table No.", Rec."Enum/Option Source Field No.");
+                if Field.Type <> Field.Type::Option then
+                    Error(SourceFieldRequiredErr);
+            end;
+
+            trigger OnLookup()
+            var
+                NewFieldNo: Integer;
+            begin
+                Rec.TestField("Enum/Option Source Table No.");
+                if LookupEnumSourceFieldID(NewFieldNo, Rec."Enum/Option Source Table No.", Rec."Enum/Option Source Field No.") then
+                    Rec.Validate("Enum/Option Source Field No.", NewFieldNo);
+            end;
+        }
+        field(23; "Show in Staging List"; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Show in Staging List';
+
+            trigger OnValidate()
+            var
+                ICMapping: Record "EOS IC Mapping Headers";
+            begin
+                if not Rec."Show in Staging List" then
+                    exit;
+
+                ICMapping.Get(Rec."Mapping Code");
+                ICMapping.TestField("Unified Staging", true);
+                Rec.TestField("Staging Field No.");
+                Rec.TestField("Staging Caption");
+            end;
+        }
     }
 
     keys
@@ -240,6 +355,28 @@ table 67017 "EOS IC Mapping Lines"
 
         Field.FilterGroup(2);
         Field.SetRange(TableNo, TableNo);
+        Field.FilterGroup(0);
+        FieldsLookup.SetRecord(Field);
+        FieldsLookup.SetTableView(Field);
+        FieldsLookup.LookupMode := true;
+        if FieldsLookup.RunModal() = Action::LookupOK then begin
+            FieldsLookup.GetRecord(Field);
+            NewFieldNo := Field."No.";
+            exit(true);
+        end;
+        exit(false);
+    end;
+
+    local procedure LookupEnumSourceFieldID(var NewFieldNo: Integer; TableNo: Integer; FieldNo: Integer): Boolean
+    var
+        Field: Record Field;
+        FieldsLookup: Page "Fields Lookup";
+    begin
+        if Field.Get(TableNo, FieldNo) then;
+
+        Field.FilterGroup(2);
+        Field.SetRange(TableNo, TableNo);
+        Field.SetRange(Type, Field.Type::Option);
         Field.FilterGroup(0);
         FieldsLookup.SetRecord(Field);
         FieldsLookup.SetTableView(Field);

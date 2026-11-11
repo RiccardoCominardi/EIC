@@ -2306,14 +2306,6 @@
           <source>Source Line No. (EIC)</source>
           <target>Nr. riga documento origine (EIC)</target>
         </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Entry No.</source>
-          <target>Nr. movimento IC</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 2066789741 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Table Id</source>
-          <target>Id tabella</target>
-        </trans-unit>
         <trans-unit id="Table 2290985398 - Field 2609259055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Option Type</source>
           <target>Tipo documento relazione</target>
@@ -2321,14 +2313,6 @@
         <trans-unit id="Table 2290985398 - Field 791814791 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Table Id</source>
           <target>Nr. tabella relazione</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Entry Created Document</source>
-          <target>Documenti creati (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 486908828 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document No.</source>
-          <target>Nr. documento</target>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Field 1849738273 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Table Name</source>
@@ -2358,17 +2342,9 @@
           <source>There is no Table with ID %1</source>
           <target>Non è presente una tabella con ID %1</target>
         </trans-unit>
-        <trans-unit id="Table 910390347 - Field 486908828 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document No.</source>
-          <target>Nr. documento</target>
-        </trans-unit>
         <trans-unit id="Table 910390347 - Field 701488602 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Doc. System Id</source>
           <target>System Id documento</target>
-        </trans-unit>
-        <trans-unit id="Table 910390347 - Field 2155343081 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Created Documents Count</source>
-          <target>Nr. documenti creati</target>
         </trans-unit>
         <trans-unit id="Page 2689497934 - Control 1802167271 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Relation Option Type</source>
@@ -2377,14 +2353,6 @@
         <trans-unit id="Page 2689497934 - Control 3790693683 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Flow Type Ordinal</source>
           <target>Tipo flusso ordinale</target>
-        </trans-unit>
-        <trans-unit id="Page 1015787352 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Entry Created Documents (EIC)</source>
-          <target>Documenti creati (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 701488602 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Doc. System Id</source>
-          <target>System Id documento</target>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Field 791814791 - Method 2126772001 - NamedType 4131985523" size-unit="char" translate="yes" xml:space="preserve">
           <source>There is no Table with ID %1</source>
@@ -2426,22 +2394,6 @@
           <source>Company Code</source>
           <target>Codice società</target>
         </trans-unit>
-        <trans-unit id="Table 3722283190 - Field 1644281458 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order Creation Flow</source>
-          <target>Flusso creazione ordini acquisto</target>
-        </trans-unit>
-        <trans-unit id="Table 3722283190 - Field 1934957095 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order Creation Flow</source>
-          <target>Flusso creazione ordini vendita</target>
-        </trans-unit>
-        <trans-unit id="Table 3722283190 - Field 4052274874 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Confirm Sales Order Flow</source>
-          <target>Flusso conferma ordini vendita</target>
-        </trans-unit>
-        <trans-unit id="Table 3722283190 - Field 576509431 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Confirm Purchase Order Flow</source>
-          <target>Flusso conferma ordini acquisto</target>
-        </trans-unit>
         <trans-unit id="Page 3602152798 - Action 1929393835 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Functions</source>
           <target>Funzioni</target>
@@ -2457,10 +2409,6 @@
         <trans-unit id="Page 3722283190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Functions (EIC)</source>
           <target>Funzioni (EIC)</target>
-        </trans-unit>
-        <trans-unit id="Table 2760821220 - Field 2363328873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document Type</source>
-          <target>Tipo documento</target>
         </trans-unit>
         <trans-unit id="Table 3722283190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Functions (EIC)</source>
@@ -2611,7 +2559,7 @@
           <target>Specifica la sostituzione completa della stringa applicata prima che il valore venga scritto nel campo di destinazione (solo campi Testo e Codice).</target>
         </trans-unit>
         <trans-unit id="Page 1277141442 - Control 3064613770 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies the complete string replacement applied after the transformation rule and before the length limit and the Base64 encoding (Text and Code fields only).</source>
+          <source>Specifies the complete string replacement applied to text output from a field or function.</source>
           <target>Specifica la sostituzione completa della stringa applicata dopo la regola di trasformazione e prima del limite di lunghezza e della codifica Base64 (solo campi Testo e Codice).</target>
         </trans-unit>
         <trans-unit id="Page 3585818265 - Control 3597746779 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
@@ -2657,6 +2605,538 @@
         <trans-unit id="PageExtension 4174190279 - Action 209467748 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Creates the intercompany confirmation entry for this order and sends it to the intercompany company.</source>
           <target>Crea la conferma intercompany per questo ordine e la invia alla società</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry No.</source>
+          <target>Nr. movimento IC</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Field 701488602 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Doc. System Id</source>
+          <target>System Id documento</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 1070129311 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Flow Code</source>
+          <target>Codice flusso</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 2852966117 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Error Message</source>
+          <target>Messaggio errore</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry No.</source>
+          <target>Nr. movimento IC</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 1789400218 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Level</source>
+          <target>Livello</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 83163012 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Node Type</source>
+          <target>Tipo nodo</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 893431294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Company</source>
+          <target>Società origine</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 4021610987 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Mapping Code</source>
+          <target>Codice mapping</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Entry No.</source>
+          <target>Nr. movimento IC</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 3161204695 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Json Path</source>
+          <target>Json Path</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 1161927236" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 is not valid:\%2</source>
+          <target>Il mapping %1 non è valido:\%2</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 4139555238" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 does not exist.</source>
+          <target>Il mapping %1 non esiste</target>
+        </trans-unit>
+        <trans-unit id="Page 3700193565 - Control 3616259048 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Value</source>
+          <target>Valore</target>
+        </trans-unit>
+        <trans-unit id="Page 3700193565 - Control 894531123 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Field</source>
+          <target>Campo</target>
+        </trans-unit>
+        <trans-unit id="Enum 3900045594 - EnumValue 1131619133 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Value</source>
+          <target>Valore</target>
+        </trans-unit>
+        <trans-unit id="Page 268314290 - Control 3776267830 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Fields</source>
+          <target>Campi</target>
+        </trans-unit>
+        <trans-unit id="Page 268314290 - Control 432566233 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Informations</source>
+          <target>Informazioni</target>
+        </trans-unit>
+        <trans-unit id="Page 268314290 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Staging Record (EIC)</source>
+          <target>Staging record (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Staging (EIC)</source>
+          <target>Staging (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 3700193565 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Staging Fields (EIC)</source>
+          <target>Campi staging (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 1882905478 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source No.</source>
+          <target>Nr. origine</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 219177148 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Created Updated Records Count</source>
+          <target>Nr. records creati/aggiornati</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Field 2066789741 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Table Id</source>
+          <target>Id tabella</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Field 486908828 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Document No.</source>
+          <target>Nr. record</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Field 2363328873 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Document Type</source>
+          <target>Tipo record</target>
+        </trans-unit>
+        <trans-unit id="Table 305772468 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Created Updated Records</source>
+          <target>Records creati/aggiornati</target>
+        </trans-unit>
+        <trans-unit id="Table 910390347 - Field 2039838234 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Use Unified Staging</source>
+          <target>Usa tabella di staging unificata</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 389186112 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Create Purch. Order</source>
+          <target>Invio/creazione ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 1565065490 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Create Sales Order</source>
+          <target>Invio/creazione ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 4290333996 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Rec. Confirm Purch. Order</source>
+          <target>Invio/ricezione conferma ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Table 3722283190 - Field 3610079022 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Received Confirm Sales Order</source>
+          <target>Invio/ricezione conferma ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Table 2796177829 - Field 3609580583 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unified Staging</source>
+          <target>Tabella staging unificata</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3051156025 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum/Option Source Field No.</source>
+          <target>Nr. campo origine (Enum/Option)</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3634295957 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum/Option Source Table No.</source>
+          <target>Nr. tabella origine (Enum/Option)</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3427276753 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Show in Staging List</source>
+          <target>Mostra in lista staging</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 1135442977 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Caption</source>
+          <target>Traduzione staging</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 1294315488 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Field Name</source>
+          <target>Nome campo staging</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3330442232 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Field No.</source>
+          <target>Nr. campo staging</target>
+        </trans-unit>
+        <trans-unit id="Table 378817272 - Field 1944144904 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enable Unified Staging</source>
+          <target>Abilita tabella staging unificata</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Staging (EIC)</source>
+          <target>Staging (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 2545571258 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manually Modified</source>
+          <target>Modificato manualmente</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 3501273925 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manually Modified At</source>
+          <target>Modificato manualmente il</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 3524620223 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Manually Modified By</source>
+          <target>Modificato manualmente da</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2425708366 - Method 1151670590 - NamedType 2048344571" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Processing documents from unified staging is not implemented yet.</source>
+          <target>L'elaborazione dei documenti provenienti dalla piattaforma di staging unificata non è ancora stata implementata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 1961673553 - Method 3608728099 - NamedType 1984956884" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The function %1 must provide a text value for the Json tag %2 when a string transformation is configured.</source>
+          <target>La funzione %1 deve fornire un valore di testo per il tag JSON %2 quando è configurata una trasformazione di stringa.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 3694829474 - NamedType 4276608104" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The value %1 at Json path %2 is not a value of the configured Enum or Option.</source>
+          <target>Il valore %1 nel percorso JSON %2 non è un valore dell'enumerazione o dell'opzione configurata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2996437379 - NamedType 383553940" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json value for path %1 exceeds the %2 characters supported for original value metadata.</source>
+          <target>Il valore JSON per il percorso %1 supera i %2 caratteri supportati per i metadati del valore originale.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1539275407 - NamedType 2428621518" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json node %1 is expected to be an array.</source>
+          <target>Il nodo JSON %1 dovrebbe essere un array.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1665861916 - NamedType 2901525345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The IC entry to rebuild has not been specified.</source>
+          <target>La voce IC per la ricostruzione non è stata specificata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 1981320726" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The received payload of entry %1 is not valid Json.</source>
+          <target>Il payload ricevuto dalla voce %1 non è un JSON valido.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 1100458592" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The flow %1 of company %2 does not exist.</source>
+          <target>Il flusso %1 dell'azienda %2 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 1476822440" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No mapping is assigned to flow %1 of company %2.</source>
+          <target>Al flusso %1 dell'azienda %2 non è assegnata alcuna mappatura.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 3608194195" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 assigned to flow %2 is not enabled.</source>
+          <target>La mappatura %1 assegnata al flusso %2 non è abilitata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 2767500124" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 is not configured for unified staging.</source>
+          <target>La mappatura %1 non è configurata per la gestione unificata delle attività.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 2537077734" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The root of the received Json must be an object or an array.</source>
+          <target>La radice del JSON ricevuto deve essere un oggetto o un array.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 3279137674 - NamedType 732726345" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging for entry %1 could not be rebuilt. %2</source>
+          <target>L'allestimento unificato per la voce %1 non è stato possibile ricostruirlo. %2</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 839607117 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json value for path %1 cannot be assigned to staging field %2. %3</source>
+          <target>Il valore JSON per il percorso %1 non può essere assegnato al campo di staging %2. %3</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 839607117 - NamedType 1622132890" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json value for path %1 exceeds the %2 characters supported by staging field %3.</source>
+          <target>Il valore JSON per il percorso %1 supera i %2 caratteri supportati dal campo di staging %3.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 3282966611" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Suggest Mapping is available only for inbound mappings.</source>
+          <target>La funzione ""Suggerisci mappatura"" è disponibile solo per le mappature in entrata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 4282586028" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enable Unified Staging on the mapping before suggesting staging fields.</source>
+          <target>Abilita la configurazione unificata delle aree di staging sulla mappatura prima di suggerire le aree di staging.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 695337539" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Disable the mapping before suggesting staging fields.</source>
+          <target>Disabilita la mappatura prima di suggerire i campi di staging.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 144239174" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Import a Json sample before suggesting staging fields.</source>
+          <target>Importa un esempio JSON prima di suggerire i campi di staging.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 774471006" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The stored Json sample is invalid.</source>
+          <target>Il campione JSON memorizzato non è valido.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1046888335" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging mapping %1 does not exist.</source>
+          <target>La mappatura unificata delle fasi %1 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1596066933" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging mapping %1 must be inbound.</source>
+          <target>La mappatura di staging unificata %1 deve essere in entrata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 3359697259" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging mapping has no lines.</source>
+          <target>La mappatura unificata delle fasi di allestimento non presenta linee.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 2308701218" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging mapping has no configured staging fields.</source>
+          <target>La mappatura unificata dello staging non ha campi di staging configurati.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 2128685181" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging field is missing.</source>
+          <target>Manca l'area di staging unificata.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1037243000" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The staging field %1 does not exist.</source>
+          <target>Il campo di staging %1 non esiste.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 3137231942" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The staging field %1 cannot be used as a value field.</source>
+          <target>Il campo di staging %1 non può essere utilizzato come campo valore.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1784710105" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A caption is required for staging field %1.</source>
+          <target>È necessaria una didascalia per il campo di staging %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 2505766101" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging field %1 is mapped more than once in the Json context %2.</source>
+          <target>Il campo di staging %1 è mappato più di una volta nel contesto JSON %2.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1772277696" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging field %1 must use the same caption throughout the mapping.</source>
+          <target>Il campo di staging %1 deve utilizzare la stessa didascalia in tutta la mappatura.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 4118568395" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Legacy target table and field must be blank in a unified staging mapping.</source>
+          <target>Nella mappatura di staging unificata, la tabella e il campo di destinazione legacy devono essere vuoti.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1361799667" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json path %1 is invalid. %2</source>
+          <target>Il percorso JSON %1 non è valido. %2</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 2039943600" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A Json path is required for a value mapping.</source>
+          <target>Per la mappatura dei valori è necessario un percorso JSON.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 3007374121" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The target value is required for a constant mapping.</source>
+          <target>Il valore target è necessario per una mappatura costante.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 3343834570" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The Json path %1 does not exist in the imported sample Json.</source>
+          <target>Il percorso JSON %1 non esiste nel file JSON di esempio importato.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 2971948894" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum or Option metadata must specify a valid source table and field.</source>
+          <target>I metadati Enum o Option devono specificare una tabella e un campo di origine validi.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 347470541" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source field %1 must be an Enum or Option field.</source>
+          <target>Il campo sorgente %1 deve essere un campo Enum o Option.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 813278753" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum and Option values must be stored in an Integer staging field.</source>
+          <target>I valori di tipo Enum e Option devono essere memorizzati in un campo di staging di tipo Integer.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1734931596" size-unit="char" translate="yes" xml:space="preserve">
+          <source>String transformations can only be used with Text staging fields.</source>
+          <target>Le trasformazioni di stringa possono essere utilizzate solo con i campi di testo.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 349022015 - Method 1151670590 - NamedType 2048344571" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Processing documents from unified staging is not implemented yet.</source>
+          <target>L'elaborazione dei documenti provenienti dalla piattaforma di staging unificata non è ancora stata implementata.</target>
+        </trans-unit>
+        <trans-unit id="Enum 3900045594 - EnumValue 3681931928 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Missing</source>
+          <target>Mancante</target>
+        </trans-unit>
+        <trans-unit id="Enum 3900045594 - EnumValue 661494885 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Null</source>
+          <target>Nullo</target>
+        </trans-unit>
+        <trans-unit id="Page 305772468 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Created Updated Records (EIC)</source>
+          <target>IC ha creato record aggiornati (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Control 3427276753 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies that this mapped value is included in the unified staging tree summary.</source>
+          <target>Specifica che questo valore mappato è incluso nel riepilogo unificato dell'albero di staging.</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 842036732 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Suggests typed unified staging fields for unassigned mapping lines using the imported Json sample.</source>
+          <target>Suggerisce campi di staging unificati tipizzati per le linee di mappatura non assegnate utilizzando l'esempio JSON importato.</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 842036732 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Suggest Mapping</source>
+          <target>Suggerisci mappatura</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 842036732 - Method 1377591017 - NamedType 4096655544" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 mapping line(s) were assigned staging fields. %2 line(s) remain unassigned because their Json value is empty, ambiguous, structural, or no compatible slot is available.</source>
+          <target>%1 riga/e di mappatura sono state assegnate ai campi di staging. %2 riga/e rimangono senza assegnazione perché il loro valore JSON è vuoto, ambiguo, strutturale o non è disponibile alcuno slot compatibile.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Control 1944144904 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies that new inbound entries use the unified staging table.</source>
+          <target>Specifica che le nuove voci in entrata utilizzano la tabella di staging unificata.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Creates a pending inbound EIC Entry using the TEST mapping and the sample Json payload.</source>
+          <target>Crea una voce EIC in entrata in sospeso utilizzando la mappatura TEST e il payload JSON di esempio.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Create Test Inbound Entry</source>
+          <target>Crea una voce di prova in entrata</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 4139555238" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The inbound mapping %1 was not found.</source>
+          <target>La mappatura in entrata %1 non è stata trovata.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 980733033" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The mapping %1 must be enabled and configured for unified staging.</source>
+          <target>La mappatura %1 deve essere abilitata e configurata per la fase di staging unificata.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 3104501620" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No enabled inbound flow uses mapping %1.</source>
+          <target>Nessun flusso in entrata abilitato utilizza la mappatura %1.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 2575946990" size-unit="char" translate="yes" xml:space="preserve">
+          <source>More than one enabled inbound flow uses mapping %1. Keep only one for this test action.</source>
+          <target>Più di un flusso in entrata abilitato utilizza la mappatura %1. Mantienine solo uno per questa azione di test.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 1981320726" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The test Json payload is invalid.</source>
+          <target>Il payload JSON di prova non è valido.</target>
+        </trans-unit>
+        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 1002437423" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Inbound EIC Entry %1 was created for flow %2. Process it from the IC Entries page to populate staging.</source>
+          <target>È stata creata la voce EIC in entrata %1 per il flusso %2. Elaborala dalla pagina Voci IC per popolare l'area di staging.</target>
+        </trans-unit>
+        <trans-unit id="Page 3700193565 - Method 2138588382 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The value %1 is not valid for the field %2.</source>
+          <target>Il valore %1 non è valido per il campo %2.</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Method 3245603402 - NamedType 1274746112" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Root</source>
+          <target>Radice</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Method 716454850 - NamedType 1274746112" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Root</source>
+          <target>Radice</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Control 2851747668 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Node</source>
+          <target>Nodo</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Action 3279137674 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Recreates the unified staging records from the original received Json.</source>
+          <target>Ricrea i record di staging unificati a partire dal JSON originale ricevuto.</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Action 3279137674 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Rebuild from Original Json</source>
+          <target>Ricostruisci dal JSON originale</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Action 3279137674 - Method 1377591017 - NamedType 3931910281" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The unified staging for entry %1 will be replaced with values from the original Json. Continue?</source>
+          <target>La configurazione unificata per la voce %1 verrà sostituita con i valori del JSON originale. Continuare?</target>
+        </trans-unit>
+        <trans-unit id="Table 2796177829 - Field 3609580583 - Method 2126772001 - NamedType 3334446380" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Clear the Key Field setting on all mapping lines before enabling unified staging.</source>
+          <target>Cancella l'impostazione Campo chiave su tutte le linee di mappatura prima di abilitare la fase di staging unificata.</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3051156025 - Method 2126772001 - NamedType 1817265581" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The source field must be an Enum or Option field.</source>
+          <target>Il campo sorgente deve essere un campo Enum o Option.</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 2337464825 - Method 2126772001 - NamedType 3630823440" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Key fields are not used in unified staging mappings.</source>
+          <target>I campi chiave non vengono utilizzati nelle mappature di staging unificate.</target>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 3330442232 - Method 2126772001 - NamedType 3137231942" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The field %1 cannot be used in unified staging.</source>
+          <target>Il campo %1 non può essere utilizzato nella fase di staging unificata.</target>
+        </trans-unit>
+        <trans-unit id="Table 1742875534 - Field 3064613770 - Method 2126772001 - NamedType 969177193" size-unit="char" translate="yes" xml:space="preserve">
+          <source>must be %1 or %2.</source>
+          <target>deve essere %1 o %2.</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 1309186445 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Node Identifier</source>
+          <target>Identificatore del nodo</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 1669556912 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Parent Record ID</source>
+          <target>ID record genitore</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 3014885516 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sequence No.</source>
+          <target>Numero di sequenza</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 2117820131 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Record ID</source>
+          <target>ID record di staging</target>
+        </trans-unit>
+        <trans-unit id="Table 548724470 - Field 1610972940 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Tree Order</source>
+          <target>Ordine degli alberi</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Staging Value (EIC)</source>
+          <target>Valore di stadiazione IC (EIC)</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 797046241 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum App ID</source>
+          <target>ID applicazione Enum</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 1915715052 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum Namespace</source>
+          <target>Spazio dei nomi enum</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 2903928810 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum Type ID</source>
+          <target>ID tipo enum</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 2346840816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum Type Name</source>
+          <target>Nome del tipo enum</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 3051156025 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum/Option Source Field No.</source>
+          <target>Numero del campo sorgente enum/opzione.</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 3634295957 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Enum/Option Source Table No.</source>
+          <target>Tabella sorgente enum/opzione n.</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 583095779 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Is Option</source>
+          <target>È un'opzione</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 2328625071 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Mapping Line No.</source>
+          <target>Linea di mappatura n.</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 1659493340 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Option Members</source>
+          <target>Membri dell'opzione</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 4072877926 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Original Json Value</source>
+          <target>Valore JSON originale</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 3330442232 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Field No.</source>
+          <target>Campo di partenza n.</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 2117820131 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Record ID</source>
+          <target>ID record di staging</target>
+        </trans-unit>
+        <trans-unit id="Table 4214130403 - Field 194565520 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Value State</source>
+          <target>Stato del valore</target>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Control 1294315488 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Staging Field Name</source>
+          <target>Nome campo staging</target>
+        </trans-unit>
+        <trans-unit id="Page 2972148784 - Control 3466715468 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Main values</source>
+          <target>Valori principali</target>
         </trans-unit>
       </group>
     </body>

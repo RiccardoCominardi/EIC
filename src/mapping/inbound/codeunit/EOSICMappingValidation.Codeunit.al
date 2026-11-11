@@ -6,6 +6,7 @@ codeunit 67015 "EOS IC Mapping Validation"
 {
     var
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
+        ICStagingMgt: Codeunit "EOS IC Staging Mgt.";
 
     // Checks the configuration of a mapping. When ForExecution is true only the problems that would break the execution are reported
     // and lines without a target are ignored (as the engine does); otherwise incomplete lines are reported too.
@@ -39,6 +40,11 @@ codeunit 67015 "EOS IC Mapping Validation"
 
         if ICMapping.Direction = ICMapping.Direction::Outbound then
             exit(ICOutMappingValidation.ValidateMapping(MappingCode, Issues));
+
+        if ICMapping."Unified Staging" then begin
+            ICStagingMgt.ValidateMapping(MappingCode, ForExecution, CheckSample, Issues);
+            exit(Issues.Count() = 0);
+        end;
 
         ICMappingLine.SetRange("Mapping Code", MappingCode);
         if not ICMappingLine.FindSet() then begin

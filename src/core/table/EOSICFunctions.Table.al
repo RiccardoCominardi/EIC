@@ -21,44 +21,44 @@ table 67005 "EOS IC Functions"
             DataClassification = CustomerContent;
             Caption = 'Direction';
         }
-        field(3; "Sales Order Creation Flow"; Code[20])
+        field(3; "Send Create Sales Order"; Code[20])
         {
             DataClassification = CustomerContent;
-            Caption = 'Sales Order Creation Flow';
+            Caption = 'Send Create Sales Order';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
-                CheckDuplicatedFunction(Rec.FieldNo("Sales Order Creation Flow"));
+                CheckDuplicatedFunction(Rec.FieldNo("Send Create Sales Order"));
             end;
         }
-        field(4; "Purchase Order Creation Flow"; Code[20])
+        field(4; "Send Create Purch. Order"; Code[20])
         {
             DataClassification = CustomerContent;
-            Caption = 'Purchase Order Creation Flow';
+            Caption = 'Send Create Purch. Order';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
-                CheckDuplicatedFunction(Rec.FieldNo("Purchase Order Creation Flow"));
+                CheckDuplicatedFunction(Rec.FieldNo("Send Create Purch. Order"));
             end;
         }
-        field(5; "Confirm Sales Order Flow"; Code[20])
+        field(5; "Send Rec. Confirm Sales Order"; Code[20])
         {
             DataClassification = CustomerContent;
-            Caption = 'Confirm Sales Order Flow';
+            Caption = 'Send Received Confirm Sales Order';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
-                CheckDuplicatedFunction(Rec.FieldNo("Confirm Sales Order Flow"));
+                CheckDuplicatedFunction(Rec.FieldNo("Send Rec. Confirm Sales Order"));
             end;
         }
-        field(6; "Confirm Purchase Order Flow"; Code[20])
+        field(6; "Send Rec. Confirm Purch. Order"; Code[20])
         {
             DataClassification = CustomerContent;
-            Caption = 'Confirm Purchase Order Flow';
+            Caption = 'Send Rec. Confirm Purch. Order';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
-                CheckDuplicatedFunction(Rec.FieldNo("Confirm Purchase Order Flow"));
+                CheckDuplicatedFunction(Rec.FieldNo("Send Rec. Confirm Purch. Order"));
             end;
         }
     }

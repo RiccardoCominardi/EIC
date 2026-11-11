@@ -270,7 +270,7 @@ codeunit 67001 "EOS IC Functions"
     var
         ICCompanies: Record "EOS IC Companies";
         ICConnections: Record "EOS IC Connections";
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
         ICAuthentication: Interface "EOS IC Authentication";
         AccessToken: SecretText;
         EntryTargetDocumentsEndpoint: Text;
@@ -300,7 +300,7 @@ codeunit 67001 "EOS IC Functions"
             until ICEntryTargetDocument.Next() = 0;
     end;
 
-    local procedure BuildEntryTargetDocumentPayload(ICEntries: Record "EOS IC Entries"; ICEntryTargetDocument: Record "EOS IC Entry Created Document") PayloadText: Text
+    local procedure BuildEntryTargetDocumentPayload(ICEntries: Record "EOS IC Entries"; ICEntryTargetDocument: Record "EOS IC Created Updated Records") PayloadText: Text
     var
         PayloadObject: JsonObject;
     begin

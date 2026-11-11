@@ -65,8 +65,8 @@ table 67003 "EOS IC Flows"
             var
                 FlowNotPairedErr: Label 'The flow %1 is not paired and cannot be enabled. Pair it first.', Comment = '%1 = flow code';
             begin
-                if Rec.Enabled and (Rec."Flow Pair Id" = '') then
-                    Error(FlowNotPairedErr, Rec.Code);
+                //if Rec.Enabled and (Rec."Flow Pair Id" = '') then
+                //    Error(FlowNotPairedErr, Rec.Code);
             end;
         }
         field(11; "Auto Create Documents"; Boolean)

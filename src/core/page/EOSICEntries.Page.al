@@ -52,11 +52,11 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                 }
-                field("Document No."; Rec."Document No.")
+                field("Source No."; Rec."Source No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Created Documents Count"; Rec."Created Documents Count")
+                field("Created Updated Records Count"; Rec."Created Updated Records Count")
                 {
                     ApplicationArea = All;
                 }
@@ -69,6 +69,10 @@ page 67012 "EOS IC Entries"
                 {
                     ApplicationArea = All;
                     StyleExpr = StagingColor;
+                }
+                field("Use Staging"; Rec."Use Staging")
+                {
+                    ApplicationArea = All;
                 }
                 field("Processed At"; Rec."Processed At")
                 {

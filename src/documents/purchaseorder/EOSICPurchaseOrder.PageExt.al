@@ -47,7 +47,7 @@ pageextension 67003 "EOS IC Purchase Order" extends "Purchase Order"
                     ICEntriesMgt: Codeunit "EOS IC Entries Management";
                 begin
                     ICFunctions.Get(Rec."EOS IC Company", ICFunctions.Direction::Outbound);
-                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Purchase Order Creation Flow");
+                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Send Create Purch. Order");
                     ICEntriesMgt.CreateEntry(Rec, ICFlows);
                     CurrPage.Update(false);
                 end;
@@ -65,7 +65,7 @@ pageextension 67003 "EOS IC Purchase Order" extends "Purchase Order"
                     ICEntriesMgt: Codeunit "EOS IC Entries Management";
                 begin
                     ICFunctions.Get(Rec."EOS IC Company", ICFunctions.Direction::Outbound);
-                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Confirm Purchase Order Flow");
+                    ICFlows.Get(Rec."EOS IC Company", ICFunctions."Send Rec. Confirm Purch. Order");
                     ICEntriesMgt.CreateEntry(Rec, ICFlows);
                     CurrPage.Update(false);
                 end;

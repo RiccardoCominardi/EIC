@@ -48,12 +48,16 @@ codeunit 67002 "EOS IC Try Functions"
     var
         ICSetup: Record "EOS IC Setup";
         ICMappingMgt: Codeunit "EOS IC Mapping Mgt.";
+        ICStagingMgt: Codeunit "EOS IC Staging Mgt.";
     begin
         ICSetup.Get();
         ICSetup.TestField(Enabled, true);
 
         ICEntries.TestField(Direction, ICEntries.Direction::Inbound);
-        ICMappingMgt.PopulateFromPayload(ICEntries);
+        if ICEntries."Use Staging" then
+            ICStagingMgt.PopulateFromPayload(ICEntries)
+        else
+            ICMappingMgt.PopulateFromPayload(ICEntries);
     end;
 
     local procedure TryProcessStaging()

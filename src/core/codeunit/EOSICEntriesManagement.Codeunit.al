@@ -85,7 +85,7 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntries."Target Company" := ICFlows."Company Code";
         ICEntries."Relation Table Id" := ICFlows."Relation Table Id";
         ICEntries."Relation Option Type" := ICFlows."Relation Option Type";
-        ICEntries."Document No." := SourceDocumentNo;
+        ICEntries."Source No." := SourceDocumentNo;
         ICEntries."Doc. System Id" := SourceSystemId;
         ICEntries.Status := ICEntries.Status::Pending;
         ICEntries.SetBlobFields(ICEntries.FieldNo("Request Payload"), PayloadText, false);
@@ -109,11 +109,11 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntries.CalcFields("Relation Table Name");
         case ICEntries.Status of
             ICEntries.Status::Completed:
-                Message(EntrySentMsg, ICEntries."Relation Table Name", ICEntries."Document No.", ICEntries."Target Company", ICEntries."Entry No.");
+                Message(EntrySentMsg, ICEntries."Relation Table Name", ICEntries."Source No.", ICEntries."Target Company", ICEntries."Entry No.");
             ICEntries.Status::Error:
                 Message(EntryErrorMsg, ICEntries."Entry No.", ICEntries."Target Company", ICEntries."Error Message");
             else
-                Message(EntryCreatedMsg, ICEntries."Entry No.", ICEntries."Relation Table Name", ICEntries."Document No.", ICEntries."Target Company");
+                Message(EntryCreatedMsg, ICEntries."Entry No.", ICEntries."Relation Table Name", ICEntries."Source No.", ICEntries."Target Company");
         end;
     end;
 
@@ -122,21 +122,32 @@ codeunit 67007 "EOS IC Entries Management"
         ICFunctions: Record "EOS IC Functions";
         StgSalesHeader: Record "EOS IC Stg. Sales Header";
         StgPurchHeader: Record "EOS IC Stg. Purch. Header";
+        UnifiedStaging: Record "EOS IC Staging";
+        StagingTree: Page "EOS IC Staging Tree";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
     begin
         if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
             exit;
 
+        if ICEntries."Use Staging" then begin
+            UnifiedStaging.SetRange("IC Entry No.", ICEntries."Entry No.");
+            if UnifiedStaging.IsEmpty() then
+                Error(StagingNotFoundErr, ICEntries."Entry No.");
+            StagingTree.SetICEntryNo(ICEntries."Entry No.");
+            StagingTree.Run();
+            exit;
+        end;
+
         ICFunctions.Get(ICEntries."Source Company", ICEntries.Direction);
         case true of
-            ICFunctions."Sales Order Creation Flow" = ICEntries."IC Flow Code":
+            ICFunctions."Send Create Sales Order" = ICEntries."IC Flow Code":
                 begin
                     StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgSalesHeader.FindFirst() then
                         Error(StagingNotFoundErr, ICEntries."Entry No.");
                     Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
                 end;
-            ICFunctions."Purchase Order Creation Flow" = ICEntries."IC Flow Code":
+            ICFunctions."Send Create Purch. Order" = ICEntries."IC Flow Code":
                 begin
                     StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
                     if not StgPurchHeader.FindFirst() then
@@ -148,7 +159,7 @@ codeunit 67007 "EOS IC Entries Management"
         end;
     end;
 
-    procedure ShowTargetDocument(TargetDocument: Record "EOS IC Entry Created Document")
+    procedure ShowTargetDocument(TargetDocument: Record "EOS IC Created Updated Records")
     var
         PageManagement: Codeunit "Page Management";
         RecRef: RecordRef;
@@ -167,7 +178,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure ShowTargetDocuments(ICEntries: Record "EOS IC Entries")
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
         NoTargetDocumentsErr: Label 'No target documents are linked to entry %1.', Comment = '%1 = entry no.';
     begin
         ICEntryTargetDocument.SetRange("IC Entry No.", ICEntries."Entry No.");
@@ -184,7 +195,7 @@ codeunit 67007 "EOS IC Entries Management"
         end;
     end;
 
-    local procedure ShowTargetDocumentList(ICEntryTargetDocument: Record "EOS IC Entry Created Document"; ICEntryNo: Integer)
+    local procedure ShowTargetDocumentList(ICEntryTargetDocument: Record "EOS IC Created Updated Records"; ICEntryNo: Integer)
     var
         PageManagement: Codeunit "Page Management";
         RecRef: RecordRef;
@@ -360,7 +371,7 @@ codeunit 67007 "EOS IC Entries Management"
     procedure ShowDocumentEntries(DocumentRecord: Variant)
     var
         ICEntries: Record "EOS IC Entries";
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
         ICEntriesPage: Page "EOS IC Entries";
         RecRef: RecordRef;
         SystemIdFieldRef: FieldRef;
@@ -399,7 +410,7 @@ codeunit 67007 "EOS IC Entries Management"
     var
         ICSetup: Record "EOS IC Setup";
         ICEntries: Record "EOS IC Entries";
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
     begin
         ICSetup.Get();
         if ICSetup."IC Entry Field No." = 0 then
@@ -450,7 +461,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure MarkDocumentEntries(ICEntries: Record "EOS IC Entries"; Direction: Enum "EOS IC Direction"; TableId: Integer; SystemId: Guid) TotalEntry: Integer
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
     begin
         case Direction of
             Direction::Outbound:
@@ -602,7 +613,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     local procedure UpdateSourceICEntry(ICEntries: Record "EOS IC Entries")
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
         ICFunctions: Codeunit "EOS IC Functions";
     begin
         if ICEntries."Staging Status" <> ICEntries."Staging Status"::Completed then
@@ -670,7 +681,7 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure SetTargetDocument(var ICEntries: Record "EOS IC Entries"; TableId: Integer; DocumentType: Text[100]; DocumentNo: Code[50]; SystemId: Guid)
     var
-        ICEntryTargetDocument: Record "EOS IC Entry Created Document";
+        ICEntryTargetDocument: Record "EOS IC Created Updated Records";
     begin
         ICEntryTargetDocument.Init();
         ICEntryTargetDocument."IC Entry No." := ICEntries."Entry No.";

@@ -1,14 +1,14 @@
 namespace EOS.Solutions.Intercompany;
 
-page 67020 "EOS IC Entry Created Docs"
+page 67020 "EOS IC Created Updated Records"
 {
-    Caption = 'IC Entry Created Documents (EIC)';
+    Caption = 'IC Created Updated Records (EIC)';
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
     PageType = List;
-    SourceTable = "EOS IC Entry Created Document";
+    SourceTable = "EOS IC Created Updated Records";
     ApplicationArea = All;
     UsageCategory = Lists;
 

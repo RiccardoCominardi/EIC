@@ -8,7 +8,7 @@ page 67028 "EOS IC Entry Target Doc API"
     APIVersion = 'v1.0';
     EntityName = 'entryCreatedDocument';
     EntitySetName = 'entryCreatedDocuments';
-    SourceTable = "EOS IC Entry Created Document";
+    SourceTable = "EOS IC Created Updated Records";
     ODataKeyFields = SystemId;
     DelayedInsert = true;
     InsertAllowed = true;
@@ -54,7 +54,7 @@ page 67028 "EOS IC Entry Target Doc API"
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         ICEntries: Record "EOS IC Entries";
-        ExistingTargetDocument: Record "EOS IC Entry Created Document";
+        ExistingTargetDocument: Record "EOS IC Created Updated Records";
         EntryNotFoundErr: Label 'No outbound entry was found for IC transaction ID %1.', Comment = '%1 = IC transaction ID';
     begin
         ICEntries.SetRange("IC Transaction ID", ICTransactionId);
