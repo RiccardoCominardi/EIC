@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="" source-language="en-US" target-language="it-IT" original="EOS Intercompany.g.xlf">
     <body>
@@ -275,9 +275,8 @@
         </trans-unit>
         <trans-unit id="Table 910390347 - Field 1265886574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Use Staging</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Usa staging</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Entries - Field Use Staging - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 2290985398 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -1466,9 +1465,8 @@
         </trans-unit>
         <trans-unit id="Table 1733395880 - Method 3273782252 - NamedType 2597726115" size-unit="char" translate="yes" xml:space="preserve">
           <source>The table relation %1 cannot be deleted because it is used by the line %2 of the mapping %3.</source>
-          <target>[NAB: REVIEW]La relazione %1</target>
+          <target>La relazione %1 non può essere eliminata perché è utilizzata dalla riga %2 della mappatura %3.</target>
           <note from="Developer" annotates="general" priority="2">%1 = relation code, %2 = line no., %3 = mapping code</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">The placeholder "%3" was found in source, but not in target.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Table Relation Header - Method CheckNotUsedByMappings - NamedType InUseErr</note>
         </trans-unit>
         <trans-unit id="Table 1733395880 - Field 3004954119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -1563,13 +1561,6 @@
           <target>Ordine acquisto</target>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreatePurchaseOrder - NamedType DocumentTypeLbl</note>
         </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 2288918498 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order</source>
-          <target>[NAB: SUGGESTION]Ordine acquisto</target>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreatePurchaseOrderFromStaging - NamedType DocumentTypeLbl</note>
-        </trans-unit>
         <trans-unit id="Codeunit 2110689530 - Method 2648269774 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
           <source>No staging record was found for the entry %1.</source>
           <target>Nessuna tabella di staging trovata per il movimento %1</target>
@@ -1580,13 +1571,6 @@
           <source>Sales Order</source>
           <target>Ordine vendita</target>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreateSalesOrder - NamedType DocumentTypeLbl</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 1002236135 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order</source>
-          <target>[NAB: SUGGESTION]Ordine vendita</target>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreateSalesOrderFromStaging - NamedType DocumentTypeLbl</note>
         </trans-unit>
         <trans-unit id="Codeunit 2110689530 - Method 161448877 - NamedType 3016971198" size-unit="char" translate="yes" xml:space="preserve">
           <source>The line type "%1" is not valid for a purchase line.</source>
@@ -2086,9 +2070,8 @@
         </trans-unit>
         <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3644894586" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Json path %1 does not exist in the sample Json.</source>
-          <target>[NAB: REVIEW]Il path Json &amp;1 non esiste nel Json di esempio</target>
+          <target>Il path Json %1 non esiste nel Json di esempio</target>
           <note from="Developer" annotates="general" priority="2">%1 = path</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">The placeholder "%1" was found in source, but not in target.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType NodeNotFoundErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3209222443" size-unit="char" translate="yes" xml:space="preserve">
@@ -2249,9 +2232,8 @@
         </trans-unit>
         <trans-unit id="Codeunit 1961673553 - Method 2121242092 - NamedType 3450732878" size-unit="char" translate="yes" xml:space="preserve">
           <source>Set at least one filter in the example table filter of the mapping %1 before downloading the Json example.</source>
-          <target>[NAB: REVIEW]Imposta almeno un filtro nel campo "Esempio filtro tabella" prima di fare il download del Json di esempio</target>
+          <target>Imposta almeno un filtro nel campo "Esempio filtro tabella" della mappatura %1 prima di fare il download del Json di esempio</target>
           <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">The placeholder "%1" was found in source, but not in target.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Out. Mapping Mgt. - Method TestTableFilterIsSet - NamedType NoTableFilterErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 203049984 - NamedType 449028127" size-unit="char" translate="yes" xml:space="preserve">
@@ -2453,16 +2435,14 @@
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 2138588382 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
           <source>The staging value %1 of the Json field %2 is not a valid %3.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Il valore di staging %1 del campo Json %2 non è un %3 valido.</target>
           <note from="Developer" annotates="general" priority="2">%1 = value, %2 = Json name, %3 = data type</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method ErrorInvalidValue - NamedType InvalidValueErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 3450599445 - NamedType 2094461002" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Json name %1 matches more than one value of the staging record: %2. Add the name of the parent object, e.g. shipTo.name.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Il nome Json %1 corrisponde a più di un valore del record di staging: %2. Aggiungi il nome dell'oggetto padre, ad es. shipTo.name.</target>
           <note from="Developer" annotates="general" priority="2">%1 = Json name, %2 = matching Json paths</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method FindValueMetadata - NamedType AmbiguousNameErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 3694829474 - NamedType 4276608104" size-unit="char" translate="yes" xml:space="preserve">
@@ -2473,16 +2453,14 @@
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 3729777999 - NamedType 411332289" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Json field %1 must have a value in the staging of the entry %2.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Il campo Json %1 deve avere un valore nello staging della voce %2.</target>
           <note from="Developer" annotates="general" priority="2">%1 = Json name, %2 = entry no.</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method GetRequiredStagingValue - NamedType ValueRequiredErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 2242871336 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
           <source>No staging record was found for the entry %1.</source>
-          <target>[NAB: SUGGESTION]Nessuna tabella di staging trovata per il movimento %1</target>
+          <target>Nessuna tabella di staging trovata per il movimento %1</target>
           <note from="Developer" annotates="general" priority="2">%1 = entry no.</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method GetRootStagingRecord - NamedType StagingNotFoundErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 2996437379 - NamedType 383553940" size-unit="char" translate="yes" xml:space="preserve">
@@ -2551,16 +2529,14 @@
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 1519548907 - NamedType 1257537974" size-unit="char" translate="yes" xml:space="preserve">
           <source>The name of the child array is required.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Il nome dell'array figlio è obbligatorio.</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method ResolveChildContext - NamedType ArrayNameRequiredErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 1519548907 - NamedType 4282833404" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Json name %1 matches more than one array under the staging record: %2. Add the name of the parent object, e.g. shipTo.lines.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Il nome Json %1 corrisponde a più di un array sotto il record di staging: %2. Aggiungi il nome dell'oggetto padre, ad es. shipTo.lines.</target>
           <note from="Developer" annotates="general" priority="2">%1 = Json name, %2 = matching arrays</note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method ResolveChildContext - NamedType AmbiguousArrayErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 839607117 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
@@ -3245,30 +3221,26 @@
         </trans-unit>
         <trans-unit id="Page 2526431623 - Action 3069824669 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Moves the selected field down within the same Json object or array.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Sposta il campo selezionato verso il basso all'interno dello stesso oggetto o array Json.</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveDown - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 2526431623 - Action 3069824669 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Move Down Line</source>
-          <target>[NAB: SUGGESTION]Sposta sotto</target>
+          <target>Sposta sotto</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveDown - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2526431623 - Action 2816622752 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Moves the selected field up within the same Json object or array.</source>
-          <target>[NAB: NOT TRANSLATED]</target>
+          <target>Sposta il campo selezionato verso l'alto all'interno dello stesso oggetto o array Json.</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveUp - Property ToolTip</note>
         </trans-unit>
         <trans-unit id="Page 2526431623 - Action 2816622752 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Move Up Line</source>
-          <target>[NAB: SUGGESTION]Sposta sopra</target>
+          <target>Sposta sopra</target>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveUp - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 2526431623 - Action 842036732 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
@@ -4071,12 +4043,6 @@
           <target>Errore</target>
           <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Staging Status - EnumValue Error - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Enum 279086850 - EnumValue 3371220206 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source> </source>
-          <target>[NAB: REVIEW] </target>
-          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Source contains only white-space, consider using 'Locked = true' to avoid translation of unnecessary texts. This note can be toggled with the setting 'NAB.PreferLockedTranslations'.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Staging Status - EnumValue None - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Enum 279086850 - EnumValue 3481143665 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Pending</source>
           <target>In attesa</target>
@@ -4146,6 +4112,14 @@
           <source>IC Admin (EIC)</source>
           <target>Admin (EIC)</target>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension EOS IC User Setup - Field EOS IC Admin - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 2110689530 - Method 3400824323 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Purchase Order</source>
+          <target>Ordine acquisto</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 2110689530 - Method 1620393406 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sales Order</source>
+          <target>Ordine vendita</target>
         </trans-unit>
       </group>
     </body>

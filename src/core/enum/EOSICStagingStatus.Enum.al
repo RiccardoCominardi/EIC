@@ -6,7 +6,7 @@ enum 67007 "EOS IC Staging Status"
 
     value(0; None)
     {
-        Caption = ' ';
+        Caption = ' ', Locked = true;
     }
     value(1; Pending)
     {
