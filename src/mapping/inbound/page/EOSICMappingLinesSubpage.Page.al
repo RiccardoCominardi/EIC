@@ -149,6 +149,34 @@ page 67011 "EOS IC Mapping Lines Subpage"
     {
         area(Processing)
         {
+            action(MoveUp)
+            {
+                ApplicationArea = All;
+                Caption = 'Move Up Line';
+                Image = MoveUp;
+                Enabled = CanMoveLine;
+                ToolTip = 'Moves the selected field up within the same Json object or array.';
+
+                trigger OnAction()
+                begin
+                    ICMappingMgt.MoveUp(Rec);
+                    CurrPage.Update(false);
+                end;
+            }
+            action(MoveDown)
+            {
+                ApplicationArea = All;
+                Caption = 'Move Down Line';
+                Image = MoveDown;
+                Enabled = CanMoveLine;
+                ToolTip = 'Moves the selected field down within the same Json object or array.';
+
+                trigger OnAction()
+                begin
+                    ICMappingMgt.MoveDown(Rec);
+                    CurrPage.Update(false);
+                end;
+            }
             action(SuggestMapping)
             {
                 ApplicationArea = All;
@@ -176,10 +204,11 @@ page 67011 "EOS IC Mapping Lines Subpage"
     var
         ICMappingHeader: Record "EOS IC Mapping Headers";
         Field: Record Field;
+        ICMappingMgt: Codeunit "EOS IC Mapping Mgt.";
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
         NodeName, NodeStyle : Text;
         StagingFieldName: Text[80];
-        NodeEditable, ShowLegacyTargets, ShowUnifiedTargets, CanSuggestMapping : Boolean;
+        NodeEditable, ShowLegacyTargets, ShowUnifiedTargets, CanSuggestMapping, CanMoveLine : Boolean;
 
     trigger OnAfterGetRecord()
     begin
@@ -206,6 +235,7 @@ page 67011 "EOS IC Mapping Lines Subpage"
             NodeEditable := false;
         end else
             NodeStyle := Format(PageStyle::Standard);
+        CanMoveLine := ICMappingMgt.CanMoveLine(Rec);
     end;
 
 }

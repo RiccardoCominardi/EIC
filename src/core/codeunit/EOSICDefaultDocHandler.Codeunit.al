@@ -384,14 +384,26 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
     procedure CreateSalesOrderFromStaging(var ICEntries: Record "EOS IC Entries")
     var
+        RootStaging: Record "EOS IC Staging";
         HeaderStaging: Record "EOS IC Staging";
-        SalesHeader: Record "Sales Header";
         StagingMgt: Codeunit "EOS IC Staging Mgt.";
+    begin
+        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", RootStaging);
+        StagingMgt.SetChildStagingRecords(HeaderStaging, RootStaging, 'header');
+        if not HeaderStaging.FindSet() then
+            exit;
+
+        repeat
+            CreateSalesOrderFromStagingHeader(ICEntries, HeaderStaging);
+        until HeaderStaging.Next() = 0;
+    end;
+
+    local procedure CreateSalesOrderFromStagingHeader(var ICEntries: Record "EOS IC Entries"; HeaderStaging: Record "EOS IC Staging")
+    var
+        SalesHeader: Record "Sales Header";
         ICEntriesMgt: Codeunit "EOS IC Entries Management";
         DocumentTypeLbl: Label 'Sales Order';
     begin
-        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", HeaderStaging);
-
         CreateSalesHeaderFromStaging(SalesHeader, HeaderStaging);
         CreateSalesLinesFromStaging(SalesHeader, HeaderStaging);
         ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Sales Header", DocumentTypeLbl, SalesHeader."No.", SalesHeader.SystemId);
@@ -478,14 +490,26 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
 
     procedure CreatePurchaseOrderFromStaging(var ICEntries: Record "EOS IC Entries")
     var
+        RootStaging: Record "EOS IC Staging";
         HeaderStaging: Record "EOS IC Staging";
-        PurchaseHeader: Record "Purchase Header";
         StagingMgt: Codeunit "EOS IC Staging Mgt.";
+    begin
+        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", RootStaging);
+        StagingMgt.SetChildStagingRecords(HeaderStaging, RootStaging, 'header');
+        if not HeaderStaging.FindSet() then
+            exit;
+
+        repeat
+            CreatePurchaseOrderFromStagingHeader(ICEntries, HeaderStaging);
+        until HeaderStaging.Next() = 0;
+    end;
+
+    local procedure CreatePurchaseOrderFromStagingHeader(var ICEntries: Record "EOS IC Entries"; HeaderStaging: Record "EOS IC Staging")
+    var
+        PurchaseHeader: Record "Purchase Header";
         ICEntriesMgt: Codeunit "EOS IC Entries Management";
         DocumentTypeLbl: Label 'Purchase Order';
     begin
-        StagingMgt.GetRootStagingRecord(ICEntries."Entry No.", HeaderStaging);
-
         CreatePurchaseHeaderFromStaging(PurchaseHeader, HeaderStaging);
         CreatePurchaseLinesFromStaging(PurchaseHeader, HeaderStaging);
         ICEntriesMgt.SetTargetDocument(ICEntries, Database::"Purchase Header", DocumentTypeLbl, PurchaseHeader."No.", PurchaseHeader.SystemId);

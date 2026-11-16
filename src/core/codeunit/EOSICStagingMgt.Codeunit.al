@@ -596,8 +596,7 @@ codeunit 67003 "EOS IC Staging Mgt."
         exit(ICMappingLine.FindFirst());
     end;
 
-    // Rows loaded before "Mapping Line No." existed have no sort number: derive it from the mapping.
-    procedure FillMissingMappingLineNos(ICEntryNo: Integer)
+    procedure RefreshMappingLineNos(ICEntryNo: Integer)
     var
         ValueMetadata: Record "EOS IC Staging Value";
         Staging: Record "EOS IC Staging";
@@ -605,19 +604,16 @@ codeunit 67003 "EOS IC Staging Mgt."
     begin
         ValueMetadata.SetCurrentKey("IC Entry No.", "Staging Record ID", "Staging Field No.");
         ValueMetadata.SetRange("IC Entry No.", ICEntryNo);
-        ValueMetadata.SetRange("Mapping Line No.", 0);
-        if ValueMetadata.IsEmpty() then
-            exit;
-
-        ValueMetadata.SetRange("Mapping Line No.");
         if ValueMetadata.FindSet(true) then
             repeat
-                if ValueMetadata."Mapping Line No." = 0 then
-                    if Staging.Get(ValueMetadata."Staging Record ID") then
-                        if FindMappingLine(Staging."Mapping Code", ValueMetadata."Staging Field No.", ValueMetadata."Json Path", ICMappingLine) then begin
-                            ValueMetadata."Mapping Line No." := ICMappingLine."Line No.";
-                            ValueMetadata.Modify(false);
-                        end;
+                if Staging.Get(ValueMetadata."Staging Record ID") then
+                    if FindMappingLine(Staging."Mapping Code", ValueMetadata."Staging Field No.", ValueMetadata."Json Path", ICMappingLine) then
+                        if (ICMappingLine."Json Path" = ValueMetadata."Json Path") or
+                            ((ValueMetadata."Mapping Line No." = 0) and (ValueMetadata."Json Path" = '')) then
+                            if ValueMetadata."Mapping Line No." <> ICMappingLine."Line No." then begin
+                                ValueMetadata."Mapping Line No." := ICMappingLine."Line No.";
+                                ValueMetadata.Modify(false);
+                            end;
             until ValueMetadata.Next() = 0;
     end;
 

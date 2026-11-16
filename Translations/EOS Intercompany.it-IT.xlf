@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="" source-language="en-US" target-language="it-IT" original="EOS Intercompany.g.xlf">
     <body>
@@ -720,6 +720,11 @@
           <source>must be a field of type Text or Code.</source>
           <target>deve essere un campo di tipo Testo o Codice.</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Transliteration Code - Method OnValidate - NamedType MustBeTextLbl</note>
+        </trans-unit>
+        <trans-unit id="Table 1083750134 - Field 401773189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Value Type</source>
+          <target>Tipo valore</target>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Value Type - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 1742875534 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Outbound Mapping Lines (EIC)</source>
@@ -3238,6 +3243,34 @@
           <target>Specifica la traslitterazione applicata al testo letto dal Json prima della scrittura nel campo di destinazione (solo campi Testo e Codice).</target>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Control Transliteration Code - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 3069824669 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Moves the selected field down within the same Json object or array.</source>
+          <target>[NAB: NOT TRANSLATED]</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveDown - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 3069824669 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Move Down Line</source>
+          <target>[NAB: SUGGESTION]Sposta sotto</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveDown - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 2816622752 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Moves the selected field up within the same Json object or array.</source>
+          <target>[NAB: NOT TRANSLATED]</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveUp - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2526431623 - Action 2816622752 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Move Up Line</source>
+          <target>[NAB: SUGGESTION]Sposta sopra</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Action MoveUp - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 2526431623 - Action 842036732 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
           <source>Suggests typed unified staging fields for unassigned mapping lines using the imported Json sample.</source>
           <target>Suggerisce campi di staging unificati tipizzati per le linee di mappatura non assegnate utilizzando l'esempio JSON importato.</target>
@@ -3577,12 +3610,12 @@
         </trans-unit>
         <trans-unit id="Page 2972148784 - Method 3245603402 - NamedType 1274746112" size-unit="char" translate="yes" xml:space="preserve">
           <source>Root</source>
-          <target>Radice</target>
+          <target>radice</target>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Staging Tree - Method OnAfterGetRecord - NamedType RootNodeLbl</note>
         </trans-unit>
         <trans-unit id="Page 2972148784 - Method 716454850 - NamedType 1274746112" size-unit="char" translate="yes" xml:space="preserve">
           <source>Root</source>
-          <target>Radice</target>
+          <target>radice</target>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Staging Tree - Method OnOpenPage - NamedType RootNodeLbl</note>
         </trans-unit>
         <trans-unit id="Page 2972148784 - Control 3466715468 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -4089,30 +4122,30 @@
           <target>Prima traslitterazione</target>
           <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Transformation Order - EnumValue Transliteration First - Property Caption</note>
         </trans-unit>
-        <trans-unit id="TableExtension 972804559 - Field 1824473816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Admin (EIC)</source>
-          <target>Admin (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EOS IC User Setup - Field EOS IC Admin - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Enum 4232871013 - EnumValue 809579490 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Constant</source>
           <target>Costante</target>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Value Types - EnumValue Constant - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 4232871013 - EnumValue 3243870290 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>External Management</source>
           <target>Gestione esterna</target>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Value Types - EnumValue External Management - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 4232871013 - EnumValue 3071184163 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Transformation</source>
           <target>Trasformazione</target>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Value Types - EnumValue Transformation - Property Caption</note>
         </trans-unit>
         <trans-unit id="Enum 4232871013 - EnumValue 2299938371 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Unchanged</source>
           <target>Invariato</target>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EOS IC Value Types - EnumValue Unchanged - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 401773189 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Value Type</source>
-          <target>Tipo valore</target>
+        <trans-unit id="TableExtension 972804559 - Field 1824473816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>IC Admin (EIC)</source>
+          <target>Admin (EIC)</target>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EOS IC User Setup - Field EOS IC Admin - Property Caption</note>
         </trans-unit>
       </group>
     </body>

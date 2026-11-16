@@ -81,7 +81,7 @@ page 67023 "EOS IC Staging Tree"
         if ICEntryNo = 0 then
             Error('An IC entry must be specified.');
 
-        StagingMgt.FillMissingMappingLineNos(ICEntryNo);
+        StagingMgt.RefreshMappingLineNos(ICEntryNo);
         Rec.SetRange("IC Entry No.", ICEntryNo);
         RootNodeName := RootNodeLbl;
         if Rec.FindFirst() then begin
