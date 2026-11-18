@@ -12,6 +12,7 @@ codeunit 67001 "EOS IC Functions"
         AccessToken: SecretText;
         EndpointUrl, ResponseText : Text;
         CompanyId, CompanyName : Text[100];
+        CompanyConnectedMsg: Label 'The connection to remote company %1 was completed successfully.', Comment = '%1 = remote company name';
     begin
         ICCompanies.TestField("Connection Code");
         ICConnections.Get(ICCompanies."Connection Code");
@@ -28,6 +29,8 @@ codeunit 67001 "EOS IC Functions"
         ICCompanies.Validate("Remote Company Id", CompanyId);
         ICCompanies.Validate("Remote Company Name", CompanyName);
         ICCompanies.Modify(true);
+        if GuiAllowed() then
+            Message(CompanyConnectedMsg, CompanyName);
     end;
 
     local procedure GetCompaniesEndpoint(ICConnections: Record "EOS IC Connections"): Text

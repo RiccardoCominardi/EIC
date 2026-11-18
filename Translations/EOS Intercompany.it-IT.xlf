@@ -273,12 +273,6 @@
           <target>Società destinazione</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Entries - Field Target Company - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 910390347 - Field 1265886574 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Use Staging</source>
-          <target>Usa staging</target>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Entries - Field Use Staging - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Table 2290985398 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Flows (EIC)</source>
           <target>Flussi (EIC)</target>
@@ -494,16 +488,6 @@
           <target>Filtro tabella</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Headers - Field Table Filter - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 2796177829 - Field 3609580583 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Unified Staging</source>
-          <target>Tabella staging unificata</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Headers - Field Unified Staging - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2796177829 - Field 3609580583 - Method 2126772001 - NamedType 3334446380" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Clear the Key Field setting on all mapping lines before enabling unified staging.</source>
-          <target>Cancella l'impostazione Campo chiave su tutte le linee di mappatura prima di abilitare la fase di staging unificata.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Headers - Field Unified Staging - Method OnValidate - NamedType KeyFieldExistsErr</note>
-        </trans-unit>
         <trans-unit id="Table 1394614129 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Mapping Json Node (EIC)</source>
           <target>Mapping nodi Json (EIC)</target>
@@ -601,16 +585,6 @@
           <target>Indentazione</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Indentation - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 2337464825 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Key Field</source>
-          <target>Campo chiave</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Is Key Field - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 2337464825 - Method 2126772001 - NamedType 3630823440" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Key fields are not used in unified staging mappings.</source>
-          <target>I campi chiave non vengono utilizzati nelle mappature di staging unificate.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Is Key Field - Method OnValidate - NamedType UnifiedKeyFieldErr</note>
-        </trans-unit>
         <trans-unit id="Table 1083750134 - Field 567768081 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Is Structure</source>
           <target>Struttura</target>
@@ -672,32 +646,6 @@
           <source>must be a field of type Text or Code.</source>
           <target>deve essere un campo di tipo Testo o Code</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field String Replacement Code - Method OnValidate - NamedType MustBeTextLbl</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 2561976296 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Field Name</source>
-          <target>Nome campo destinazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Target Field Name - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 3323085680 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Field No.</source>
-          <target>Nr. campo destinazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Target Field No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 3323085680 - Method 2126772001 - NamedType 1037243000" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 does not exist in the table %2.</source>
-          <target>Il campo %1 non esiste nella tabella %2</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field no., %2 = table id</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Target Field No. - Method OnValidate - NamedType FieldNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 1666780894 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Table ID</source>
-          <target>Table Id destinazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Target Table ID - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 1083750134 - Field 1241212708 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Target Table Name</source>
-          <target>Nome tabella destinazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Mapping Lines - Field Target Table Name - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 1083750134 - Field 316711105 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Transformation Order</source>
@@ -1102,296 +1050,6 @@
           <target>Stato del valore</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Staging Value - Field Value State - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Table 2749412492 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Purchase Header (EIC)</source>
-          <target>Staging documenti acquisto (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 3792369418 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Buy-from Vendor No.</source>
-          <target>Acquistare da - Nr. fornitore</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Buy-from Vendor No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 4198939294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Currency Code</source>
-          <target>Cod. valuta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Currency Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 580412389 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document Date</source>
-          <target>Data documento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Document Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Entry No.</source>
-          <target>Nr. movimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Entry No.</source>
-          <target>Nr. movimento IC</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field IC Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 2161572060 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Location Code</source>
-          <target>Cod. ubicazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Location Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No.</source>
-          <target>Nr.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 2632124822 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Order Date</source>
-          <target>Data ordine</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Order Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 966740350 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Payment Terms Code</source>
-          <target>Cod. condizioni pagam.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Payment Terms Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 3710982960 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Posting Date</source>
-          <target>Data di registrazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Posting Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 1602222300 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Requested Receipt Date</source>
-          <target>Data carico richiesta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Requested Receipt Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 2205104606 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Shipment Method Code</source>
-          <target>Codice metodo di spedizione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Shipment Method Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 3126877759 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Vendor Order No.</source>
-          <target>Nr. ordine fornitore</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Vendor Order No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2749412492 - Field 3001618318 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Your Reference</source>
-          <target>Vs. riferimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Header - Field Your Reference - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Purchase Line (EIC)</source>
-          <target>Staging righe documenti acquisto (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Description</source>
-          <target>Descrizione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Description - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 4187992892 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Direct Unit Cost</source>
-          <target>Costo unitario diretto</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Direct Unit Cost - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Entry No.</source>
-          <target>Nr. movimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 3582421358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line Amount</source>
-          <target>Importo riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Line Amount - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 2702998682 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line Discount %</source>
-          <target>% sconto riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Line Discount % - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line No.</source>
-          <target>Num. riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Line No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 2161572060 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Location Code</source>
-          <target>Cod. ubicazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Location Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No.</source>
-          <target>Nr.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 2704404533 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Quantity</source>
-          <target>Quantità</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Quantity - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 1602222300 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Requested Receipt Date</source>
-          <target>Data carico richiesta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Requested Receipt Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 1878130204 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Type</source>
-          <target>Tipo</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Type - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 2385270358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Unit of Measure Code</source>
-          <target>Cod. unità di misura</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Unit of Measure Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2913546931 - Field 3450651614 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Variant Code</source>
-          <target>Cod. variante</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Purch. Line - Field Variant Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Sales Header (EIC)</source>
-          <target>Staging documenti vendita (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 4198939294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Currency Code</source>
-          <target>Cod. valuta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Currency Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 580412389 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Document Date</source>
-          <target>Data documento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Document Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Entry No.</source>
-          <target>Nr. movimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 1527563463 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>External Document No.</source>
-          <target>Nr. documento esterno</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field External Document No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 321537579 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Entry No.</source>
-          <target>Nr. movimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field IC Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 2161572060 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Location Code</source>
-          <target>Cod. ubicazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Location Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No.</source>
-          <target>Nr.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 2632124822 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Order Date</source>
-          <target>Data ordine</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Order Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 966740350 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Payment Terms Code</source>
-          <target>Cod. condizioni pagam.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Payment Terms Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 3710982960 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Posting Date</source>
-          <target>Data di registrazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Posting Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 135600996 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Requested Delivery Date</source>
-          <target>Data di consegna richiesta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Requested Delivery Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 1225278069 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sell-to Customer No.</source>
-          <target>Vendere a - Nr. cliente</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Sell-to Customer No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 2205104606 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Shipment Method Code</source>
-          <target>Codice metodo di spedizione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Shipment Method Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2592994182 - Field 3001618318 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Your Reference</source>
-          <target>Vs. riferimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Header - Field Your Reference - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Sales Line (EIC)</source>
-          <target>Staging righe documenti vendita (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Description</source>
-          <target>Descrizione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Description - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Entry No.</source>
-          <target>Nr. movimento</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Entry No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 3582421358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line Amount</source>
-          <target>Importo riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Line Amount - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 2702998682 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line Discount %</source>
-          <target>% sconto riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Line Discount % - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 3320823955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Line No.</source>
-          <target>Num. riga</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Line No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 2161572060 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Location Code</source>
-          <target>Cod. ubicazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Location Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 4200184881 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No.</source>
-          <target>Nr.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 2704404533 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Quantity</source>
-          <target>Quantità</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Quantity - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 135600996 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Requested Delivery Date</source>
-          <target>Data di consegna richiesta</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Requested Delivery Date - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 1878130204 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Type</source>
-          <target>Tipo</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Type - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 2385270358 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Unit of Measure Code</source>
-          <target>Cod. unità di misura</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Unit of Measure Code - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 2937233469 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Unit Price</source>
-          <target>Prezzo unitario</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Unit Price - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Table 2224744141 - Field 3450651614 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Variant Code</source>
-          <target>Cod. variante</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Stg. Sales Line - Field Variant Code - Property Caption</note>
-        </trans-unit>
         <trans-unit id="Table 755115487 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC String Transformation Header (EIC)</source>
           <target>Trasformazione testo (EIC)</target>
@@ -1549,40 +1207,6 @@
           <source>Target Table No.</source>
           <target>Nr. tabella destinazione</target>
           <note from="Xliff Generator" annotates="general" priority="3">Table EOS IC Table Relation Line - Field Target Table No. - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 1315191579 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No staging record was found for the entry %1.</source>
-          <target>Nessuna tabella di staging trovata per il movimento %1</target>
-          <note from="Developer" annotates="general" priority="2">%1 = entry no.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreatePurchaseOrder - NamedType StagingNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 1315191579 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Purchase Order</source>
-          <target>Ordine acquisto</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreatePurchaseOrder - NamedType DocumentTypeLbl</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 2648269774 - NamedType 3810363753" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No staging record was found for the entry %1.</source>
-          <target>Nessuna tabella di staging trovata per il movimento %1</target>
-          <note from="Developer" annotates="general" priority="2">%1 = entry no.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreateSalesOrder - NamedType StagingNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 2648269774 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Sales Order</source>
-          <target>Ordine vendita</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method CreateSalesOrder - NamedType DocumentTypeLbl</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 161448877 - NamedType 3016971198" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The line type "%1" is not valid for a purchase line.</source>
-          <target>Il tipo riga "%1" non è valido per una riga di acquisto</target>
-          <note from="Developer" annotates="general" priority="2">%1 = line type</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method GetPurchaseLineType - NamedType InvalidLineTypeErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2110689530 - Method 316427380 - NamedType 3016971198" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The line type "%1" is not valid for a sales line.</source>
-          <target>Il tipo riga "%1" non è valido per una riga di vendita</target>
-          <note from="Developer" annotates="general" priority="2">%1 = line type</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Default Doc. Handler - Method GetSalesLineType - NamedType InvalidLineTypeErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 2110689530 - Method 1151670590 - NamedType 4204058380" size-unit="char" translate="yes" xml:space="preserve">
           <source>No functions found for company %1 related to the selected flow.</source>
@@ -1926,60 +1550,6 @@
           <note from="Developer" annotates="general" priority="2">%1 = error detail with the position of the error</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Json Sample Mgt. - Method ReadJsonStream - NamedType InvalidJsonErr</note>
         </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 933040171 - NamedType 2565456324" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The key field %1 of the table %2 has no value in the payload (array %3). Check the mapping.</source>
-          <target>Il campo chiave %1 della tabella %2 non ha alcun valore nel payload (array %3). Verificare la mappatura.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field caption, %2 = table caption, %3 = Json path of the array</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method CheckKeyValues - NamedType BlankKeyErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 1539275407 - NamedType 2428621518" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The node %1 of the payload is expected to be an array.</source>
-          <target>Il nodo %1 del payload deve essere un array.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = Json path of the array</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method IterateContext - NamedType ArrayExpectedErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 2178881834 - NamedType 1981320726" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The received payload of the entry %1 is not a valid Json.</source>
-          <target>Il payload ricevuto per la voce %1 non è un JSON valido.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = entry no.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method PopulateFromPayload - NamedType InvalidPayloadErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 1100458592" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The flow %1 of the company %2 does not exist.</source>
-          <target>Il flusso %1 della società %2 non esiste</target>
-          <note from="Developer" annotates="general" priority="2">%1 = flow code, %2 = company code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method PopulateFromToken - NamedType FlowNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 1476822440" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No mapping has been assigned to the flow %1 of the company %2.</source>
-          <target>Non è stata assegnata alcuna mappatura al flusso %1 della società %2.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = flow code, %2 = company code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method PopulateFromToken - NamedType MappingNotAssignedErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 421544661 - NamedType 3608194195" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The mapping %1 assigned to the flow %2 of the company %3 is not enabled.</source>
-          <target>La mappatura %1 assegnata al flusso %2 della società %3 non è abilitata.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code, %2 = flow code, %3 = company code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method PopulateFromToken - NamedType MappingNotEnabledErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 1131357321 - Method 1190564735 - NamedType 2510853505" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The value cannot be mapped to the field %1 of the table %2. %3</source>
-          <target>Il valore non può essere mappato sul campo %1 della tabella %2. %3</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field caption, %2 = table caption, %3 = error detail</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Mgt. - Method SetFieldText - NamedType InvalidValueErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 382403341 - NamedType 2762621889" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The path %1 belongs to a different array branch than the other paths of the table %2 (%3).</source>
-          <target>Il percorso %1 appartiene a un ramo di array diverso rispetto agli altri percorsi della tabella %2 (%3).</target>
-          <note from="Developer" annotates="general" priority="2">%1 = path, %2 = table, %3 = array context of the table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method BuildTableContextsInternal - NamedType BranchConflictErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 273134276 - NamedType 3557067621" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The Json path %1 is already used by the line %2.</source>
-          <target>Il percorso JSON %1 è già utilizzato dalla riga %2.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = Json path, %2 = line no.</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method CheckDuplicatedPath - NamedType DuplicatedPathErr</note>
-        </trans-unit>
         <trans-unit id="Codeunit 2983509608 - Method 1527500307 - NamedType 4114321298" size-unit="char" translate="yes" xml:space="preserve">
           <source>The mapping %1 cannot be enabled because it is not valid:\%2</source>
           <target>La mappatura %1 non può essere abilitata perché non è valida:\%2</target>
@@ -1991,24 +1561,6 @@
           <target>Il mapping %1 non è valido:\%2</target>
           <note from="Developer" annotates="general" priority="2">%1 = mapping code, %2 = list of problems</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method CheckForExecution - NamedType NotValidErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 3799472879 - NamedType 1548293700" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The table %1 cannot be used as a target: the first field of its primary key (entry number) must be an Integer field.</source>
-          <target>La tabella %1 non può essere utilizzata come destinazione: il primo campo della sua chiave primaria (numero di voce) deve essere un campo di tipo Integer.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method CheckTableStructure - NamedType StructureErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2291745248 - NamedType 1553268666" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Path: %1: %2</source>
-          <target>Path: %1: %2</target>
-          <note from="Developer" annotates="general" priority="2">%1 = Json path, %2 = problem</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method PathIssue - NamedType PathIssueLbl</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2291745248 - NamedType 1413563382" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Path: (not specified): %1</source>
-          <target>Path: (non specificato): %1</target>
-          <note from="Developer" annotates="general" priority="2">%1 = problem</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method PathIssue - NamedType MissingPathIssueLbl</note>
         </trans-unit>
         <trans-unit id="Codeunit 2983509608 - Method 4232835401 - NamedType 3811670313" size-unit="char" translate="yes" xml:space="preserve">
           <source>The mapping %1 is valid.</source>
@@ -2022,113 +1574,11 @@
           <note from="Developer" annotates="general" priority="2">%1 = mapping code, %2 = list of problems</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateAndShowResult - NamedType NotValidMsg</note>
         </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1705898744 - NamedType 929574037" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 of the table %2 is filled in automatically and cannot be mapped.</source>
-          <target>Il campo %1 della tabella %2 viene compilato automaticamente e non può essere mappato.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field, %2 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateKeyLines - NamedType ReservedFieldErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1705898744 - NamedType 2795102967" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 of the table %2 is marked as key field but it is not part of its primary key.</source>
-          <target>Il campo %1 della tabella %2 è contrassegnato come campo chiave, ma non fa parte della sua chiave primaria.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field, %2 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateKeyLines - NamedType NotKeyFieldErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 828115313" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The target table is missing.</source>
-          <target>Tabella di destinazione mancante</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType MissingTableErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 448691940" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The target table %1 does not exist.</source>
-          <target>La tabella di destinazione %1 non esiste</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table id</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType TableNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 2128685181" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The target field is missing.</source>
-          <target>Campo destinazione mancante</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType MissingFieldErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 1037243000" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 does not exist in the table %2.</source>
-          <target>Il campo %1 non esiste nella tabella %2</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field no., %2 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType FieldNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3314249000" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 of the table %2 cannot be mapped because it is not a normal field.</source>
-          <target>Il campo %1 della tabella %2 non può essere mappato perché non è un campo normale.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field no., %2 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType FieldNotSupportedErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 1361799667" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The Json path %1 is not valid. %2</source>
-          <target>Il path Json %1 non è valido. %2</target>
-          <note from="Developer" annotates="general" priority="2">%1 = path, %2 = error detail</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType InvalidPathErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3644894586" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The Json path %1 does not exist in the sample Json.</source>
-          <target>Il path Json %1 non esiste nel Json di esempio</target>
-          <note from="Developer" annotates="general" priority="2">%1 = path</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType NodeNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 3209222443" size-unit="char" translate="yes" xml:space="preserve">
-          <source>A Json path is required for this value type.</source>
-          <target>È richiesto un percorso Json per questo tipo di valore.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType PathRequiredErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1004476092 - NamedType 714158422" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The constant text is required for the value type Constant.</source>
-          <target>Il testo costante è obbligatorio per il tipo di valore Costante.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateLine - NamedType ConstantRequiredErr</note>
-        </trans-unit>
         <trans-unit id="Codeunit 2983509608 - Method 2591697262 - NamedType 4139555238" size-unit="char" translate="yes" xml:space="preserve">
           <source>The mapping %1 does not exist.</source>
           <target>Il mapping %1 non esiste</target>
           <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateMapping - NamedType MappingNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2591697262 - NamedType 3359697259" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The mapping has no lines.</source>
-          <target>Il mapping non ha righe</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateMapping - NamedType NoLinesErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2591697262 - NamedType 4213027799" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The mapping has no line with a target table and a target field.</source>
-          <target>Il mapping non ha righe con tabella e campi di destinazione</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateMapping - NamedType NoActiveLinesErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 1857365242 - NamedType 3875065412" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The field %1 of the table %2 is part of its primary key: it must be mapped and its line must be marked as key field.</source>
-          <target>Il campo %1 della tabella %2 fa parte della sua chiave primaria: deve essere mappato e la sua riga deve essere contrassegnata come campo chiave.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = field, %2 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateOwnKeyFields - NamedType MissingKeyLineErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 1578380186" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The table %1 is at the first level of the payload: its primary key must be the entry number only.</source>
-          <target>La tabella %1 si trova al primo livello del payload: la sua chiave primaria deve essere costituita unicamente dal numero di voce.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateTableKeys - NamedType FirstLevelKeyErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 3648346386" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The table %1 is linked to the IC entry: it must have an Integer field named %2.</source>
-          <target>La tabella %1 è collegata alla voce IC: deve avere un campo Integer denominato %2.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table, %2 = field name</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateTableKeys - NamedType MissingICEntryNoErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 355462506" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The primary key of the table %1 must start with the same fields of the primary key of its parent table %2.</source>
-          <target>La chiave primaria della tabella %1 deve iniziare con gli stessi campi della chiave primaria della sua tabella padre %2.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table, %2 = parent table</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateTableKeys - NamedType ParentKeyErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 2983509608 - Method 2364487176 - NamedType 2628352360" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The table %1 is nested in the table %2: its primary key must have at least %3 fields (the key of the parent table followed by the fields that identify its records).</source>
-          <target>La tabella %1 è annidata nella tabella %2: la sua chiave primaria deve avere almeno %3 campi (la chiave della tabella padre seguita dai campi che identificano i suoi record).</target>
-          <note from="Developer" annotates="general" priority="2">%1 = table, %2 = parent table, %3 = number of fields</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Mapping Validation - Method ValidateTableKeys - NamedType KeyTooShortErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 2199460658 - NamedType 3892698433" size-unit="char" translate="yes" xml:space="preserve">
           <source>Unable to get an access token.</source>
@@ -2504,12 +1954,6 @@
           <note from="Developer" annotates="general" priority="2">%1 = mapping code, %2 = flow code</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method PopulateEntry - NamedType MappingNotEnabledErr</note>
         </trans-unit>
-        <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 2767500124" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The mapping %1 is not configured for unified staging.</source>
-          <target>La mappatura %1 non è configurata per la gestione unificata delle attività.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method PopulateEntry - NamedType MappingNotUnifiedErr</note>
-        </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 1426698606 - NamedType 1161927236" size-unit="char" translate="yes" xml:space="preserve">
           <source>The mapping %1 is not valid:\%2</source>
           <target>Il mapping %1 non è valido:\%2</target>
@@ -2561,11 +2005,6 @@
           <source>Suggest Mapping is available only for inbound mappings.</source>
           <target>La funzione ""Suggerisci mappatura"" è disponibile solo per le mappature in entrata.</target>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method SuggestMapping - NamedType InboundRequiredErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 4282586028" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Enable Unified Staging on the mapping before suggesting staging fields.</source>
-          <target>Abilita la configurazione unificata delle aree di staging sulla mappatura prima di suggerire le aree di staging.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method SuggestMapping - NamedType UnifiedRequiredErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 842036732 - NamedType 695337539" size-unit="char" translate="yes" xml:space="preserve">
           <source>Disable the mapping before suggesting staging fields.</source>
@@ -2638,11 +2077,6 @@
           <target>Il campo di staging %1 deve utilizzare la stessa didascalia in tutta la mappatura.</target>
           <note from="Developer" annotates="general" priority="2">%1 = field name</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method ValidateMapping - NamedType InconsistentCaptionErr</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 4118568395" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Legacy target table and field must be blank in a unified staging mapping.</source>
-          <target>Nella mappatura di staging unificata, la tabella e il campo di destinazione legacy devono essere vuoti.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit EOS IC Staging Mgt. - Method ValidateMapping - NamedType LegacyTargetErr</note>
         </trans-unit>
         <trans-unit id="Codeunit 3475758358 - Method 2591697262 - NamedType 1361799667" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Json path %1 is invalid. %2</source>
@@ -3189,11 +2623,6 @@
           <target>Righe mapping (EIC)</target>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 2526431623 - Control 2337464825 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Specifies that the target field is part of the primary key of the target table, after the entry number and the key fields of the parent table. Its value identifies each record created from the elements of the array.</source>
-          <target>Specifica che il campo di destinazione fa parte della chiave primaria della tabella di destinazione, collocandosi dopo il numero di voce e i campi chiave della tabella padre. Il suo valore identifica ciascun record creato a partire dagli elementi dell'array.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Mapping Lines Subpage - Control Is Key Field - Property ToolTip</note>
-        </trans-unit>
         <trans-unit id="Page 2526431623 - Control 2454603624 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Node Name</source>
           <target>Nome nodo</target>
@@ -3494,51 +2923,6 @@
           <target>Trasformazione testo</target>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action StringTransformations - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Creates a pending inbound EIC Entry using the TEST mapping and the sample Json payload.</source>
-          <target>Crea una voce EIC in entrata in sospeso utilizzando la mappatura TEST e il payload JSON di esempio.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Property ToolTip</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Create Test Inbound Entry</source>
-          <target>Crea una voce di prova in entrata</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 4139555238" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The inbound mapping %1 was not found.</source>
-          <target>La mappatura in entrata %1 non è stata trovata.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType MappingNotFoundErr</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 980733033" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The mapping %1 must be enabled and configured for unified staging.</source>
-          <target>La mappatura %1 deve essere abilitata e configurata per la fase di staging unificata.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType MappingNotReadyErr</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 3104501620" size-unit="char" translate="yes" xml:space="preserve">
-          <source>No enabled inbound flow uses mapping %1.</source>
-          <target>Nessun flusso in entrata abilitato utilizza la mappatura %1.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType NoTestFlowErr</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 2575946990" size-unit="char" translate="yes" xml:space="preserve">
-          <source>More than one enabled inbound flow uses mapping %1. Keep only one for this test action.</source>
-          <target>Più di un flusso in entrata abilitato utilizza la mappatura %1. Mantienine solo uno per questa azione di test.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = mapping code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType MultipleTestFlowsErr</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 1981320726" size-unit="char" translate="yes" xml:space="preserve">
-          <source>The test Json payload is invalid.</source>
-          <target>Il payload JSON di prova non è valido.</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType InvalidPayloadErr</note>
-        </trans-unit>
-        <trans-unit id="Page 378817272 - Action 3926853285 - Method 1377591017 - NamedType 1002437423" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Inbound EIC Entry %1 was created for flow %2. Process it from the IC Entries page to populate staging.</source>
-          <target>È stata creata la voce EIC in entrata %1 per il flusso %2. Elaborala dalla pagina Voci IC per popolare l'area di staging.</target>
-          <note from="Developer" annotates="general" priority="2">%1 = Entry No., %2 = flow code</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Setup - Action CreateTestInboundEntry - Method OnAction - NamedType EntryCreatedMsg</note>
-        </trans-unit>
         <trans-unit id="Page 268314290 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC Staging Record (EIC)</source>
           <target>Staging record (EIC)</target>
@@ -3615,56 +2999,6 @@
           <target>La configurazione unificata per la voce %1 verrà sostituita con i valori del JSON originale. Continuare?</target>
           <note from="Developer" annotates="general" priority="2">%1 = entry no.</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Staging Tree - Action RebuildFromOriginal - Method OnAction - NamedType RebuildQst</note>
-        </trans-unit>
-        <trans-unit id="Page 2996090066 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Lines</source>
-          <target>Righe</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Purch. Lines Sub - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2810175003 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Purchase Order (EIC)</source>
-          <target>Staging ordine acquisto (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Purch. Order - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2810175003 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target>Generale</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Purch. Order - Control General - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2810175003 - Control 3471137671 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Lines</source>
-          <target>Righe</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Purch. Order - Control Lines - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 3662750086 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Purchase Orders (EIC)</source>
-          <target>Staging ordine acquisto (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Purch. Orders - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 581103384 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Lines</source>
-          <target>Righe</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Sales Lines Sub - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2958775845 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Sales Order (EIC)</source>
-          <target>Staging ordine vendita (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Sales Order - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2958775845 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target>Generale</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Sales Order - Control General - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 2958775845 - Control 3471137671 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Lines</source>
-          <target>Righe</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Sales Order - Control Lines - Property Caption</note>
-        </trans-unit>
-        <trans-unit id="Page 658827996 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
-          <source>IC Staging Sales Orders (EIC)</source>
-          <target>Staging ordine vendita (EIC)</target>
-          <note from="Xliff Generator" annotates="general" priority="3">Page EOS IC Stg. Sales Orders - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 4150431018 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>IC String Transformation Card (EIC)</source>
@@ -4120,6 +3454,30 @@
         <trans-unit id="Codeunit 2110689530 - Method 1620393406 - NamedType 2636616999" size-unit="char" translate="yes" xml:space="preserve">
           <source>Sales Order</source>
           <target>Ordine vendita</target>
+        </trans-unit>
+        <trans-unit id="Page 902719603 - Control 3879241928 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the client ID of the Microsoft Entra authentication application</source>
+          <target>Specifica il Client ID dell'applicazione di autenticazione Microsoft Entra</target>
+        </trans-unit>
+        <trans-unit id="Page 902719603 - Control 4133968198 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the client secret of the Microsoft Entra authentication application</source>
+          <target>Specifica il Client Secret dell'applicazione di autenticazione Microsoft Entra</target>
+        </trans-unit>
+        <trans-unit id="Page 902719603 - Control 1780120627 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the redirect URL for the OAuth 2.0 authentication flow. In most OnPrem scenarios this will be: https://&lt;serverName&gt;/&lt;instanceName&gt;/OAuthLanding.htm . In most Cloud scenarios this will be: https://businesscentral.dynamics.com/OAuthLanding.htm</source>
+          <target>Specifica l'URL di reindirizzamento per il flusso di autenticazione OAuth 2.0. Nella maggior parte degli scenari On-Premise, questo sarà: https://&lt;serverName&gt;/&lt;instanceName&gt;/OAuthLanding.htm. Nella maggior parte degli scenari Cloud, questo sarà: https://businesscentral.dynamics.com/OAuthLanding.htm.</target>
+        </trans-unit>
+        <trans-unit id="Page 902719603 - Control 593885934 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the OAuth scope required for authentication. In most scenarios this will be: https://api.businesscentral.dynamics.com/.default</source>
+          <target>Specifica lo scope OAuth richiesto per l'autenticazione. Nella maggior parte dei casi sarà: https://api.businesscentral.dynamics.com/.default</target>
+        </trans-unit>
+        <trans-unit id="Page 902719603 - Control 3180471772 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the OAuth 2.0 token endpoint of the Microsoft Entra authentication application. The endpoint indicates a directory to which tokens can be requested. In most scenarios this will be: https://login.microsoftonline.com/&lt;tenantID&gt;/oauth2/v2.0/token</source>
+          <target>Specifica l'endpoint del token OAuth 2.0 dell'applicazione di autenticazione Microsoft Entra. L'endpoint indica una directory a cui è possibile richiedere i token. Nella maggior parte dei casi, l'endpoint sarà: https://login.microsoftonline.com/&lt;tenantID&gt;/oauth2/v2.0/token</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 3722283190 - Method 2948399184 - NamedType 2746291011" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The connection to remote company %1 was completed successfully.</source>
+          <target>La connessione alla società remotra %1 è stata completata correttamente</target>
         </trans-unit>
       </group>
     </body>

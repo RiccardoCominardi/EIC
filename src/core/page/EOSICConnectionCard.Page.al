@@ -82,6 +82,7 @@ page 67002 "EOS IC Connection Card"
                     field("Client Id"; Rec."Client Id")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the client ID of the Microsoft Entra authentication application';
                         trigger OnValidate()
                         begin
                             Rec.DeleteToken(Rec."Secret Id");
@@ -91,6 +92,7 @@ page 67002 "EOS IC Connection Card"
                     {
                         ApplicationArea = All;
                         Caption = 'Secret Id', Locked = true;
+                        ToolTip = 'Specifies the client secret of the Microsoft Entra authentication application';
                         ExtendedDatatype = Masked;
                         trigger OnValidate()
                         var
@@ -103,14 +105,17 @@ page 67002 "EOS IC Connection Card"
                     field("Token Url"; Rec."Token Url")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the OAuth 2.0 token endpoint of the Microsoft Entra authentication application. The endpoint indicates a directory to which tokens can be requested. In most scenarios this will be: https://login.microsoftonline.com/<tenantID>/oauth2/v2.0/token';
                     }
                     field("Redirect Url"; Rec."Redirect Url")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the redirect URL for the OAuth 2.0 authentication flow. In most OnPrem scenarios this will be: https://<serverName>/<instanceName>/OAuthLanding.htm . In most Cloud scenarios this will be: https://businesscentral.dynamics.com/OAuthLanding.htm';
                     }
                     field(Scope; Rec.Scope)
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the OAuth scope required for authentication. In most scenarios this will be: https://api.businesscentral.dynamics.com/.default';
                     }
                 }
             }

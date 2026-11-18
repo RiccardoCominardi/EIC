@@ -14,17 +14,11 @@ codeunit 67003 "EOS IC Staging Mgt."
             Error(RebuildEntryNotSetErr);
 
         ICEntries.Get(RebuildEntryNo);
-        if not ICEntries."Use Staging" then
-            Error('Entry %1 is not configured for unified staging.', ICEntries."Entry No.");
-
         PopulateEntry(ICEntries);
     end;
 
     procedure PopulateFromPayload(ICEntries: Record "EOS IC Entries")
     begin
-        if not ICEntries."Use Staging" then
-            Error('Entry %1 is not configured for unified staging.', ICEntries."Entry No.");
-
         PopulateEntry(ICEntries);
     end;
 
@@ -94,7 +88,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         MissingCaptionErr: Label 'A caption is required for staging field %1.', Comment = '%1 = field name';
         DuplicateTargetErr: Label 'Staging field %1 is mapped more than once in the Json context %2.', Comment = '%1 = field name, %2 = Json context';
         InconsistentCaptionErr: Label 'Staging field %1 must use the same caption throughout the mapping.', Comment = '%1 = field name';
-        LegacyTargetErr: Label 'Legacy target table and field must be blank in a unified staging mapping.';
         InvalidPathErr: Label 'The Json path %1 is invalid. %2', Comment = '%1 = path, %2 = error detail';
         MissingPathErr: Label 'A Json path is required for this mapping type.';
         MissingConstantErr: Label 'The constant text is required for a constant mapping.';
@@ -116,10 +109,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         end;
         if ICMapping.Direction <> ICMapping.Direction::Inbound then begin
             Issues.Add(StrSubstNo(WrongDirectionErr, MappingCode));
-            exit;
-        end;
-        if not ICMapping."Unified Staging" then begin
-            Issues.Add('The mapping is not configured for unified staging.');
             exit;
         end;
 
@@ -147,11 +136,6 @@ codeunit 67003 "EOS IC Staging Mgt."
                             Issues.Add(MissingFieldErr)
                         else begin
                             ActiveLineCount += 1;
-                            if ICMappingLine."Is Key Field" then
-                                Issues.Add('Key fields are not used in unified staging mappings.');
-                            if (ICMappingLine."Target Table ID" <> 0) or (ICMappingLine."Target Field No." <> 0) then
-                                Issues.Add(LegacyTargetErr);
-
                             if not Field.Get(Database::"EOS IC Staging", ICMappingLine."Staging Field No.") then
                                 Issues.Add(StrSubstNo(FieldNotFoundErr, ICMappingLine."Staging Field No."))
                             else begin
@@ -636,7 +620,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         SuggestedCount: Integer;
         MappingNotFoundErr: Label 'The mapping %1 does not exist.', Comment = '%1 = mapping code';
         InboundRequiredErr: Label 'Suggest Mapping is available only for inbound mappings.';
-        UnifiedRequiredErr: Label 'Enable Unified Staging on the mapping before suggesting staging fields.';
         MappingMustBeDisabledErr: Label 'Disable the mapping before suggesting staging fields.';
         SampleJsonRequiredErr: Label 'Import a Json sample before suggesting staging fields.';
         InvalidSampleJsonErr: Label 'The stored Json sample is invalid.';
@@ -646,8 +629,6 @@ codeunit 67003 "EOS IC Staging Mgt."
             Error(MappingNotFoundErr, MappingCode);
         if ICMapping.Direction <> ICMapping.Direction::Inbound then
             Error(InboundRequiredErr);
-        if not ICMapping."Unified Staging" then
-            Error(UnifiedRequiredErr);
         if ICMapping.Enabled then
             Error(MappingMustBeDisabledErr);
 
@@ -1103,7 +1084,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         FlowNotFoundErr: Label 'The flow %1 of company %2 does not exist.', Comment = '%1 = flow code, %2 = company code';
         MappingNotAssignedErr: Label 'No mapping is assigned to flow %1 of company %2.', Comment = '%1 = flow code, %2 = company code';
         MappingNotEnabledErr: Label 'The mapping %1 assigned to flow %2 is not enabled.', Comment = '%1 = mapping code, %2 = flow code';
-        MappingNotUnifiedErr: Label 'The mapping %1 is not configured for unified staging.', Comment = '%1 = mapping code';
         MappingInvalidErr: Label 'The mapping %1 is not valid:\%2', Comment = '%1 = mapping code, %2 = validation issues';
         InvalidRootErr: Label 'The root of the received Json must be an object or an array.';
     begin
@@ -1120,8 +1100,6 @@ codeunit 67003 "EOS IC Staging Mgt."
         ICMapping.Get(ICFlows."Mapping Code");
         if not ICMapping.Enabled then
             Error(MappingNotEnabledErr, ICMapping.Code, ICFlows.Code);
-        if not ICMapping."Unified Staging" then
-            Error(MappingNotUnifiedErr, ICMapping.Code);
         if not ValidateMapping(ICMapping.Code, true, false, Issues) then
             Error(MappingInvalidErr, ICMapping.Code, GetIssuesText(Issues));
 

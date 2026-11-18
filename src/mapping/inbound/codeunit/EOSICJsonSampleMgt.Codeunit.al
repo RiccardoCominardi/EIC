@@ -367,7 +367,7 @@ codeunit 67016 "EOS IC Json Sample Mgt."
         if ICMappingLine.FindSet() then
             repeat
                 if not GroupPaths.Contains(ICMappingLine."Json Path") then
-                    if (ICMappingLine."Target Table ID" = 0) and (ICMappingLine."Target Field No." = 0) then
+                    if ICMappingLine."Staging Field No." = 0 then
                         ICMappingLine.Delete()
                     else begin
                         ICMappingLine."Is Structure" := false;

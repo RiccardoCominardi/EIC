@@ -119,9 +119,6 @@ codeunit 67007 "EOS IC Entries Management"
 
     procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries")
     var
-        ICFunctions: Record "EOS IC Functions";
-        StgSalesHeader: Record "EOS IC Stg. Sales Header";
-        StgPurchHeader: Record "EOS IC Stg. Purch. Header";
         UnifiedStaging: Record "EOS IC Staging";
         StagingTree: Page "EOS IC Staging Tree";
         StagingNotFoundErr: Label 'No staging record was found for the entry %1.', Comment = '%1 = entry no.';
@@ -129,34 +126,11 @@ codeunit 67007 "EOS IC Entries Management"
         if ICEntries."Staging Status" = ICEntries."Staging Status"::None then
             exit;
 
-        if ICEntries."Use Staging" then begin
-            UnifiedStaging.SetRange("IC Entry No.", ICEntries."Entry No.");
-            if UnifiedStaging.IsEmpty() then
-                Error(StagingNotFoundErr, ICEntries."Entry No.");
-            StagingTree.SetICEntryNo(ICEntries."Entry No.");
-            StagingTree.Run();
-            exit;
-        end;
-
-        ICFunctions.Get(ICEntries."Source Company", ICEntries.Direction);
-        case true of
-            ICFunctions."Send Create Sales Order" = ICEntries."IC Flow Code":
-                begin
-                    StgSalesHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgSalesHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Sales Order", StgSalesHeader);
-                end;
-            ICFunctions."Send Create Purch. Order" = ICEntries."IC Flow Code":
-                begin
-                    StgPurchHeader.SetRange("IC Entry No.", ICEntries."Entry No.");
-                    if not StgPurchHeader.FindFirst() then
-                        Error(StagingNotFoundErr, ICEntries."Entry No.");
-                    Page.Run(Page::"EOS IC Stg. Purch. Order", StgPurchHeader);
-                end;
-            else
-                OnHandleDocsShowStagingRecord(ICEntries, ICFunctions);
-        end;
+        UnifiedStaging.SetRange("IC Entry No.", ICEntries."Entry No.");
+        if UnifiedStaging.IsEmpty() then
+            Error(StagingNotFoundErr, ICEntries."Entry No.");
+        StagingTree.SetICEntryNo(ICEntries."Entry No.");
+        StagingTree.Run();
     end;
 
     procedure ShowTargetDocument(TargetDocument: Record "EOS IC Created Updated Records")
@@ -690,11 +664,6 @@ codeunit 67007 "EOS IC Entries Management"
         ICEntryTargetDocument."Table Id" := TableId;
         ICEntryTargetDocument."Doc. System Id" := SystemId;
         ICEntryTargetDocument.Insert(true);
-    end;
-
-    [IntegrationEvent(false, false)]
-    local procedure OnHandleDocsShowStagingRecord(ICEntries: Record "EOS IC Entries"; ICFunctions: Record "EOS IC Functions")
-    begin
     end;
 
     [IntegrationEvent(false, false)]

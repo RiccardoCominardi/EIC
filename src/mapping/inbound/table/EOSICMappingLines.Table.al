@@ -45,59 +45,6 @@ table 67017 "EOS IC Mapping Lines"
                 Rec.Validate("String Replacement Code");
             end;
         }
-        field(5; "Target Table ID"; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Table ID';
-            TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
-            BlankZero = true;
-            trigger OnValidate()
-            begin
-                if Rec."Target Table ID" <> xRec."Target Table ID" then
-                    Rec."Target Field No." := 0;
-            end;
-        }
-        field(6; "Target Table Name"; Text[249])
-        {
-            Caption = 'Target Table Name';
-            FieldClass = FlowField;
-            CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = const(Table), "Object ID" = field("Target Table ID")));
-            Editable = false;
-        }
-        field(7; "Target Field No."; Integer)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Target Field No.';
-            BlankZero = true;
-            trigger OnValidate()
-            var
-                Field: Record Field;
-                FieldNotFoundErr: Label 'The field %1 does not exist in the table %2.', Comment = '%1 = field no., %2 = table id';
-            begin
-                if Rec."Target Field No." = 0 then
-                    exit;
-
-                Rec.TestField("Target Table ID");
-                if not Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
-                    Error(FieldNotFoundErr, Rec."Target Field No.", Rec."Target Table ID");
-            end;
-
-            trigger OnLookup()
-            var
-                NewFieldNo: Integer;
-            begin
-                Rec.TestField("Target Table ID");
-                if LookupFieldsID(NewFieldNo, Rec."Target Table ID", Rec."Target Field No.") then
-                    Rec.Validate("Target Field No.", NewFieldNo);
-            end;
-        }
-        field(8; "Target Field Name"; Text[80])
-        {
-            Caption = 'Target Field Name';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Target Table ID"), "No." = field("Target Field No.")));
-            Editable = false;
-        }
         field(11; "Array Context"; Text[2048])
         {
             DataClassification = CustomerContent;
@@ -115,26 +62,6 @@ table 67017 "EOS IC Mapping Lines"
             DataClassification = CustomerContent;
             Caption = 'Is Structure';
             Editable = false;
-        }
-        field(14; "Is Key Field"; Boolean)
-        {
-            DataClassification = CustomerContent;
-            Caption = 'Key Field';
-
-            trigger OnValidate()
-            var
-                ICMapping: Record "EOS IC Mapping Headers";
-                UnifiedKeyFieldErr: Label 'Key fields are not used in unified staging mappings.';
-            begin
-                if not Rec."Is Key Field" then
-                    exit;
-
-                if ICMapping.Get(Rec."Mapping Code") then
-                    if ICMapping."Unified Staging" then
-                        Error(UnifiedKeyFieldErr);
-
-                Rec.TestField("Target Field No.");
-            end;
         }
         field(15; "Transliteration Code"; Code[20])
         {
@@ -154,9 +81,9 @@ table 67017 "EOS IC Mapping Lines"
                 if Rec."Value Type" = Rec."Value Type"::Constant then
                     Rec.FieldError("Value Type", StrSubstNo(MustNotBeLbl, Rec."Value Type"));
 
-                if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
+                if Field.Get(Database::"EOS IC Staging", Rec."Staging Field No.") then
                     if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
-                        Rec.FieldError("Target Field No.", MustBeTextLbl);
+                        Rec.FieldError("Staging Field No.", MustBeTextLbl);
             end;
         }
         field(16; "String Replacement Code"; Code[20])
@@ -177,9 +104,9 @@ table 67017 "EOS IC Mapping Lines"
                 if Rec."Value Type" = Rec."Value Type"::Constant then
                     Rec.FieldError("Value Type", StrSubstNo(MustNotBeLbl, Rec."Value Type"));
 
-                if Field.Get(Rec."Target Table ID", Rec."Target Field No.") then
+                if Field.Get(Database::"EOS IC Staging", Rec."Staging Field No.") then
                     if not (Field.Type in [Field.Type::Text, Field.Type::Code]) then
-                        Rec.FieldError("Target Field No.", MustBeTextLbl);
+                        Rec.FieldError("Staging Field No.", MustBeTextLbl);
             end;
         }
         field(17; "Transformation Order"; Enum "EOS IC Transformation Order")
@@ -197,7 +124,6 @@ table 67017 "EOS IC Mapping Lines"
             trigger OnValidate()
             var
                 Field: Record Field;
-                ICMapping: Record "EOS IC Mapping Headers";
                 UnsupportedFieldErr: Label 'The field %1 cannot be used in unified staging.', Comment = '%1 = field name';
             begin
                 if Rec."Staging Field No." = 0 then begin
@@ -205,8 +131,6 @@ table 67017 "EOS IC Mapping Lines"
                     exit;
                 end;
 
-                ICMapping.Get(Rec."Mapping Code");
-                ICMapping.TestField("Unified Staging", true);
                 Field.Get(Database::"EOS IC Staging", Rec."Staging Field No.");
                 if (Field.Class <> Field.Class::Normal) or (Field.Type in [Field.Type::Blob, Field.Type::Media, Field.Type::MediaSet]) then
                     Error(UnsupportedFieldErr, Field."Field Caption");
@@ -281,14 +205,10 @@ table 67017 "EOS IC Mapping Lines"
             Caption = 'Show in Staging List';
 
             trigger OnValidate()
-            var
-                ICMapping: Record "EOS IC Mapping Headers";
             begin
                 if not Rec."Show in Staging List" then
                     exit;
 
-                ICMapping.Get(Rec."Mapping Code");
-                ICMapping.TestField("Unified Staging", true);
                 Rec.TestField("Staging Field No.");
                 Rec.TestField("Staging Caption");
             end;

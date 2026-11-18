@@ -70,10 +70,6 @@ page 67012 "EOS IC Entries"
                     ApplicationArea = All;
                     StyleExpr = StagingColor;
                 }
-                field("Use Staging"; Rec."Use Staging")
-                {
-                    ApplicationArea = All;
-                }
                 field("Processed At"; Rec."Processed At")
                 {
                     ApplicationArea = All;
