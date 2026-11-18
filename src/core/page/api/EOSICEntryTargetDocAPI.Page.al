@@ -25,27 +25,33 @@ page 67028 "EOS IC Entry Target Doc API"
                 field(id; Rec.SystemId)
                 {
                     Caption = 'Id';
+                    ToolTip = 'Specifies the unique system ID of the target document link.';
                     Editable = false;
                 }
                 field(icTransactionId; ICTransactionId)
                 {
                     Caption = 'IC Transaction ID';
+                    ToolTip = 'Specifies the transaction ID of the outbound entry linked to this document.';
                 }
                 field(targetDocumentType; Rec."Document Type")
                 {
                     Caption = 'Target Document Type';
+                    ToolTip = 'Specifies the type of the document created or updated in the target company.';
                 }
                 field(targetDocumentNo; Rec."Document No.")
                 {
                     Caption = 'Target Document No.';
+                    ToolTip = 'Specifies the number of the document created or updated in the target company.';
                 }
                 field(targetTableId; Rec."Table Id")
                 {
                     Caption = 'Target Table Id';
+                    ToolTip = 'Specifies the ID of the table that contains the target document.';
                 }
                 field(targetSystemId; Rec."Doc. System Id")
                 {
                     Caption = 'Target System Id';
+                    ToolTip = 'Specifies the system ID of the target document.';
                 }
             }
         }

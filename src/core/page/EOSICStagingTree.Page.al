@@ -28,16 +28,19 @@ page 67023 "EOS IC Staging Tree"
                 {
                     ApplicationArea = All;
                     Caption = 'Node';
+                    ToolTip = 'Specifies the JSON object, array, or value represented by this row.';
                     StyleExpr = NodeStyle;
                 }
                 field(ListSummaryColumn; ListSummary)
                 {
                     ApplicationArea = All;
                     Caption = 'Main values';
+                    ToolTip = 'Shows the mapped values selected for the staging tree summary.';
                 }
                 field("Manually Modified"; Rec."Manually Modified")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Indicates whether a value in this staging record was changed manually.';
                 }
             }
         }

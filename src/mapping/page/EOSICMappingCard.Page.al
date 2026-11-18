@@ -20,15 +20,18 @@ page 67010 "EOS IC Mapping Card"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the mapping.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the mapping.';
                 }
                 field(Direction; Rec.Direction)
                 {
                     ApplicationArea = All;
                     Editable = not Rec.Enabled;
+                    ToolTip = 'Specifies whether the mapping processes inbound or outbound data.';
 
                     trigger OnValidate()
                     begin
@@ -38,10 +41,12 @@ page 67010 "EOS IC Mapping Card"
                 field(Enabled; Rec.Enabled)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the mapping is available for use by flows.';
                 }
                 field("No. of Flows"; Rec."No. of Flows")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies how many flows use this mapping.';
                 }
             }
             group(Json)
@@ -52,11 +57,13 @@ page 67010 "EOS IC Mapping Card"
                 {
                     ApplicationArea = All;
                     Caption = 'Json File Name';
+                    ToolTip = 'Specifies the name of the imported JSON sample file.';
                 }
                 field("Json Imported At"; Rec."Json Imported At")
                 {
                     ApplicationArea = All;
                     Caption = 'Json Imported At';
+                    ToolTip = 'Specifies when the JSON sample was imported.';
                 }
             }
             group(Source)
@@ -67,6 +74,7 @@ page 67010 "EOS IC Mapping Card"
                 {
                     ApplicationArea = All;
                     Editable = not Rec.Enabled;
+                    ToolTip = 'Specifies the table whose records are used by this outbound mapping.';
 
                     trigger OnValidate()
                     begin
@@ -76,6 +84,7 @@ page 67010 "EOS IC Mapping Card"
                 field("Source Table Name"; Rec."Source Table Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the source table for this outbound mapping.';
                 }
                 field(TableFilterFld; TableFilterText)
                 {

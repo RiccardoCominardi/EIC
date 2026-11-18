@@ -15,6 +15,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Company Code';
+            ToolTip = 'Specifies the intercompany company that owns this flow.';
             TableRelation = "EOS IC Companies".Code;
             NotBlank = true;
         }
@@ -22,27 +23,32 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the unique code of the flow within the company.';
             NotBlank = true;
         }
         field(3; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of the flow.';
         }
         field(4; "Flow Pair Id"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Flow Pair Id';
+            ToolTip = 'Specifies the identifier used to pair this flow with a flow in the remote company.';
         }
         field(5; Direction; Enum "EOS IC Direction")
         {
             DataClassification = CustomerContent;
             Caption = 'Direction';
+            ToolTip = 'Specifies whether the flow sends data to or receives data from another company.';
         }
         field(8; "Auto Send"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Auto Send';
+            ToolTip = 'Specifies whether outbound entries using this flow are sent automatically.';
             trigger OnValidate()
             begin
                 Rec.TestField(Direction, Rec.Direction::Outbound);
@@ -52,6 +58,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Auto Process';
+            ToolTip = 'Specifies whether inbound entries using this flow are processed automatically.';
             trigger OnValidate()
             begin
                 Rec.TestField(Direction, Rec.Direction::Inbound);
@@ -61,6 +68,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Enabled';
+            ToolTip = 'Specifies whether the flow is available for processing.';
             trigger OnValidate()
             var
                 FlowNotPairedErr: Label 'The flow %1 is not paired and cannot be enabled. Pair it first.', Comment = '%1 = flow code';
@@ -73,6 +81,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Auto Create Documents';
+            ToolTip = 'Specifies whether documents are created automatically from inbound staging data.';
             trigger OnValidate()
             begin
                 Rec.TestField(Direction, Rec.Direction::Inbound);
@@ -82,6 +91,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Mapping Code';
+            ToolTip = 'Specifies the mapping used to translate data for this flow.';
             TableRelation = "EOS IC Mapping Headers"."Code" where(Direction = field(Direction));
 
             trigger OnValidate()
@@ -99,6 +109,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Relation Table Id';
+            ToolTip = 'Specifies the ID of the table containing the source documents for this flow.';
             BlankZero = true;
             TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
 
@@ -130,6 +141,7 @@ table 67003 "EOS IC Flows"
         field(14; "Relation Table Name"; Text[249])
         {
             Caption = 'Relation Table Name';
+            ToolTip = 'Specifies the name of the table containing the source documents for this flow.';
             FieldClass = FlowField;
             CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = filter(Table), "Object ID" = field("Relation Table Id")));
             Editable = false;
@@ -138,6 +150,7 @@ table 67003 "EOS IC Flows"
         {
             DataClassification = CustomerContent;
             Caption = 'Relation Option Type';
+            ToolTip = 'Specifies the option value used to identify the source document type for this flow.';
             OptionMembers = "0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19";
             trigger OnValidate()
             begin

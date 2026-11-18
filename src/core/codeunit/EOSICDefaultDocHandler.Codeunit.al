@@ -43,13 +43,6 @@ codeunit 67011 "EOS IC Default Doc. Handler" implements "EOS IC Document Handler
         end;
     end;
 
-    procedure ShowStagingRecord(ICEntries: Record "EOS IC Entries")
-    var
-        ICEntriesMgt: Codeunit "EOS IC Entries Management";
-    begin
-        ICEntriesMgt.ShowStagingRecord(ICEntries);
-    end;
-
     #region BuildPayloadFunctions
 
     local procedure BuildPurchaseOrderJson(RecRef: RecordRef): JsonObject

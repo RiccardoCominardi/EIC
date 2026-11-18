@@ -11,6 +11,7 @@ table 67023 "EOS IC String Transform Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the string transformation that contains this line.';
             TableRelation = "EOS IC String Transform Header"."Code";
             NotBlank = true;
         }
@@ -18,11 +19,13 @@ table 67023 "EOS IC String Transform Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Line No.';
+            ToolTip = 'Specifies the sequence number of this transformation line.';
         }
         field(3; Character; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Source String';
+            ToolTip = 'Specifies the source string to match in the input value.';
             NotBlank = true;
 
             trigger OnValidate()
@@ -34,6 +37,7 @@ table 67023 "EOS IC String Transform Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Replacement';
+            ToolTip = 'Specifies the replacement text, or leave blank to remove the source string.';
         }
     }
 

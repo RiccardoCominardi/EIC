@@ -13,6 +13,7 @@ table 67021 "EOS IC Table Relation Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the table relation that contains this field pair.';
             TableRelation = "EOS IC Table Relation Header"."Code";
             NotBlank = true;
         }
@@ -20,10 +21,12 @@ table 67021 "EOS IC Table Relation Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Line No.';
+            ToolTip = 'Specifies the sequence number of this table relation line.';
         }
         field(3; "Source Table No."; Integer)
         {
             Caption = 'Source Table No.';
+            ToolTip = 'Specifies the table that contains the source field.';
             FieldClass = FlowField;
             CalcFormula = lookup("EOS IC Table Relation Header"."Source Table No." where(Code = field(Code)));
             Editable = false;
@@ -32,6 +35,7 @@ table 67021 "EOS IC Table Relation Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Source Field No.';
+            ToolTip = 'Specifies the field number used to match source records.';
             BlankZero = true;
 
             trigger OnLookup()
@@ -52,6 +56,7 @@ table 67021 "EOS IC Table Relation Line"
         field(5; "Target Table No."; Integer)
         {
             Caption = 'Target Table No.';
+            ToolTip = 'Specifies the related table that contains the target field.';
             FieldClass = FlowField;
             CalcFormula = lookup("EOS IC Table Relation Header"."Target Table No." where(Code = field(Code)));
             Editable = false;
@@ -60,6 +65,7 @@ table 67021 "EOS IC Table Relation Line"
         {
             DataClassification = CustomerContent;
             Caption = 'Target Field No.';
+            ToolTip = 'Specifies the field number matched against the source field.';
             BlankZero = true;
 
             trigger OnLookup()
@@ -80,6 +86,7 @@ table 67021 "EOS IC Table Relation Line"
         field(7; "Source Field Name"; Text[80])
         {
             Caption = 'Source Field Name';
+            ToolTip = 'Specifies the name of the selected source field.';
             FieldClass = FlowField;
             CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Source Table No."), "No." = field("Source Field No.")));
             Editable = false;
@@ -87,6 +94,7 @@ table 67021 "EOS IC Table Relation Line"
         field(8; "Target Field Name"; Text[80])
         {
             Caption = 'Target Field Name';
+            ToolTip = 'Specifies the name of the selected target field.';
             FieldClass = FlowField;
             CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Target Table No."), "No." = field("Target Field No.")));
             Editable = false;

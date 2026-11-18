@@ -15,17 +15,20 @@ table 67016 "EOS IC Mapping Headers"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the unique code of the mapping.';
             NotBlank = true;
         }
         field(2; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of the mapping.';
         }
         field(3; Enabled; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Enabled';
+            ToolTip = 'Specifies whether the mapping is available for use by flows.';
             trigger OnValidate()
             var
                 ICMappingValidation: Codeunit "EOS IC Mapping Validation";
@@ -38,23 +41,27 @@ table 67016 "EOS IC Mapping Headers"
         {
             DataClassification = CustomerContent;
             Caption = 'Json File Name';
+            ToolTip = 'Specifies the name of the imported JSON sample file.';
             Editable = false;
         }
         field(5; "Json Imported At"; DateTime)
         {
             DataClassification = CustomerContent;
             Caption = 'Json Imported At';
+            ToolTip = 'Specifies when the JSON sample was imported.';
             Editable = false;
         }
         field(6; "Json Content"; Blob)
         {
             DataClassification = CustomerContent;
             Caption = 'Json Content';
+            ToolTip = 'Stores the imported JSON sample used to configure the mapping.';
         }
         field(7; Direction; Enum "EOS IC Direction")
         {
             DataClassification = CustomerContent;
             Caption = 'Direction';
+            ToolTip = 'Specifies whether the mapping processes inbound or outbound data.';
 
             trigger OnValidate()
             begin
@@ -66,6 +73,7 @@ table 67016 "EOS IC Mapping Headers"
         {
             DataClassification = CustomerContent;
             Caption = 'Source Table No.';
+            ToolTip = 'Specifies the table whose records are used by this outbound mapping.';
             BlankZero = true;
             TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
 
@@ -79,6 +87,7 @@ table 67016 "EOS IC Mapping Headers"
         field(9; "Source Table Name"; Text[249])
         {
             Caption = 'Source Table Name';
+            ToolTip = 'Specifies the name of the source table for this outbound mapping.';
             FieldClass = FlowField;
             CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = const(Table), "Object ID" = field("Source Table No.")));
             Editable = false;
@@ -86,6 +95,7 @@ table 67016 "EOS IC Mapping Headers"
         field(10; "No. of Lines"; Integer)
         {
             Caption = 'No. of Lines';
+            ToolTip = 'Specifies the number of inbound mapping lines.';
             FieldClass = FlowField;
             CalcFormula = count("EOS IC Mapping Lines" where("Mapping Code" = field(Code)));
             Editable = false;
@@ -93,6 +103,7 @@ table 67016 "EOS IC Mapping Headers"
         field(11; "No. of Flows"; Integer)
         {
             Caption = 'No. of Flows';
+            ToolTip = 'Specifies how many flows use this mapping.';
             FieldClass = FlowField;
             CalcFormula = count("EOS IC Flows" where("Mapping Code" = field(Code)));
             Editable = false;
@@ -100,6 +111,7 @@ table 67016 "EOS IC Mapping Headers"
         field(12; "No. of Outbound Lines"; Integer)
         {
             Caption = 'No. of Outbound Lines';
+            ToolTip = 'Specifies the number of lines in this outbound mapping.';
             FieldClass = FlowField;
             CalcFormula = count("EOS IC Out. Mapping Lines" where("Mapping Code" = field(Code)));
             Editable = false;
@@ -108,6 +120,7 @@ table 67016 "EOS IC Mapping Headers"
         {
             DataClassification = CustomerContent;
             Caption = 'Table Filter';
+            ToolTip = 'Stores the filter applied to source records when generating an example JSON file.';
         }
     }
 

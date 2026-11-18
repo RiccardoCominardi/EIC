@@ -10,6 +10,7 @@ tableextension 67007 "EOS IC User Setup" extends "User Setup"
         {
             DataClassification = CustomerContent;
             Caption = 'IC Admin (EIC)';
+            ToolTip = 'Specifies whether the user is an intercompany administrator.';
         }
     }
 }

@@ -28,6 +28,7 @@ page 67011 "EOS IC Mapping Lines Subpage"
                 {
                     ApplicationArea = All;
                     Caption = 'Node Name';
+                    ToolTip = 'Specifies the name of the JSON node represented by this mapping line.';
                     StyleExpr = NodeStyle;
                     Editable = false;
                 }
@@ -36,29 +37,34 @@ page 67011 "EOS IC Mapping Lines Subpage"
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies the typed staging field that receives the mapped value.';
                 }
                 field("Staging Field Name"; StagingFieldName)
                 {
                     Caption = 'Staging Field Name';
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the name of the selected staging field.';
                 }
                 field("Enum/Option Source Table No."; Rec."Enum/Option Source Table No.")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies the table that defines the enum or option values for the staging field.';
                 }
                 field("Enum/Option Source Field No."; Rec."Enum/Option Source Field No.")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies the field that defines the enum or option values for the staging field.';
                 }
                 field("Staging Caption"; Rec."Staging Caption")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
+                    ToolTip = 'Specifies the caption displayed for this value in the staging record.';
                 }
                 field("Show in Staging List"; Rec."Show in Staging List")
                 {
@@ -72,18 +78,21 @@ page 67011 "EOS IC Mapping Lines Subpage"
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies whether the staging value comes from the JSON payload, a constant, or a transformation.';
                 }
                 field("Constant Text"; Rec."Constant Text")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies the fixed text value assigned to this mapping line.';
                 }
                 field("Transformation Order"; Rec."Transformation Order")
                 {
                     ApplicationArea = All;
                     Editable = NodeEditable;
                     HideValue = not NodeEditable;
+                    ToolTip = 'Specifies whether transliteration or string replacement is applied first.';
                 }
                 field("Transliteration Code"; Rec."Transliteration Code")
                 {

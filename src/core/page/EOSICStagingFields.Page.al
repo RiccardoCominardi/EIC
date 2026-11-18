@@ -25,11 +25,13 @@ page 67025 "EOS IC Staging Fields"
                     ApplicationArea = All;
                     Caption = 'Field';
                     Editable = false;
+                    ToolTip = 'Specifies the staging field mapped to the JSON value.';
                 }
                 field(DisplayValueText; DisplayValueText)
                 {
                     ApplicationArea = All;
                     Caption = 'Value';
+                    ToolTip = 'Specifies the value read from the JSON payload; edit it to change the staging value.';
 
                     trigger OnValidate()
                     var

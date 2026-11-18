@@ -14,17 +14,20 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Company Code';
+            ToolTip = 'Specifies the intercompany company to which these function assignments apply.';
             NotBlank = true;
         }
         field(2; "Direction"; Enum "EOS IC Direction")
         {
             DataClassification = CustomerContent;
             Caption = 'Direction';
+            ToolTip = 'Specifies the direction of the flows assigned to these functions.';
         }
         field(3; "Send Create Sales Order"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Send Create Sales Order';
+            ToolTip = 'Specifies the outbound flow used to send sales orders.';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
@@ -35,6 +38,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Send Create Purch. Order';
+            ToolTip = 'Specifies the outbound flow used to send purchase orders.';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
@@ -45,6 +49,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Send Received Confirm Sales Order';
+            ToolTip = 'Specifies the outbound flow used to send received sales order confirmations.';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin
@@ -55,6 +60,7 @@ table 67005 "EOS IC Functions"
         {
             DataClassification = CustomerContent;
             Caption = 'Send Rec. Confirm Purch. Order';
+            ToolTip = 'Specifies the outbound flow used to send received purchase order confirmations.';
             TableRelation = "EOS IC Flows"."Code" where("Company Code" = field("Company Code"), Direction = field(Direction));
             trigger OnValidate()
             begin

@@ -10,6 +10,7 @@ tableextension 67000 "EOS IC Customer" extends Customer
         {
             DataClassification = CustomerContent;
             Caption = 'IC Company';
+            ToolTip = 'Specifies the intercompany company associated with this customer.';
             TableRelation = "EOS IC Companies".Code;
         }
     }

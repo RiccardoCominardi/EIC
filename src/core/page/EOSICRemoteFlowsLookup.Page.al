@@ -22,38 +22,47 @@ page 67008 "EOS IC Remote Flows Lookup"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the remote flow.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the remote flow.';
                 }
                 field(Direction; Rec.Direction)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the remote flow sends or receives data.';
                 }
                 field("Relation Table Id"; Rec."Relation Table Id")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the ID of the table associated with the remote flow.';
                 }
                 field("Relation Option Type"; Rec."Relation Option Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the option value used to identify the remote document type.';
                 }
                 field("Relation Table Name"; Rec."Relation Table Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the table associated with the remote flow.';
                 }
                 field("Flow Pair Id"; Rec."Flow Pair Id")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the identifier used to match this remote flow with a local flow.';
                 }
                 field("Auto Send"; Rec."Auto Send")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the remote flow sends entries automatically.';
                 }
                 field("Auto Process"; Rec."Auto Process")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the remote flow processes entries automatically.';
                 }
             }
         }

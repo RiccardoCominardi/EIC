@@ -23,11 +23,13 @@ page 67021 "EOS IC Table Value Type List"
                 {
                     ApplicationArea = All;
                     Caption = 'Option No.';
+                    ToolTip = 'Specifies the numeric value assigned to the option.';
                 }
                 field(MyField; gTxtArrayValue[Rec.Number + 1])
                 {
                     ApplicationArea = All;
                     Caption = 'Option Value';
+                    ToolTip = 'Specifies the displayed value assigned to the option.';
                 }
             }
         }

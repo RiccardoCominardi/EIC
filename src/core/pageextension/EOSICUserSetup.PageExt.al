@@ -11,6 +11,7 @@ pageextension 67005 "EOS IC User Setup" extends "User Setup"
             field("EOS IC Admin"; Rec."EOS IC Admin")
             {
                 ApplicationArea = All;
+                ToolTip = 'Specifies whether the user is an intercompany administrator.';
             }
         }
     }

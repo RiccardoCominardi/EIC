@@ -17,14 +17,17 @@ page 67002 "EOS IC Connection Card"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the connection.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the connection.';
                 }
                 field("Environment Type"; Rec."Environment Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the remote Business Central environment is online or on-premises.';
                     trigger OnValidate()
 
                     begin
@@ -38,15 +41,18 @@ page 67002 "EOS IC Connection Card"
                     field("OnPrem API Base Url"; Rec."API Base Url")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the base URL used for API requests to the on-premises Business Central environment.';
                     }
                     field("Server Port"; Rec."Server Port")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the port used to access the on-premises Business Central server.';
                         BlankZero = true;
                     }
                     field("Instance Name"; Rec."Instance Name")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the name of the on-premises Business Central server instance.';
                     }
                 }
                 group(SaaS)
@@ -56,10 +62,12 @@ page 67002 "EOS IC Connection Card"
                     field("SaaS API Base Url"; Rec."API Base Url")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the base URL used for API requests to the online Business Central environment.';
                     }
                     field("Environment Name"; Rec."Environment Name")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the name of the remote Business Central environment.';
                     }
                 }
             }
@@ -69,6 +77,7 @@ page 67002 "EOS IC Connection Card"
                 field("Authentication Type"; Rec."Authentication Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the authentication method used to connect to the remote environment.';
                 }
 
                 group("OAuth2.0")
@@ -78,6 +87,7 @@ page 67002 "EOS IC Connection Card"
                     field("Tenant ID"; Rec."Tenant ID")
                     {
                         ApplicationArea = All;
+                        ToolTip = 'Specifies the Microsoft Entra tenant that contains the remote Business Central environment.';
                     }
                     field("Client Id"; Rec."Client Id")
                     {
@@ -130,6 +140,7 @@ page 67002 "EOS IC Connection Card"
             {
                 ApplicationArea = All;
                 Caption = 'Test Connection';
+                ToolTip = 'Checks whether the connection settings can reach the remote Business Central environment.';
                 Image = TestDatabase;
                 trigger OnAction()
                 var

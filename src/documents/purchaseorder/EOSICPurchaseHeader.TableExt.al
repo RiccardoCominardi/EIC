@@ -10,17 +10,20 @@ tableextension 67003 "EOS IC Purchase Header" extends "Purchase Header"
         {
             DataClassification = CustomerContent;
             Caption = 'IC Company';
+            ToolTip = 'Specifies the intercompany company associated with this purchase document.';
             TableRelation = "EOS IC Companies".Code;
         }
         field(67001; "EOS IC Entry No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'IC Entries';
+            ToolTip = 'Specifies the number of intercompany entries linked to this purchase document.';
         }
         field(67002; "EOS IC Source Document No."; Code[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Source Document No. (EIC)';
+            ToolTip = 'Specifies the source document number in the intercompany company.';
         }
     }
 }

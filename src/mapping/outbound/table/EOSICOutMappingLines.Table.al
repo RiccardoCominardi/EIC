@@ -14,6 +14,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Mapping Code';
+            ToolTip = 'Specifies the outbound mapping that contains this line.';
             TableRelation = "EOS IC Mapping Headers"."Code" where(Direction = const(Outbound));
             NotBlank = true;
         }
@@ -21,16 +22,19 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Line No.';
+            ToolTip = 'Specifies the unique number of this mapping line.';
         }
         field(3; "Sort No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Sort No.';
+            ToolTip = 'Specifies the order in which this line is written to the JSON output.';
         }
         field(4; "Line Type"; Enum "EOS IC Mapping Line Type")
         {
             DataClassification = CustomerContent;
             Caption = 'Type';
+            ToolTip = 'Specifies whether the line creates a JSON record or an attribute.';
 
             trigger OnValidate()
             var
@@ -56,6 +60,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Table No.';
+            ToolTip = 'Specifies the table used to create the record for this mapping line.';
             BlankZero = true;
             TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
         }
@@ -63,6 +68,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Field No.';
+            ToolTip = 'Specifies the source field used to create this JSON attribute.';
             BlankZero = true;
 
             trigger OnLookup()
@@ -98,6 +104,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         field(7; "Field Name"; Text[80])
         {
             Caption = 'Field Name';
+            ToolTip = 'Specifies the name of the source field selected for this attribute.';
             FieldClass = FlowField;
             CalcFormula = lookup(Field."Field Caption" where(TableNo = field("Table No."), "No." = field("Field No.")));
             Editable = false;
@@ -106,27 +113,32 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Parent Line No.';
+            ToolTip = 'Specifies the line number of the parent record in the mapping tree.';
         }
         field(9; Level; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Level';
+            ToolTip = 'Specifies the nesting level of this line in the JSON structure.';
         }
         field(10; "Record Relation"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Record Relation';
+            ToolTip = 'Specifies the table relation used to find records related to the parent record.';
             TableRelation = "EOS IC Table Relation Header"."Code" where("Source Table No." = field("Parent Table No."), "Target Table No." = field("Table No."));
         }
         field(11; "Parent Table No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Parent Table No.';
+            ToolTip = 'Specifies the table that contains the parent record.';
         }
         field(12; "Attribute Type"; Enum "EOS IC Attribute Type")
         {
             DataClassification = CustomerContent;
             Caption = 'Attribute Type';
+            ToolTip = 'Specifies whether the attribute value comes from a field, a constant, or a function.';
 
             trigger OnValidate()
             var
@@ -162,10 +174,12 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Table Filter';
+            ToolTip = 'Specifies the filter applied to records included in this JSON array.';
         }
         field(14; "Table Name"; Text[249])
         {
             Caption = 'Table Name';
+            ToolTip = 'Specifies the name of the table used by this record line.';
             FieldClass = FlowField;
             CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = const(Table), "Object ID" = field("Table No.")));
             Editable = false;
@@ -174,58 +188,69 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Json Tag';
+            ToolTip = 'Specifies the JSON property name written for this attribute or record.';
         }
         field(16; "Is Array"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Is Array';
+            ToolTip = 'Specifies whether the records created by this line are written as a JSON array.';
         }
         field(17; Constant; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Constant';
+            ToolTip = 'Specifies the fixed value written when the attribute type is Constant.';
         }
         field(18; "Function"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Function';
+            ToolTip = 'Specifies the function used to calculate the attribute value.';
         }
         field(19; "Blank as null"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Blank as null';
+            ToolTip = 'Specifies whether a blank value is written as JSON null.';
         }
         field(20; "Field Type"; Text[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Field Type';
+            ToolTip = 'Specifies the data type of the selected source field.';
         }
         field(21; Length; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Length';
+            ToolTip = 'Specifies the maximum length of the value written to JSON.';
             MinValue = 0;
         }
         field(23; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of this mapping line.';
         }
         field(24; "Transformation Rule"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Transformation Rule';
+            ToolTip = 'Specifies the standard transformation rule applied to the source value.';
             TableRelation = "Transformation Rule";
         }
         field(30; "Function Parameters"; Text[2048])
         {
             DataClassification = CustomerContent;
             Caption = 'Function Parameters';
+            ToolTip = 'Specifies the parameters passed to the selected function.';
         }
         field(50; "Encode to Base64"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Encode to Base64';
+            ToolTip = 'Specifies whether the text or code value is encoded as Base64.';
 
             trigger OnValidate()
             var
@@ -250,6 +275,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Constant Type';
+            ToolTip = 'Specifies the data type of the constant value.';
 
             trigger OnValidate()
             begin
@@ -261,6 +287,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Transliteration Code';
+            ToolTip = 'Specifies the character-transliteration setup applied to the output value.';
             TableRelation = "EOS IC String Transform Header"."Code" where("Transformation Type" = const("Character Transliteration"));
 
             trigger OnValidate()
@@ -286,6 +313,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'String Replacement Code';
+            ToolTip = 'Specifies the complete-string replacement setup applied to the output value.';
             TableRelation = "EOS IC String Transform Header"."Code" where("Transformation Type" = const("Complete String Replacement"));
 
             trigger OnValidate()
@@ -313,6 +341,7 @@ table 67019 "EOS IC Out. Mapping Lines"
         {
             DataClassification = CustomerContent;
             Caption = 'Transformation Order';
+            ToolTip = 'Specifies whether transliteration or string replacement is applied first.';
         }
     }
 

@@ -15,17 +15,20 @@ table 67020 "EOS IC Table Relation Header"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the unique code of the table relation.';
             NotBlank = true;
         }
         field(2; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of the table relation.';
         }
         field(3; "Source Table No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Source Table No.';
+            ToolTip = 'Specifies the table that contains the source records.';
             BlankZero = true;
             TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
         }
@@ -33,12 +36,14 @@ table 67020 "EOS IC Table Relation Header"
         {
             DataClassification = CustomerContent;
             Caption = 'Target Table No.';
+            ToolTip = 'Specifies the related table whose records are selected.';
             BlankZero = true;
             TableRelation = AllObjWithCaption."Object ID" where("Object Type" = const(Table));
         }
         field(5; "Source Table Name"; Text[249])
         {
             Caption = 'Source Table Name';
+            ToolTip = 'Specifies the name of the source table.';
             FieldClass = FlowField;
             CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = const(Table), "Object ID" = field("Source Table No.")));
             Editable = false;
@@ -46,6 +51,7 @@ table 67020 "EOS IC Table Relation Header"
         field(6; "Target Table Name"; Text[249])
         {
             Caption = 'Target Table Name';
+            ToolTip = 'Specifies the name of the related target table.';
             FieldClass = FlowField;
             CalcFormula = lookup(AllObjWithCaption."Object Caption" where("Object Type" = const(Table), "Object ID" = field("Target Table No.")));
             Editable = false;

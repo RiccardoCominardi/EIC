@@ -601,6 +601,81 @@ codeunit 67003 "EOS IC Staging Mgt."
             until ValueMetadata.Next() = 0;
     end;
 
+    procedure GetAssignableStagingFieldNos(MappingLine: Record "EOS IC Mapping Lines"; var AvailableFieldNos: List of [Integer])
+    var
+        ICMapping: Record "EOS IC Mapping Headers";
+        OtherMappingLine: Record "EOS IC Mapping Lines";
+        JsonSample: JsonToken;
+        JsonInStream: InStream;
+        UsedSlotContexts: Dictionary of [Text, Boolean];
+        SlotCaptions: Dictionary of [Integer, Text];
+        ConflictingSlots: Dictionary of [Integer, Boolean];
+        CandidateFieldNos: List of [Integer];
+        ExistingCaption: Text;
+        SuggestedType: Text;
+        CaptionText: Text;
+        ArrayContext: Text;
+        OtherArrayContext: Text;
+        SlotContextKey: Text;
+        HasStructuralValue: Boolean;
+        CandidateFieldNo: Integer;
+        InvalidSampleJsonErr: Label 'The stored Json sample is invalid.';
+    begin
+        Clear(AvailableFieldNos);
+        if MappingLine."Is Structure" then
+            exit;
+
+        if ICMapping.Get(MappingLine."Mapping Code") then begin
+            ICMapping.CalcFields("Json Content");
+            if ICMapping."Json Content".HasValue() then begin
+                ICMapping."Json Content".CreateInStream(JsonInStream, TextEncoding::UTF8);
+                if not JsonSample.ReadFrom(JsonInStream) then
+                    Error(InvalidSampleJsonErr);
+                if not (JsonSample.IsObject() or JsonSample.IsArray()) then
+                    Error(InvalidSampleJsonErr);
+
+                SuggestedType := InferJsonPathType(
+                    JsonSample,
+                    MappingLine."Json Path",
+                    MappingLine."Enum/Option Source Field No." <> 0,
+                    SuggestedType,
+                    HasStructuralValue);
+                if HasStructuralValue then
+                    exit;
+            end;
+        end;
+
+        CaptionText := MappingLine."Staging Caption";
+        if CaptionText = '' then
+            CaptionText := GetSuggestedCaption(MappingLine."Json Path");
+        ArrayContext := ICJsonPathMgt.GetArrayContext(MappingLine."Json Path");
+
+        OtherMappingLine.SetRange("Mapping Code", MappingLine."Mapping Code");
+        OtherMappingLine.SetFilter("Line No.", '<>%1', MappingLine."Line No.");
+        if OtherMappingLine.FindSet() then
+            repeat
+                if OtherMappingLine."Staging Field No." <> 0 then begin
+                    OtherArrayContext := ICJsonPathMgt.GetArrayContext(OtherMappingLine."Json Path");
+                    SlotContextKey := GetSlotContextKey(OtherMappingLine."Staging Field No.", OtherArrayContext);
+                    UsedSlotContexts.Set(SlotContextKey, true);
+                    if SlotCaptions.Get(OtherMappingLine."Staging Field No.", ExistingCaption) then begin
+                        if ExistingCaption <> OtherMappingLine."Staging Caption" then
+                            ConflictingSlots.Set(OtherMappingLine."Staging Field No.", true);
+                    end else
+                        SlotCaptions.Add(OtherMappingLine."Staging Field No.", OtherMappingLine."Staging Caption");
+                end;
+            until OtherMappingLine.Next() = 0;
+
+        if SuggestedType = '' then
+            GetAllCandidateSlotNos(CandidateFieldNos)
+        else
+            GetCandidateSlotNos(SuggestedType, CandidateFieldNos);
+
+        foreach CandidateFieldNo in CandidateFieldNos do
+            if IsSuggestedSlotAvailable(CandidateFieldNo, ArrayContext, CaptionText, UsedSlotContexts, SlotCaptions, ConflictingSlots) then
+                AvailableFieldNos.Add(CandidateFieldNo);
+    end;
+
     procedure SuggestMapping(MappingCode: Code[20]; var UnassignedCount: Integer): Integer
     var
         ICMapping: Record "EOS IC Mapping Headers";
@@ -683,7 +758,7 @@ codeunit 67003 "EOS IC Staging Mgt."
                             SlotCaptions,
                             ConflictingSlots);
                         if SuggestedFieldNo <> 0 then begin
-                            ICMappingLine.Validate("Staging Field No.", SuggestedFieldNo);
+                            ICMappingLine."Staging Field No." := SuggestedFieldNo;
                             ICMappingLine.Validate("Staging Caption", CopyStr(SuggestedCaption, 1, 100));
                             ICMappingLine.Modify(true);
 
@@ -997,18 +1072,26 @@ codeunit 67003 "EOS IC Staging Mgt."
     var
         CandidateFieldNos: List of [Integer];
         CandidateFieldNo: Integer;
-        ContextKey: Text;
-        ExistingCaption: Text;
-        CaptionExists: Boolean;
     begin
         GetCandidateSlotNos(InferredType, CandidateFieldNos);
-        foreach CandidateFieldNo in CandidateFieldNos do begin
-            ContextKey := GetSlotContextKey(CandidateFieldNo, ContextPath);
-            CaptionExists := SlotCaptions.Get(CandidateFieldNo, ExistingCaption);
-            if not UsedSlotContexts.ContainsKey(ContextKey) and not ConflictingSlots.ContainsKey(CandidateFieldNo) then
-                if not CaptionExists or (ExistingCaption = CaptionText) then
-                    exit(CandidateFieldNo);
-        end;
+        foreach CandidateFieldNo in CandidateFieldNos do
+            if IsSuggestedSlotAvailable(CandidateFieldNo, ContextPath, CaptionText, UsedSlotContexts, SlotCaptions, ConflictingSlots) then
+                exit(CandidateFieldNo);
+    end;
+
+    local procedure IsSuggestedSlotAvailable(CandidateFieldNo: Integer; ContextPath: Text; CaptionText: Text; var UsedSlotContexts: Dictionary of [Text, Boolean]; var SlotCaptions: Dictionary of [Integer, Text]; var ConflictingSlots: Dictionary of [Integer, Boolean]): Boolean
+    var
+        ContextKey: Text;
+        ExistingCaption: Text;
+    begin
+        ContextKey := GetSlotContextKey(CandidateFieldNo, ContextPath);
+        if UsedSlotContexts.ContainsKey(ContextKey) or ConflictingSlots.ContainsKey(CandidateFieldNo) then
+            exit(false);
+
+        if SlotCaptions.Get(CandidateFieldNo, ExistingCaption) then
+            exit((CaptionText <> '') and (ExistingCaption = CaptionText));
+
+        exit(true);
     end;
 
     local procedure GetCandidateSlotNos(InferredType: Text; var FieldNos: List of [Integer])
@@ -1061,6 +1144,15 @@ codeunit 67003 "EOS IC Staging Mgt."
                     AddSlotRange(FieldNos, 190);
                 end;
         end;
+    end;
+
+    local procedure GetAllCandidateSlotNos(var FieldNos: List of [Integer])
+    var
+        FieldNo: Integer;
+    begin
+        Clear(FieldNos);
+        for FieldNo := 20 to 199 do
+            FieldNos.Add(FieldNo);
     end;
 
     local procedure AddSlotRange(var FieldNos: List of [Integer]; FirstFieldNo: Integer)

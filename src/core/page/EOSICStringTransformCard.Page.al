@@ -17,14 +17,17 @@ page 67035 "EOS IC String Transform Card"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the string transformation.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the string transformation.';
                 }
                 field("Transformation Type"; Rec."Transformation Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the transformation matches individual characters or complete strings.';
                 }
             }
             part(Lines; "EOS IC String Transform Lines")

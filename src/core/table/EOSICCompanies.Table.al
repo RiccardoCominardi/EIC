@@ -12,38 +12,45 @@ table 67002 "EOS IC Companies"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the unique code of the intercompany company.';
             NotBlank = true;
         }
         field(2; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of the intercompany company.';
         }
         field(3; "Interface"; Enum "EOS IC Companies")
         {
             DataClassification = CustomerContent;
             Caption = 'Interface';
+            ToolTip = 'Specifies the interface used to exchange intercompany data with this company.';
         }
         field(4; "Connection Code"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Connection Code';
+            ToolTip = 'Specifies the connection used to access the remote company.';
             TableRelation = "EOS IC Connections"."Code";
         }
         field(5; "Remote Company Id"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Remote Company Id';
+            ToolTip = 'Specifies the ID of the company in the remote Business Central environment.';
         }
         field(6; "Remote Company Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Remote Company Name';
+            ToolTip = 'Specifies the name of the company in the remote Business Central environment.';
         }
         field(7; Enabled; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Enabled';
+            ToolTip = 'Specifies whether this intercompany company is available for use.';
         }
     }
 

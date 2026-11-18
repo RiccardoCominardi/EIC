@@ -19,18 +19,22 @@ page 67001 "EOS IC Connections List"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the connection.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the connection.';
                 }
                 field("Environment Type"; Rec."Environment Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the remote Business Central environment is online or on-premises.';
                 }
                 field("Authentication Type"; Rec."Authentication Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the authentication method used to connect to the remote environment.';
                 }
             }
         }
@@ -44,6 +48,7 @@ page 67001 "EOS IC Connections List"
             {
                 ApplicationArea = All;
                 Caption = 'Test Connection';
+                ToolTip = 'Checks whether the connection settings can reach the remote Business Central environment.';
                 Image = TestDatabase;
                 trigger OnAction()
                 var

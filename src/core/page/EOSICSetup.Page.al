@@ -22,10 +22,12 @@ page 67000 "EOS IC Setup"
                 field(Enabled; Rec.Enabled)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the intercompany functionality is enabled.';
                 }
                 field("Company Code"; Rec."Company Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the code that identifies this company to intercompany partners.';
                 }
             }
             group(DocumentFields)
@@ -34,10 +36,12 @@ page 67000 "EOS IC Setup"
                 field("Company Code Field No."; Rec."Company Code Field No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the field number that stores the intercompany company code on documents.';
                 }
                 field("IC Entry Field No."; Rec."IC Entry Field No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the field number that stores the linked intercompany entry count on documents.';
                 }
             }
         }
@@ -51,6 +55,7 @@ page 67000 "EOS IC Setup"
             {
                 ApplicationArea = All;
                 Caption = 'IC Entries';
+                ToolTip = 'Opens the list of intercompany entries.';
                 Image = Log;
                 RunObject = page "EOS IC Entries";
             }

@@ -20,18 +20,22 @@ page 67009 "EOS IC Mapping List"
                 field("Code"; Rec."Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique code of the mapping.';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of the mapping.';
                 }
                 field(Direction; Rec.Direction)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the mapping processes inbound or outbound data.';
                 }
                 field(Enabled; Rec.Enabled)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the mapping is available for use by flows.';
                 }
                 field(NoOfLines; NoOfLines)
                 {
@@ -42,6 +46,7 @@ page 67009 "EOS IC Mapping List"
                 field("No. of Flows"; Rec."No. of Flows")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies how many flows use this mapping.';
                 }
             }
         }

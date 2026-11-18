@@ -27,75 +27,90 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 field("Line Type"; Rec."Line Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the line creates a JSON record or an attribute.';
                 }
                 field(Level; Rec.Level)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the nesting level of this line in the JSON structure.';
                 }
                 field("Sort No."; Rec."Sort No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the order in which this line is written to the JSON output.';
                 }
                 field("Parent Line No."; Rec."Parent Line No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the line number of the parent record in the mapping tree.';
                 }
                 field("Parent Table No."; Rec."Parent Table No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
+                    ToolTip = 'Specifies the table that contains the parent record.';
                 }
                 field("Attribute Type"; Rec."Attribute Type")
                 {
                     ApplicationArea = All;
                     Editable = Rec."Line Type" <> Rec."Line Type"::Record;
+                    ToolTip = 'Specifies whether the attribute value comes from a field, a constant, or a function.';
                 }
                 field("Table No."; Rec."Table No.")
                 {
                     ApplicationArea = All;
                     Editable = Rec."Line Type" = Rec."Line Type"::Record;
+                    ToolTip = 'Specifies the table used to create the record for this mapping line.';
                     Style = Strong;
                 }
                 field("Table Name"; Rec."Table Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the table used by this record line.';
                     Style = Strong;
                 }
                 field("Field No."; Rec."Field No.")
                 {
                     ApplicationArea = All;
                     Editable = Rec."Attribute Type" = Rec."Attribute Type"::Field;
+                    ToolTip = 'Specifies the source field used to create this JSON attribute.';
                     Style = Strong;
                 }
                 field("Field Name"; Rec."Field Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the source field selected for this attribute.';
                     Style = Strong;
                 }
                 field("Blank as null"; Rec."Blank as null")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether a blank value is written as JSON null.';
                 }
                 field("Json Tag"; Rec."Json Tag")
                 {
                     ApplicationArea = All;
                     Caption = 'Tag Name';
+                    ToolTip = 'Specifies the JSON property name written for this attribute or record.';
                 }
                 field(Constant; Rec.Constant)
                 {
                     ApplicationArea = All;
                     Enabled = Rec."Attribute Type" = Rec."Attribute Type"::Constant;
+                    ToolTip = 'Specifies the fixed value written when the attribute type is Constant.';
                 }
                 field("Constant Type"; Rec."Constant Type")
                 {
                     ApplicationArea = All;
                     Enabled = Rec."Attribute Type" = Rec."Attribute Type"::Constant;
+                    ToolTip = 'Specifies the data type of the constant value.';
                 }
                 field("Function"; Rec."Function")
                 {
                     ApplicationArea = All;
                     Enabled = Rec."Attribute Type" = Rec."Attribute Type"::"Function";
+                    ToolTip = 'Specifies the function used to calculate the attribute value.';
 
                     trigger OnAssistEdit()
                     begin
@@ -106,34 +121,41 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                     Enabled = Rec."Attribute Type" = Rec."Attribute Type"::"Function";
+                    ToolTip = 'Specifies the parameters passed to the selected function.';
                 }
                 field(Length; Rec.Length)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the maximum length of the value written to JSON.';
                     Style = Strong;
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies a description of this mapping line.';
                     Style = Strong;
                 }
                 field("Is Array"; Rec."Is Array")
                 {
                     ApplicationArea = All;
                     Enabled = Rec."Line Type" = Rec."Line Type"::Record;
+                    ToolTip = 'Specifies whether the records created by this line are written as a JSON array.';
                 }
                 field("Field Type"; Rec."Field Type")
                 {
                     ApplicationArea = All;
                     Editable = false;
+                    ToolTip = 'Specifies the data type of the selected source field.';
                 }
                 field("Transformation Rule"; Rec."Transformation Rule")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the standard transformation rule applied to the source value.';
                 }
                 field("Transformation Order"; Rec."Transformation Order")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether transliteration or string replacement is applied first.';
                 }
                 field("Transliteration Code"; Rec."Transliteration Code")
                 {
@@ -148,17 +170,20 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 field("Encode to Base64"; Rec."Encode to Base64")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the text or code value is encoded as Base64.';
                 }
                 field("Record Relation"; Rec."Record Relation")
                 {
                     ApplicationArea = All;
                     Editable = Rec."Line Type" = Rec."Line Type"::Record;
+                    ToolTip = 'Specifies the table relation used to find records related to the parent record.';
                 }
                 field(HasFilterFld; HasTableFilter)
                 {
                     ApplicationArea = All;
                     Caption = 'Has Filter';
                     Editable = false;
+                    ToolTip = 'Indicates whether a table filter is applied to this record line.';
 
                     trigger OnAssistEdit()
                     begin
@@ -170,6 +195,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                     ApplicationArea = All;
                     Caption = 'Table Filter';
                     Editable = false;
+                    ToolTip = 'Specifies the filter applied to records included in this JSON array.';
 
                     trigger OnAssistEdit()
                     begin
@@ -179,6 +205,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 field("Line No."; Rec."Line No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique number of this mapping line.';
                 }
             }
         }
@@ -236,6 +263,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                     Caption = 'Move Up Line';
+                    ToolTip = 'Moves the selected line up in the mapping order.';
                     Image = MoveUp;
 
                     trigger OnAction()
@@ -247,6 +275,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                     Caption = 'Move Down Line';
+                    ToolTip = 'Moves the selected line down in the mapping order.';
                     Image = MoveDown;
 
                     trigger OnAction()
@@ -258,6 +287,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                     Caption = 'Sort Lines';
+                    ToolTip = 'Sorts the lines of the outbound mapping.';
                     Image = SortAscending;
 
                     trigger OnAction()
@@ -269,6 +299,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                 {
                     ApplicationArea = All;
                     Caption = 'Clear Filters';
+                    ToolTip = 'Removes the table filter from the selected record line.';
                     Image = ClearFilter;
 
                     trigger OnAction()

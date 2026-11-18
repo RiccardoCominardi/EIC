@@ -21,10 +21,12 @@ page 67020 "EOS IC Created Updated Records"
                 field("Document Type"; Rec."Document Type")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the type of document created or updated by the intercompany entry.';
                 }
                 field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the number of the document created or updated by the intercompany entry.';
 
                     trigger OnDrillDown()
                     var

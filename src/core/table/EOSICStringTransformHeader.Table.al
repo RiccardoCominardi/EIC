@@ -13,17 +13,20 @@ table 67022 "EOS IC String Transform Header"
         {
             DataClassification = CustomerContent;
             Caption = 'Code';
+            ToolTip = 'Specifies the unique code of the string transformation.';
             NotBlank = true;
         }
         field(2; Description; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Description';
+            ToolTip = 'Specifies a description of the string transformation.';
         }
         field(3; "Transformation Type"; Enum "EOS IC String Transform Type")
         {
             DataClassification = CustomerContent;
             Caption = 'Transformation Type';
+            ToolTip = 'Specifies whether the transformation matches individual characters or complete strings.';
         }
     }
 

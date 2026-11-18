@@ -26,19 +26,23 @@ page 67013 "EOS IC Entries API"
                 field(id; Rec.SystemId)
                 {
                     Caption = 'Id';
+                    ToolTip = 'Specifies the unique system ID of the intercompany entry.';
                     Editable = false;
                 }
                 field(icTransactionId; Rec."IC Transaction ID")
                 {
                     Caption = 'IC Transaction ID';
+                    ToolTip = 'Specifies the transaction identifier shared by the connected companies.';
                 }
                 field(flowPairId; FlowPairId)
                 {
                     Caption = 'Flow Pair Id';
+                    ToolTip = 'Specifies the identifier of the inbound flow used to route the entry.';
                 }
                 field(requestPayload; RequestPayload)
                 {
                     Caption = 'Request Payload';
+                    ToolTip = 'Specifies the Base64-encoded JSON payload of the inbound entry.';
                 }
             }
         }

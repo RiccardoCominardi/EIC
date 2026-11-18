@@ -7,6 +7,7 @@ using Microsoft.Sales.Document;
 
 codeunit 67008 "EOS IC Events"
 {
+    /*
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnAfterValidateEvent, 'Sell-to Customer No.', false, false)]
     local procedure SalesHeaderOnAfterValidateSellToCustomerNo(var Rec: Record "Sales Header")
     var
@@ -28,4 +29,5 @@ codeunit 67008 "EOS IC Events"
         else
             Rec."EOS IC Company" := '';
     end;
+    */
 }

@@ -23,60 +23,74 @@ page 67012 "EOS IC Entries"
                 field("Entry No."; Rec."Entry No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique number of the intercompany entry.';
                 }
                 field("System Created At"; Rec.SystemCreatedAt)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies when the intercompany entry was created.';
                 }
                 field("IC Transaction ID"; Rec."IC Transaction ID")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the unique transaction identifier shared by the connected companies.';
                 }
                 field("IC Flow Code"; Rec."IC Flow Code")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the flow used to process this intercompany entry.';
                 }
                 field(Direction; Rec.Direction)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies whether the entry is sent to or received from another company.';
                 }
                 field("Source Company"; Rec."Source Company")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the company that sent the intercompany entry.';
                 }
                 field("Target Company"; Rec."Target Company")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the company that receives the intercompany entry.';
                 }
                 field("Relation Table Name"; Rec."Relation Table Name")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the name of the table associated with the source document.';
                 }
                 field("Source No."; Rec."Source No.")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the number of the source document associated with the entry.';
                 }
                 field("Created Updated Records Count"; Rec."Created Updated Records Count")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the number of documents created or updated by this entry.';
                 }
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the processing status of the intercompany entry.';
                     StyleExpr = FieldColor;
                 }
                 field("Staging Status"; Rec."Staging Status")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the status of creating documents from the entry staging data.';
                     StyleExpr = StagingColor;
                 }
                 field("Processed At"; Rec."Processed At")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the date and time when the entry was last processed.';
                 }
                 field("Retry Count"; Rec."Retry Count")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies how many times processing of the entry has been retried.';
                 }
             }
         }
@@ -90,6 +104,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Show Document';
+                ToolTip = 'Opens the document associated with the selected intercompany entry.';
                 Image = View;
                 trigger OnAction()
                 var
@@ -115,6 +130,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Show Staging';
+                ToolTip = 'Opens the staging data received for the selected intercompany entry.';
                 Image = View;
                 trigger OnAction()
                 var
@@ -176,6 +192,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Show Payload';
+                ToolTip = 'Displays the JSON payload sent or received for the selected entry.';
                 Image = ShowList;
 
                 trigger OnAction()
@@ -187,6 +204,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Export Payload';
+                ToolTip = 'Downloads the JSON payload sent or received for the selected entry.';
                 Image = ExportFile;
 
                 trigger OnAction()
@@ -198,6 +216,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Full Error';
+                ToolTip = 'Displays the full error details recorded for the selected entry.';
                 Image = PrevErrorMessage;
 
                 trigger OnAction()
@@ -209,6 +228,7 @@ page 67012 "EOS IC Entries"
             {
                 ApplicationArea = All;
                 Caption = 'Call Stack';
+                ToolTip = 'Displays the call stack recorded when processing the selected entry failed.';
                 Image = PrevErrorMessage;
 
                 trigger OnAction()

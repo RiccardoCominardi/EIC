@@ -10,6 +10,7 @@ tableextension 67001 "EOS IC Vendor" extends Vendor
         {
             DataClassification = CustomerContent;
             Caption = 'IC Company';
+            ToolTip = 'Specifies the intercompany company associated with this vendor.';
             TableRelation = "EOS IC Companies".Code;
         }
     }

@@ -25,9 +25,9 @@ page 67024 "EOS IC Staging Card"
             group(Informations)
             {
                 Caption = 'Informations';
-                field("Manually Modified"; Rec."Manually Modified") { ApplicationArea = All; Editable = false; }
-                field("Manually Modified At"; Rec."Manually Modified At") { ApplicationArea = All; Editable = false; }
-                field("Manually Modified By"; Rec."Manually Modified By") { ApplicationArea = All; Editable = false; }
+                field("Manually Modified"; Rec."Manually Modified") { ApplicationArea = All; Editable = false; ToolTip = 'Indicates whether a value in this staging record was changed manually.'; }
+                field("Manually Modified At"; Rec."Manually Modified At") { ApplicationArea = All; Editable = false; ToolTip = 'Specifies when a value in this staging record was last changed manually.'; }
+                field("Manually Modified By"; Rec."Manually Modified By") { ApplicationArea = All; Editable = false; ToolTip = 'Specifies the user who last changed a value in this staging record.'; }
             }
         }
     }
