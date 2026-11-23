@@ -66,51 +66,63 @@ codeunit 67018 "EOS IC Out. Mapping Lines Mgt."
 
         SortLines(NewMappingLine."Mapping Code");
 
+        // SortLines changes the Sort No. in the database: the caller must not save an outdated copy of the line.
+        NewMappingLine.Get(NewMappingLine."Mapping Code", NewMappingLine."Line No.");
         exit(NewMappingLine);
     end;
 
     procedure MoveUp(MappingLine: Record "EOS IC Out. Mapping Lines")
-    var
-        PrevMappingLine: Record "EOS IC Out. Mapping Lines";
-        SortNo: Integer;
     begin
-        PrevMappingLine.SetCurrentKey("Mapping Code", "Sort No.");
-        PrevMappingLine.SetAscending("Sort No.", false);
-        PrevMappingLine.SetRange("Mapping Code", MappingLine."Mapping Code");
-        PrevMappingLine.SetRange(Level, MappingLine.Level);
-        PrevMappingLine.SetFilter("Sort No.", '<%1', MappingLine."Sort No.");
-        if PrevMappingLine.FindFirst() then begin
-            SortNo := MappingLine."Sort No.";
-            MappingLine."Sort No." := PrevMappingLine."Sort No.";
-            PrevMappingLine."Sort No." := SortNo;
-            MappingLine.Modify(true);
-            PrevMappingLine.Modify(true);
-        end;
-        SortLines(MappingLine."Mapping Code");
+        MoveLine(MappingLine, -1);
     end;
 
     procedure MoveDown(MappingLine: Record "EOS IC Out. Mapping Lines")
+    begin
+        MoveLine(MappingLine, 1);
+    end;
+
+    // The line and its child lines swap place with the previous (Direction = -1) or the next (Direction = 1) line of the same parent.
+    local procedure MoveLine(MappingLine: Record "EOS IC Out. Mapping Lines"; Direction: Integer)
     var
-        NextMappingLine: Record "EOS IC Out. Mapping Lines";
+        AdjacentMappingLine: Record "EOS IC Out. Mapping Lines";
         SortNo: Integer;
     begin
-        NextMappingLine.SetCurrentKey("Mapping Code", "Sort No.");
-        NextMappingLine.SetRange("Mapping Code", MappingLine."Mapping Code");
-        NextMappingLine.SetRange(Level, MappingLine.Level);
-        NextMappingLine.SetFilter("Sort No.", '>%1', MappingLine."Sort No.");
-        if NextMappingLine.FindFirst() then begin
-            SortNo := MappingLine."Sort No.";
-            MappingLine."Sort No." := NextMappingLine."Sort No.";
-            NextMappingLine."Sort No." := SortNo;
-            MappingLine.Modify(true);
-            NextMappingLine.Modify(true);
+        // Lines can share the same Sort No.: sorting them first makes the adjacent line unambiguous.
+        SortLines(MappingLine."Mapping Code");
+        if not MappingLine.Get(MappingLine."Mapping Code", MappingLine."Line No.") then
+            exit;
+
+        AdjacentMappingLine.SetCurrentKey("Mapping Code", "Sort No.");
+        AdjacentMappingLine.SetRange("Mapping Code", MappingLine."Mapping Code");
+        AdjacentMappingLine.SetRange(Level, MappingLine.Level);
+        // All the lines of the first level are siblings, whatever their parent line.
+        if MappingLine.Level > 1 then
+            AdjacentMappingLine.SetRange("Parent Line No.", MappingLine."Parent Line No.");
+
+        if Direction < 0 then begin
+            AdjacentMappingLine.SetFilter("Sort No.", '<%1', MappingLine."Sort No.");
+            if not AdjacentMappingLine.FindLast() then
+                exit;
+        end else begin
+            AdjacentMappingLine.SetFilter("Sort No.", '>%1', MappingLine."Sort No.");
+            if not AdjacentMappingLine.FindFirst() then
+                exit;
         end;
+
+        SortNo := MappingLine."Sort No.";
+        MappingLine."Sort No." := AdjacentMappingLine."Sort No.";
+        AdjacentMappingLine."Sort No." := SortNo;
+        MappingLine.Modify(true);
+        AdjacentMappingLine.Modify(true);
+
         SortLines(MappingLine."Mapping Code");
     end;
 
     procedure SortLines(MappingCode: Code[20])
     var
         MappingLine: Record "EOS IC Out. Mapping Lines";
+        RootLineNos: List of [Integer];
+        RootLineNo: Integer;
         SortNo: Integer;
     begin
         SortNo := 10000;
@@ -119,16 +131,28 @@ codeunit 67018 "EOS IC Out. Mapping Lines Mgt."
         MappingLine.SetRange(Level, 1);
         if MappingLine.FindSet() then
             repeat
+                RootLineNos.Add(MappingLine."Line No.");
+            until MappingLine.Next() = 0;
+
+        // Sort No. is part of the key used to read the lines: modifying it inside the loop would skip or repeat lines.
+        MappingLine.Reset();
+        foreach RootLineNo in RootLineNos do begin
+            MappingLine.Get(MappingCode, RootLineNo);
+            if MappingLine."Sort No." <> SortNo then begin
                 MappingLine."Sort No." := SortNo;
                 MappingLine.Modify(true);
-                SortNo += 10000;
-                SortChildLines(MappingLine, SortNo);
-            until MappingLine.Next() = 0;
+            end;
+            SortNo += 10000;
+            SortChildLines(MappingLine, SortNo);
+        end;
     end;
 
     procedure SortChildLines(MappingLine: Record "EOS IC Out. Mapping Lines"; var SortNo: Integer)
     var
         ChildMappingLine: Record "EOS IC Out. Mapping Lines";
+        ChildLineNos: List of [Integer];
+        ChildLineNo: Integer;
+        ParentLineNo: Integer;
         InvalidLevelErr: Label 'Invalid level %1 for line %2', Comment = '%1 = level, %2 = line no.';
     begin
         ChildMappingLine.SetCurrentKey("Mapping Code", "Sort No.");
@@ -136,18 +160,28 @@ codeunit 67018 "EOS IC Out. Mapping Lines Mgt."
         ChildMappingLine.SetRange("Parent Line No.", MappingLine."Line No.");
         if ChildMappingLine.FindSet() then
             repeat
-                if ChildMappingLine.Level <> MappingLine.Level + 1 then
-                    // A child at the same level as its parent is repositioned under the parent of the latter.
-                    if ChildMappingLine.Level = MappingLine.Level then
-                        ChildMappingLine."Parent Line No." := MappingLine."Parent Line No."
-                    else
-                        Error(InvalidLevelErr, ChildMappingLine.Level, ChildMappingLine."Line No.");
-
-                ChildMappingLine."Sort No." := SortNo;
-                ChildMappingLine.Modify(true);
-                SortNo += 10000;
-                SortChildLines(ChildMappingLine, SortNo);
+                ChildLineNos.Add(ChildMappingLine."Line No.");
             until ChildMappingLine.Next() = 0;
+
+        ChildMappingLine.Reset();
+        foreach ChildLineNo in ChildLineNos do begin
+            ChildMappingLine.Get(MappingLine."Mapping Code", ChildLineNo);
+            ParentLineNo := ChildMappingLine."Parent Line No.";
+            if ChildMappingLine.Level <> MappingLine.Level + 1 then
+                // A child at the same level as its parent is repositioned under the parent of the latter.
+                if ChildMappingLine.Level = MappingLine.Level then
+                    ParentLineNo := MappingLine."Parent Line No."
+                else
+                    Error(InvalidLevelErr, ChildMappingLine.Level, ChildMappingLine."Line No.");
+
+            if (ChildMappingLine."Sort No." <> SortNo) or (ChildMappingLine."Parent Line No." <> ParentLineNo) then begin
+                ChildMappingLine."Sort No." := SortNo;
+                ChildMappingLine."Parent Line No." := ParentLineNo;
+                ChildMappingLine.Modify(true);
+            end;
+            SortNo += 10000;
+            SortChildLines(ChildMappingLine, SortNo);
+        end;
     end;
 
     procedure DeleteRecurr(MappingLine: Record "EOS IC Out. Mapping Lines"; var FirstLoop: Boolean)
@@ -239,10 +273,56 @@ codeunit 67018 "EOS IC Out. Mapping Lines Mgt."
         until Field.Next() = 0;
     end;
 
-    // Json tags cannot contain spaces, dots, accented letters and brackets.
+    // Json tag in camelCase without spaces and special characters, e.g. "Ship-to Name 2" becomes "shipToName2".
     procedure GetName(FieldName: Text): Text
+    var
+        Word: Text;
+        Result: Text;
+        Index: Integer;
     begin
-        exit(ConvertStr(FieldName, ' .àèéìòù()"''', '__aeeiou____'));
+        // The trailing space closes the last word.
+        FieldName := ConvertStr(FieldName, 'àèéìòùÀÈÉÌÒÙ', 'aeeiouAEEIOU') + ' ';
+        for Index := 1 to StrLen(FieldName) do
+            if IsAlphanumeric(FieldName[Index]) then
+                Word += CopyStr(FieldName, Index, 1)
+            else
+                if Word <> '' then begin
+                    Result += GetCamelCaseWord(Word, Result = '');
+                    Word := '';
+                end;
+
+        exit(Result);
+    end;
+
+    local procedure GetCamelCaseWord(Word: Text; IsFirstWord: Boolean): Text
+    var
+        HasLowercase: Boolean;
+        Index: Integer;
+    begin
+        for Index := 1 to StrLen(Word) do
+            if IsLowercaseLetter(Word[Index]) then
+                HasLowercase := true;
+
+        // Words made only of capitals, like VAT, are normalized; the other words keep their inner capitals.
+        if not HasLowercase then
+            Word := LowerCase(Word);
+
+        if IsFirstWord then
+            exit(LowerCase(CopyStr(Word, 1, 1)) + CopyStr(Word, 2));
+
+        exit(UpperCase(CopyStr(Word, 1, 1)) + CopyStr(Word, 2));
+    end;
+
+    local procedure IsLowercaseLetter(Character: Char): Boolean
+    begin
+        // Character codes: 97-122 = a-z.
+        exit((Character >= 97) and (Character <= 122));
+    end;
+
+    local procedure IsAlphanumeric(Character: Char): Boolean
+    begin
+        // Character codes: 48-57 = 0-9, 65-90 = A-Z.
+        exit(((Character >= 48) and (Character <= 57)) or ((Character >= 65) and (Character <= 90)) or IsLowercaseLetter(Character));
     end;
 
     procedure LookupFunction(var MappingLine: Record "EOS IC Out. Mapping Lines")
