@@ -269,6 +269,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                     trigger OnAction()
                     begin
                         ICOutMappingLinesMgt.MoveUp(Rec);
+                        CurrPage.Update(false);
                     end;
                 }
                 action(MoveDown)
@@ -281,6 +282,7 @@ page 67030 "EOS IC Out. Mapping Lines Sub"
                     trigger OnAction()
                     begin
                         ICOutMappingLinesMgt.MoveDown(Rec);
+                        CurrPage.Update(false);
                     end;
                 }
                 action(SortLines)
