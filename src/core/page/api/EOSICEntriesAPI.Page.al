@@ -81,7 +81,7 @@ page 67013 "EOS IC Entries API"
         Rec.Insert(true);
 
         if ICFlows."Auto Process" then
-            ICEntriesManagement.ScheduleEntryProcessing(Rec);
+            ICEntriesManagement.ScheduleEntryProcessing(Rec, 'PROCESS_ENTRY');
 
         exit(false);
     end;

@@ -45,8 +45,17 @@ table 67017 "EOS IC Mapping Lines"
 
             trigger OnValidate()
             begin
-                Rec.Validate("Transliteration Code");
-                Rec.Validate("String Replacement Code");
+                if Rec."Value Type" = Rec."Value Type"::Transformation then begin
+                    Rec.Validate("Transliteration Code");
+                    Rec.Validate("String Replacement Code");
+                end else begin
+                    Clear(Rec."Transliteration Code");
+                    Clear(Rec."String Replacement Code");
+                    Clear(Rec."Transformation Order");
+                end;
+
+                if Rec."Value Type" <> Rec."Value Type"::Constant then
+                    Clear(Rec."Constant Text");
             end;
         }
         field(11; "Array Context"; Text[2048])

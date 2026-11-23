@@ -83,28 +83,28 @@ page 67011 "EOS IC Mapping Lines Subpage"
                 field("Constant Text"; Rec."Constant Text")
                 {
                     ApplicationArea = All;
-                    Editable = NodeEditable;
+                    Editable = ConstantTextEditable;
                     HideValue = not NodeEditable;
                     ToolTip = 'Specifies the fixed text value assigned to this mapping line.';
                 }
                 field("Transformation Order"; Rec."Transformation Order")
                 {
                     ApplicationArea = All;
-                    Editable = NodeEditable;
-                    HideValue = not NodeEditable;
+                    Editable = TransformationEditable;
+                    HideValue = not TransformationEditable;
                     ToolTip = 'Specifies whether transliteration or string replacement is applied first.';
                 }
                 field("Transliteration Code"; Rec."Transliteration Code")
                 {
                     ApplicationArea = All;
-                    Editable = NodeEditable;
+                    Editable = TransformationEditable;
                     HideValue = not NodeEditable;
                     ToolTip = 'Specifies the transliteration applied to the text read from the Json before it is written in the target field (Text and Code fields only).';
                 }
                 field("String Replacement Code"; Rec."String Replacement Code")
                 {
                     ApplicationArea = All;
-                    Editable = NodeEditable;
+                    Editable = TransformationEditable;
                     HideValue = not NodeEditable;
                     ToolTip = 'Specifies the complete string replacement applied before the value is written in the target field (Text and Code fields only).';
                 }
@@ -174,7 +174,7 @@ page 67011 "EOS IC Mapping Lines Subpage"
         ICJsonPathMgt: Codeunit "EOS IC Json Path Mgt.";
         NodeName, NodeStyle : Text;
         StagingFieldName: Text[80];
-        NodeEditable, CanSuggestMapping, CanMoveLine : Boolean;
+        NodeEditable, TransformationEditable, ConstantTextEditable, CanSuggestMapping, CanMoveLine : Boolean;
 
     trigger OnAfterGetRecord()
     begin
@@ -197,6 +197,8 @@ page 67011 "EOS IC Mapping Lines Subpage"
             NodeEditable := false;
         end else
             NodeStyle := Format(PageStyle::Standard);
+        TransformationEditable := NodeEditable and (Rec."Value Type" = Rec."Value Type"::Transformation);
+        ConstantTextEditable := NodeEditable and (Rec."Value Type" = Rec."Value Type"::Constant);
         CanMoveLine := ICMappingMgt.CanMoveLine(Rec);
     end;
 

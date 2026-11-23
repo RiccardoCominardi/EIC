@@ -525,7 +525,7 @@ codeunit 67007 "EOS IC Entries Management"
                 ProcessStaging(ICEntries);
     end;
 
-    procedure ScheduleEntryProcessing(ICEntries: Record "EOS IC Entries")
+    procedure ScheduleEntryProcessing(ICEntries: Record "EOS IC Entries"; FunctionParameter: Text[250])
     var
         JobQueueEntry: Record "Job Queue Entry";
         JobQueueCategory: Record "Job Queue Category";
@@ -543,7 +543,7 @@ codeunit 67007 "EOS IC Entries Management"
         JobQueueEntry."Object Type to Run" := JobQueueEntry."Object Type to Run"::Codeunit;
         JobQueueEntry."Object ID to Run" := Codeunit::"EOS IC Process Entries JQ";
         JobQueueEntry.Description := CopyStr(StrSubstNo(JobDescriptionLbl, ICEntries."Entry No."), 1, MaxStrLen(JobQueueEntry.Description));
-        JobQueueEntry."Parameter String" := Format(ICEntries."Entry No.");
+        JobQueueEntry."Parameter String" := FunctionParameter;
         JobQueueEntry."Maximum No. of Attempts to Run" := 3;
         JobQueueEntry."Recurring Job" := false;
         JobQueueEntry."Job Queue Category Code" := JobQueueCategoryCodeTxt;
