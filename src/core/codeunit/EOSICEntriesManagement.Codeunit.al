@@ -148,6 +148,8 @@ codeunit 67007 "EOS IC Entries Management"
 
         DocVariant := RecRef;
         PageManagement.PageRun(DocVariant);
+
+        //Use standard event OnPageRunAtFieldOnBeforeRunPage on Codeunit "Page Management" with ForceListPage parameter set to false to handle the opening of the card for your document.  
     end;
 
     procedure ShowTargetDocuments(ICEntries: Record "EOS IC Entries")
@@ -195,6 +197,8 @@ codeunit 67007 "EOS IC Entries Management"
         RecRef.MarkedOnly(true);
         DocVariant := RecRef;
         PageManagement.PageRunList(DocVariant);
+
+        //Use standard event OnPageRunAtFieldOnBeforeRunPage on Codeunit "Page Management" with ForceListPage parameter set to true to handle the opening of the list for your documents.  
     end;
 
     // Returns the code of the flow to use, or '' when the user cancels the selection.
